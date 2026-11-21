@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Amigo invisible</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: fino, silencioso, editorial; un formulario de estudio de diseño, no una web de sorteos.
+   IDEA: una ficha impresa en papel gris con retícula de puntos; una pregunta por hoja.
+   PICTURE: la propia pregunta: campos de texto gigantes, filas con círculo, y el contador 1/5 enorme abajo a la izquierda.
+   COLOUR and TYPE: gris cálido, tinta casi negra, un solo acento rojo para etiquetas; Inter Tight en cuatro tamaños.
+   LAYOUT: pantalla completa sin scroll, dos columnas (pregunta | respuestas); en móvil una columna. */
+:root{color-scheme:light dark;
+--bg:light-dark(#dedbd6,#151514);--ink:light-dark(#141413,#ecebe7);--mute:light-dark(#7a766f,#8d8a84);
+--line:light-dark(#b9b5ae,#3a3936);--dot:light-dark(rgba(20,20,19,.13),rgba(236,235,231,.09));--acc:light-dark(#c4391f,#ff6a4a);--field:light-dark(rgba(255,255,255,.35),rgba(255,255,255,.04))}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 "Inter Tight",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+.paper{position:fixed;inset:72px 2.2vw 2.2vw;border-radius:6px;background-image:radial-gradient(var(--dot) 1px,transparent 1.2px);background-size:16px 16px;pointer-events:none}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 max(2.8vw,18px);position:relative;z-index:2}
+.brand{font-weight:600;font-size:22px;letter-spacing:-.03em}
+.brand i{font-style:normal;color:var(--acc)}
+.top a,.top button{font:500 14px "Inter Tight",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:none;border:0;padding:10px 0 4px;margin-left:clamp(18px,3vw,48px);cursor:pointer;min-height:44px;border-bottom:1px solid transparent}
+.top button[aria-pressed=true]{border-bottom-color:var(--ink)}
+main{position:relative;z-index:1}
+.screen{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:4vw;height:calc(100dvh - 72px);padding:clamp(28px,6vh,72px) max(5vw,20px) clamp(24px,5vh,56px);animation:in .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+.q{display:flex;flex-direction:column;min-height:0}
+.label{font-weight:500;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:22px}
+h1{font-weight:400;font-size:clamp(34px,3.6vw,58px);line-height:1.05;letter-spacing:-.03em;margin:0;text-wrap:balance}
+.q p{color:var(--mute);margin:18px 0 0;max-width:34ch}
+.count{margin-top:auto;font-weight:400;font-size:clamp(110px,15vw,240px);line-height:.8;letter-spacing:-.06em}
+.count.sm{font-size:clamp(56px,7vw,116px);letter-spacing:-.04em;white-space:nowrap}
+.a{display:flex;flex-direction:column;min-height:0}
+.body{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;justify-content:center;padding-right:6px;scrollbar-width:thin}
+.body.start{justify-content:flex-start}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid var(--line);margin-top:18px}
+.nav button{font:500 clamp(20px,1.8vw,26px) "Inter Tight",sans-serif;letter-spacing:-.02em;background:none;border:0;color:var(--ink);cursor:pointer;min-height:48px;padding:0}
+.nav .next{display:inline-flex;gap:14px;align-items:center}
+.nav .next::after{content:"→";transition:transform .2s}
+.nav .next:hover::after{transform:translateX(6px)}
+.nav .back{color:var(--mute)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+button:disabled{opacity:.35;cursor:not-allowed}
+/* filas grandes */
+.row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding:6px 0}
+.row:first-child{border-top:1px solid var(--line)}
+.idx{font-size:14px;color:var(--mute);font-variant-numeric:tabular-nums}
+.big{font:400 clamp(30px,3.3vw,54px) "Inter Tight",sans-serif;letter-spacing:-.03em;width:100%;border:0;background:none;color:var(--ink);padding:10px 0;min-height:64px}
+.big::placeholder{color:var(--mute);opacity:.55}
+.big:focus{outline:none}
+.row:focus-within{border-bottom-color:var(--ink)}
+.tool{display:flex;gap:4px}
+.tool button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--mute);font:400 20px "Inter Tight",sans-serif;cursor:pointer}
+.tool button:hover{border-color:var(--ink);color:var(--ink)}
+.extra{grid-column:2/4;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 0 14px}
+.small{font:400 17px "Inter Tight",sans-serif;width:100%;border:0;border-bottom:1px solid var(--line);background:var(--field);color:var(--ink);padding:12px 10px;min-height:46px;border-radius:4px 4px 0 0}
+.small::placeholder{color:var(--mute)}
+.add{font:400 clamp(22px,2vw,30px) "Inter Tight",sans-serif;letter-spacing:-.02em;background:none;border:0;color:var(--mute);cursor:pointer;padding:16px 0;text-align:left;min-height:56px}
+.add:hover{color:var(--ink)}
+/* filas con opciones */
+.opt{display:grid;grid-template-columns:minmax(120px,.8fr) minmax(0,2fr);gap:18px;align-items:center;border-bottom:1px solid var(--line);padding:14px 0}
+.opt:first-child{border-top:1px solid var(--line)}
+.opt .nm{font-size:clamp(24px,2.3vw,36px);letter-spacing:-.03em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:10px;font:400 17px "Inter Tight",sans-serif;background:none;border:1px solid var(--line);border-radius:999px;color:var(--ink);padding:8px 16px 8px 10px;min-height:44px;cursor:pointer}
+.chip::before{content:"";width:16px;height:16px;border-radius:50%;border:1px solid currentColor;flex:none}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed=true]::before{background:var(--acc);border-color:var(--acc)}
+/* campos de reglas */
+.field{border-bottom:1px solid var(--line);padding:10px 0 2px}
+.field:first-child{border-top:1px solid var(--line)}
+.field label{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding-top:6px}
+.field .big{font-size:clamp(26px,2.6vw,42px);min-height:56px;padding:4px 0 8px}
+/* sortear */
+.huge{font-size:clamp(120px,16vw,260px);line-height:.85;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+.huge+div{font-size:clamp(22px,2vw,30px);letter-spacing:-.02em;margin-top:10px}
+.facts{list-style:none;padding:0;margin:36px 0 0;color:var(--mute);display:grid;gap:10px;max-width:52ch}
+.facts li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px}
+.facts li::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--acc);margin-top:8px}
+.go{display:flex;align-items:center;gap:22px;font:400 clamp(36px,4vw,64px) "Inter Tight",sans-serif;letter-spacing:-.04em;background:none;border:0;color:var(--ink);cursor:pointer;padding:18px 0;margin-top:26px;min-height:64px;text-align:left}
+.go::before{content:"";width:.8em;height:.8em;border-radius:50%;border:1.5px solid currentColor;flex:none;transition:background .2s}
+.go:hover::before{background:var(--acc);border-color:var(--acc)}
+/* envío */
+.srow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 20px;align-items:center;border-bottom:1px solid var(--line);padding:14px 0}
+.srow:first-child{border-top:1px solid var(--line)}
+.srow .nm{font-size:clamp(26px,2.6vw,40px);letter-spacing:-.03em;display:flex;align-items:center;gap:12px}
+.srow .nm small{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
+.links{display:flex;gap:6px 18px;flex-wrap:wrap;justify-content:flex-end}
+.links a,.links button{font:500 15px "Inter Tight",sans-serif;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);padding:10px 0 4px;cursor:pointer;text-decoration:none;min-height:44px}
+.links a:hover,.links button:hover{border-bottom-color:var(--ink)}
+.meta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:22px}
+.meta label{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.inline{display:flex;gap:10px;align-items:end}
+.inline .links{flex:none}
+/* revelación */
+.reveal{display:flex;flex-direction:column;justify-content:center;flex:1}
+.tap{display:flex;align-items:center;gap:26px;font:400 clamp(36px,4.2vw,68px) "Inter Tight",sans-serif;letter-spacing:-.04em;background:none;border:0;color:var(--ink);cursor:pointer;text-align:left;padding:10px 0}
+.tap span.o{width:1.25em;height:1.25em;border-radius:50%;border:1.5px solid currentColor;flex:none;display:grid;place-items:center;animation:pulse 2.2s ease-in-out infinite}
+.tap span.o::after{content:"";width:30%;height:30%;border-radius:50%;background:var(--acc)}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.who{font-weight:500;font-size:clamp(72px,12vw,200px);line-height:.88;letter-spacing:-.06em;overflow-wrap:anywhere}
+.who span{display:inline-block;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(.4em)}}
+.after{margin-top:34px;border-top:1px solid var(--line);display:grid}
+.after div{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;border-bottom:1px solid var(--line);padding:12px 0}
+.after dt{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding-top:3px}
+.after dd{margin:0;font-size:19px}
+.msg{font-size:15px;color:var(--acc);min-height:22px;margin-top:10px}
+.ok{color:var(--ink)}
+[hidden]{display:none!important}
+@media(max-width:780px){
+.paper{inset:64px 0 0}header{height:64px}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:14px;font-size:12px}
+.screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:28px;padding-top:24px}
+.count{order:-1;font-size:72px;margin:0 0 14px}.count.sm{font-size:48px}
+.q p{margin-top:12px}.body{overflow:visible;justify-content:flex-start}
+.opt{grid-template-columns:minmax(0,1fr);gap:10px}.extra,.meta{grid-template-columns:minmax(0,1fr)}
+.srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
+.after div{grid-template-columns:minmax(0,1fr);gap:2px}
+.nav{position:sticky;bottom:0;background:var(--bg);padding-bottom:12px}}
+@media(prefers-reduced-motion:reduce){.screen,.who span,.tap span.o{animation:none}}
+</style>
+</head>
+<body>
+<div class="paper" aria-hidden="true"></div>
+<header>
+  <div class="brand">amigo<i>.</i>invisible</div>
+  <nav class="top"><button id="mOrg" aria-pressed="true">Organizar</button><button id="mVer" aria-pressed="false">Mi resultado</button></nav>
+</header>
+<main id="app"></main>
+
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const PAGE_URL=(/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/.test(location.hostname))?location.origin+location.pathname:"https://miguel-moya.github.io/amigo-invisible/";
+const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+function rnd(n){const a=new Uint32Array(1),lim=Math.floor(4294967296/n)*n;let v;do{crypto.getRandomValues(a);v=a[0]}while(v>=lim);return v%n}
+
+/* ---------- códigos ---------- */
+const enc=new TextEncoder(),dec=new TextDecoder();
+function ks(seed,len){let x=seed>>>0||1;const o=new Uint8Array(len);for(let i=0;i<len;i++){x^=x<<13;x>>>=0;x^=x>>>17;x^=x<<5;x>>>=0;o[i]=x&255}return o}
+function b64u(b){let s="";b.forEach(c=>s+=String.fromCharCode(c));return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function ub64(s){s=s.replace(/-/g,"+").replace(/_/g,"/");const b=atob(s);return Uint8Array.from(b,c=>c.charCodeAt(0))}
+function seal(prefix,obj){const d=enc.encode(JSON.stringify(obj)),seed=new Uint32Array(1);crypto.getRandomValues(seed);const k=ks(seed[0],d.length),o=new Uint8Array(d.length+4);new DataView(o.buffer).setUint32(0,seed[0]);d.forEach((c,i)=>o[i+4]=c^k[i]);return prefix+b64u(o)}
+function unseal(prefix,s){s=s.trim().replace(/\s+/g,"");if(!s.startsWith(prefix))throw 0;const o=ub64(s.slice(prefix.length)),seed=new DataView(o.buffer).getUint32(0),d=o.slice(4),k=ks(seed,d.length);return JSON.parse(dec.decode(d.map((c,i)=>c^k[i])))}
+const B32="0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+function toB32(b){let bits=0,v=0,o="";b.forEach(c=>{v=(v<<8)|c;bits+=8;while(bits>=5){o+=B32[(v>>>(bits-5))&31];bits-=5}});if(bits)o+=B32[(v<<(5-bits))&31];return o.match(/.{1,5}/g).join("-")}
+function fromB32(s){s=s.toUpperCase().replace(/O/g,"0").replace(/[IL]/g,"1").replace(/[^0-9A-Z]/g,"");let bits=0,v=0;const o=[];for(const ch of s){const k=B32.indexOf(ch);if(k<0)throw 0;v=((v<<5)|k)&0xffff;bits+=5;if(bits>=8){o.push((v>>>(bits-8))&255);bits-=8}}return Uint8Array.from(o)}
+const idBytes=id=>fromB32(id.replace("-","")+"00");
+function shortSeal(id,r,i){const body=enc.encode(r+(i?"\n"+i:"")),idb=idBytes(id),d=new Uint8Array(idb.length+body.length);d.set(idb);d.set(body,idb.length);const s=rnd(256),k=ks(s*2654435761+7,d.length),o=new Uint8Array(d.length+1);o[0]=s;d.forEach((c,j)=>o[j+1]=c^k[j]);return toB32(o)}
+function shortOpen(code){code=code.includes("#")?code.split("#").pop():code;const o=fromB32(code);if(o.length<7)throw 0;const s=o[0],d=o.slice(1),k=ks(s*2654435761+7,d.length),p=d.map((c,j)=>c^k[j]);const txt=dec.decode(p.slice(5));if(!txt||txt.includes("\uFFFD"))throw 0;const [r,...rest]=txt.split("\n");const id=toB32(p.slice(0,5)).replace(/-/g,"").slice(0,6);return{id:id.slice(0,3)+"-"+id.slice(3),r,i:rest.join("\n")}}
+
+/* ---------- estado ---------- */
+let st=store.get("ai-draft");
+if(!st||!Array.isArray(st.people))st={people:Array.from({length:3},()=>({n:"",e:"",i:"",x:[]})),last:{},hist:"",price:"",org:"",date:"",place:"",note:""};
+let histPairs=[],result=store.get("ai-result");if(!result||result.v!==2)result=null;
+const save=()=>store.set("ai-draft",st);
+const norm=s=>s.trim().toLowerCase();
+const active=()=>st.people.map((p,i)=>({...p,idx:i})).filter(p=>p.n.trim());
+function allowed(ps){return ps.map(a=>ps.map(b=>{
+  if(a.idx===b.idx||a.x.includes(b.idx))return false;
+  if(st.last[a.idx]!=null&&+st.last[a.idx]===b.idx)return false;
+  if(histPairs.some(h=>h[0]===norm(a.n)&&h[1]===norm(b.n)))return false;
+  return true}))}
+function countAll(A,cap=2e6){const n=A.length,used=new Array(n).fill(false);let c=0;(function go(i){if(c>=cap)return;if(i===n){c++;return}for(let j=0;j<n;j++)if(!used[j]&&A[i][j]){used[j]=true;go(i+1);used[j]=false}})(0);return c}
+function draw(A){const n=A.length;for(let t=0;t<400000;t++){const p=[...Array(n).keys()];for(let i=n-1;i>0;i--){const j=rnd(i+1);[p[i],p[j]]=[p[j],p[i]]}if(p.every((j,i)=>A[i][j]))return p}return null}
+function loadHist(){histPairs=[];if(!st.hist)return"";try{const h=unseal("H1-",st.hist);histPairs=h.p;return`Cargado: se evitarán las ${h.p.length} parejas del sorteo ${h.id}, sin mostrarlas.`}catch(e){return"Ese código no es válido."}}
+loadHist();
+
+/* ---------- pantallas ---------- */
+const TOTAL=5;
+const shell=(n,label,title,text,body,nav,countTxt)=>`<section class="screen">
+  <div class="q"><div class="label">${label}</div><h1>${title}</h1>${text?`<p>${text}</p>`:""}<div class="count${countTxt?" sm":""}">${countTxt||`${n}/${TOTAL}`}</div></div>
+  <div class="a"><div class="body${n===1||n===2||n===3?" start":""}">${body}</div>${nav}</div></section>`;
+const navs=(n,nextTxt="Siguiente")=>`<div class="nav">${n>1?`<button class="back" data-to="${n-1}">Atrás</button>`:"<span></span>"}<button class="next" data-to="${n+1}">${nextTxt}</button></div>`;
+
+const views={
+1:()=>shell(1,"Paso uno","¿Quién juega?","Escribe un nombre por línea. Con el botón + puedes añadir su email y una pista de regalo.",
+  `<div id="rows">${st.people.map((p,i)=>`<div class="row"><span class="idx">${String(i+1).padStart(2,"0")}</span>
+    <input class="big" data-f="n" data-i="${i}" value="${esc(p.n)}" placeholder="${i===0?"Tu nombre":"Nombre"}" aria-label="Nombre ${i+1}" autocomplete="off">
+    <div class="tool"><button data-more="${i}" aria-label="Email y pista">+</button><button data-del="${i}" aria-label="Quitar">×</button></div>
+    <div class="extra"${p.e||p.i?"":" hidden"} id="ex${i}"><input class="small" type="email" data-f="e" data-i="${i}" value="${esc(p.e)}" placeholder="Email (opcional)"><input class="small" data-f="i" data-i="${i}" value="${esc(p.i)}" placeholder="Pista de regalo para quien le toque"></div></div>`).join("")}</div>
+   <button class="add" id="add">+ Añadir persona</button><div class="msg" id="m1"></div>`,navs(1)),
+2:()=>{const ps=active();return shell(2,"Paso dos","¿Alguien no puede regalar a alguien?","Por ejemplo, las parejas. Toca los nombres a los que cada persona no puede regalar. Si nadie, sigue.",
+  ps.map(a=>`<div class="opt"><div class="nm">${esc(a.n)}</div><div class="chips">${ps.filter(b=>b.idx!==a.idx).map(b=>`<button class="chip" data-ex="${a.idx}" data-to2="${b.idx}" aria-pressed="${a.x.includes(b.idx)}">${esc(b.n)}</button>`).join("")}</div></div>`).join(""),navs(2))},
+3:()=>{const ps=active();return shell(3,"Paso tres","El año pasado, ¿a quién regaló cada uno?","Esas parejas no se repetirán. Si guardaste el código de historial del año pasado, pégalo abajo y no hace falta marcar nada.",
+  ps.map(a=>`<div class="opt"><div class="nm">${esc(a.n)}</div><div class="chips">${ps.filter(b=>b.idx!==a.idx).map(b=>`<button class="chip" data-last="${a.idx}" data-to3="${b.idx}" aria-pressed="${st.last[a.idx]!=null&&+st.last[a.idx]===b.idx}">${esc(b.n)}</button>`).join("")}</div></div>`).join("")+
+  `<div class="field" style="border-top:0;margin-top:8px"><label for="hist">Código de historial (opcional)</label><input class="big" id="hist" style="font-size:22px" value="${esc(st.hist)}" placeholder="H1-…" autocomplete="off"></div><div class="msg" id="m3"></div>`,navs(3))},
+4:()=>shell(4,"Paso cuatro","Las reglas del juego","Todo es opcional. Irá en el mensaje que recibe cada persona.",
+  [["price","Precio máximo","30 €"],["date","Cuándo","24 de diciembre, en la cena"],["place","Dónde","Casa de los abuelos"],["org","Organiza","Tu nombre"],["note","Mensaje para todos","Nada de calcetines"]].map(([k,l,ph])=>`<div class="field"><label for="${k}">${l}</label><input class="big" id="${k}" data-r="${k}" value="${esc(st[k])}" placeholder="${ph}" autocomplete="off"></div>`).join(""),navs(4)),
+5:()=>{const ps=active(),c=countAll(allowed(ps));return shell(5,"Paso cinco","Listo para sortear",`${ps.length} personas: ${ps.map(p=>esc(p.n.trim())).join(", ")}.`,
+  `<div class="huge">${c>=2e6?"2M+":c}</div><div>${c===0?"Con estas exclusiones no hay ningún sorteo posible. Vuelve atrás y quita alguna.":c===1?"único sorteo posible: no habrá sorpresa.":"sorteos posibles. Saldrá uno al azar, todos igual de probables."}</div>
+   <ul class="facts"><li>Se usa el generador aleatorio criptográfico del navegador.</li><li>Tú no verás el resultado: cada persona recibe un enlace cerrado.</li><li>Cada sorteo lleva un número. Si todos tenéis el mismo, nadie ha repetido el sorteo a escondidas.</li></ul>
+   <button class="go" id="draw"${c===0?" disabled":""}>Sortear</button><div class="msg" id="m5"></div>`,`<div class="nav"><button class="back" data-to="4">Atrás</button><span></span></div>`)},
+send:()=>shell(0,"Sorteo hecho","Envía a cada uno su enlace","Un toque en el enlace y ven su resultado. El mensaje nunca lleva el nombre de a quién le toca. Todos tienen que ver este número:",
+  result.people.map((p,i)=>`<div class="srow"><div class="nm">${esc(p.n)}${p.sent?"<small>Enviado</small>":""}</div><div class="links">
+   <a href="https://wa.me/?text=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">WhatsApp ↗</a>
+   <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.e)}&su=${encodeURIComponent("Tu amigo invisible · sorteo "+result.id)}&body=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">Gmail ↗</a>
+   <button data-copy="${i}">Copiar</button><button data-mark="${i}">${p.sent?"Desmarcar":"Marcar"}</button></div></div>`).join("")+
+  `<div class="meta"><div><label for="url">Enlace de la página</label><input class="small" id="url" value="${esc(result.url||PAGE_URL)}"></div>
+   <div><label for="histOut">Código de historial para el año que viene</label><div class="inline"><input class="small" id="histOut" readonly value="${esc(result.hist)}"><div class="links"><button id="copyHist">Copiar</button></div></div></div></div>`,
+  `<div class="nav"><button class="back" id="redo">Nuevo sorteo</button><span></span></div>`,result.id),
+ver:(r,msg)=>shell(0,"Tu amigo invisible",r?"Te toca regalar a…":"Abre tu resultado",r?"Solo lo verás tú. No lo enseñes, que se acaba la gracia.":"Pega el enlace o el código que te ha llegado por WhatsApp o email.",
+  r?`<div class="reveal" id="rv"><button class="tap" id="tap"><span class="o"></span>Toca para descubrirlo</button></div>`
+   :`<div class="reveal"><div class="field"><label for="code">Tu código</label><input class="big" id="code" placeholder="8K2QM-X7TRA-4PNV1" autocomplete="off"></div><div class="msg" id="mv">${msg||""}</div><button class="go" id="openCode">Abrir</button></div>`,
+  "",r?r.id:"?")
+};
+let cur=1;
+function show(v,arg,msg){cur=v;$("#app").innerHTML=views[v](arg,msg);bind(v,arg);
+  $("#mOrg").setAttribute("aria-pressed",v!=="ver");$("#mVer").setAttribute("aria-pressed",v==="ver");
+  const f=$("#app input.big");if(f&&v!=="send"&&matchMedia("(min-width:781px)").matches)f.focus({preventScroll:true});window.scrollTo(0,0)}
+function validate(to){const ps=active();
+  if(to>1&&ps.length<3)return"Hacen falta al menos 3 personas.";
+  if(to>1&&ps.map(p=>norm(p.n)).some((v,i,a)=>a.indexOf(v)!==i))return"Hay nombres repetidos: añade una inicial para distinguirlos.";
+  return""}
+function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1");if(m)m.textContent=e;return}}
+  if(n===5&&result){show("send");return}show(n)}
+
+/* ---------- mensaje ---------- */
+const baseUrl=()=>(($("#url")&&$("#url").value.trim())||result.url||PAGE_URL).split("#")[0];
+function msgFor(p){const L=[["Precio máximo",st.price],["Cuándo",st.date],["Dónde",st.place]].filter(x=>(x[1]||"").trim()).map(x=>`${x[0]}: ${x[1].trim()}`);
+  return [`Hola, ${p.n}: ya tienes tu amigo invisible.`,``,`Ábrelo aquí (solo lo verás tú):`,baseUrl()+"#"+p.code,...(L.length?[``,...L]:[]),...((st.note||"").trim()?[``,st.note.trim()]:[]),``,`Sorteo nº ${result.id}${(st.org||"").trim()?` · organiza ${st.org.trim()}`:""}. Tiene que ser el mismo número para todos.`].join("\n")}
+
+/* ---------- eventos ---------- */
+function bind(v,arg){
+  $$("[data-to]").forEach(b=>b.onclick=()=>goTo(+b.dataset.to));
+  if(v===1){
+    $("#rows").addEventListener("input",e=>{const t=e.target;if(t.dataset.f){st.people[t.dataset.i][t.dataset.f]=t.value;save();$("#m1").textContent=""}});
+    $("#rows").addEventListener("keydown",e=>{const t=e.target;if(e.key==="Enter"&&t.dataset.f==="n"){e.preventDefault();const i=+t.dataset.i,nx=$(`[data-f="n"][data-i="${i+1}"]`);if(nx)nx.focus();else if(t.value.trim()){st.people.push({n:"",e:"",i:"",x:[]});save();show(1);$(`[data-f="n"][data-i="${i+1}"]`).focus()}}});
+    $("#rows").addEventListener("click",e=>{const t=e.target;
+      if(t.dataset.more!=null){const x=$("#ex"+t.dataset.more);x.hidden=!x.hidden;if(!x.hidden)x.querySelector("input").focus()}
+      if(t.dataset.del!=null){const d=+t.dataset.del;st.people.splice(d,1);st.people.forEach(p=>p.x=p.x.filter(j=>j!==d).map(j=>j>d?j-1:j));const L={};Object.entries(st.last).forEach(([a,b])=>{a=+a;b=+b;if(a!==d&&b!==d)L[a>d?a-1:a]=b>d?b-1:b});st.last=L;if(!st.people.length)st.people.push({n:"",e:"",i:"",x:[]});save();show(1)}});
+    $("#add").onclick=()=>{st.people.push({n:"",e:"",i:"",x:[]});save();show(1);$$('[data-f="n"]').pop().focus()};
+  }
+  if(v===2)$$("[data-ex]").forEach(b=>b.onclick=()=>{const p=st.people[+b.dataset.ex],j=+b.dataset.to2;p.x=p.x.includes(j)?p.x.filter(x=>x!==j):[...p.x,j];b.setAttribute("aria-pressed",p.x.includes(j));save()});
+  if(v===3){$$("[data-last]").forEach(b=>b.onclick=()=>{const a=b.dataset.last,j=+b.dataset.to3;if(st.last[a]!=null&&+st.last[a]===j)delete st.last[a];else st.last[a]=j;save();$$(`[data-last="${a}"]`).forEach(c=>c.setAttribute("aria-pressed",st.last[a]!=null&&+st.last[a]===+c.dataset.to3))});
+    const h=$("#hist");h.oninput=()=>{st.hist=h.value.trim();save();$("#m3").textContent=loadHist()};$("#m3").textContent=loadHist()}
+  if(v===4)$$("[data-r]").forEach(el=>{el.oninput=()=>{st[el.dataset.r]=el.value;save()};el.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const all=$$("[data-r]"),k=all.indexOf(el);all[k+1]?all[k+1].focus():goTo(5)}}});
+  if(v===5)$("#draw").onclick=()=>{const ps=active(),p=draw(allowed(ps));if(!p){$("#m5").textContent="No se ha encontrado un sorteo válido.";return}
+    const ALPHA="23456789ABCDEFGHJKMNPQRSTVWXYZ";let id="";for(let i=0;i<6;i++)id+=ALPHA[rnd(ALPHA.length)];id=id.slice(0,3)+"-"+id.slice(3);
+    result={v:2,id,url:PAGE_URL,people:ps.map((a,i)=>{const b=ps[p[i]];return{n:a.n.trim(),e:a.e.trim(),code:shortSeal(id,b.n.trim(),b.i.trim()),sent:false}}),hist:seal("H1-",{id,p:ps.map((a,i)=>[norm(a.n),norm(ps[p[i]].n)])})};
+    store.set("ai-result",result);show("send")};
+  if(v==="send"){
+    $("#url").onchange=()=>{result.url=$("#url").value.trim();store.set("ai-result",result);show("send")}}
+  if(v==="ver"){
+    if(arg){const reveal=()=>{const rv=$("#rv");rv.innerHTML=`<div class="who" aria-live="polite">${[...arg.r].map((c,k)=>`<span style="animation-delay:${k*45}ms">${c===" "?"&nbsp;":esc(c)}</span>`).join("")}</div>
+        <dl class="after">${arg.i?`<div><dt>Su pista</dt><dd>${esc(arg.i)}</dd></div>`:""}<div><dt>Número de sorteo</dt><dd>${esc(arg.id)}: tiene que coincidir con el de los demás</dd></div><div><dt>Precio, fecha y lugar</dt><dd>En el mensaje que te llegó</dd></div></dl>`};
+      $("#tap").onclick=reveal}
+    else{const open=()=>{try{show("ver",shortOpen($("#code").value))}catch(e){$("#mv").textContent="Ese código no es válido. Revisa que esté completo."}};
+      $("#openCode").onclick=open;$("#code").onkeydown=e=>{if(e.key==="Enter")open()}}}
+}
+$("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("[data-sent],[data-copy],[data-mark],#copyHist,#redo");if(!t)return;
+      if(t.id==="copyHist"){try{await navigator.clipboard.writeText(result.hist);t.textContent="Copiado"}catch(err){$("#histOut").select()}return}
+      if(t.id==="redo"){result=null;store.del("ai-result");show(5);return}
+      if(t.dataset.copy!=null){const p=result.people[+t.dataset.copy];try{await navigator.clipboard.writeText(msgFor(p));t.textContent="Copiado";p.sent=true;store.set("ai-result",result);setTimeout(()=>show("send"),1100)}catch(err){t.textContent="No se pudo copiar"}return}
+      if(t.dataset.mark!=null){const p=result.people[+t.dataset.mark];p.sent=!p.sent;store.set("ai-result",result);show("send");return}
+      if(t.dataset.sent!=null){result.people[+t.dataset.sent].sent=true;store.set("ai-result",result);setTimeout(()=>show("send"),400)}});
+$("#mOrg").onclick=()=>{if(location.hash)history.replaceState(null,"",location.pathname+location.search);show(result?"send":1)};
+$("#mVer").onclick=()=>show("ver");
+
+/* ---------- inicio ---------- */
+const hc=location.hash.slice(1);
+if(hc==="ver")show("ver");
+else if(/^[0-9A-Za-z]{5}(-[0-9A-Za-z]{1,5})+$/.test(hc)){let r=null;try{r=shortOpen(hc)}catch(e){}r?show("ver",r):show("ver",null,"El enlace no es válido. Pide a quien organiza que te lo reenvíe.")}
+else show(result?"send":1);
+}
+</script>
+</body>
+</html>
