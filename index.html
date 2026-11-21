@@ -111,6 +111,8 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .after dd{margin:0;font-size:19px}
 .msg{font-size:15px;color:var(--acc);min-height:22px;margin-top:10px}
 .ok{color:var(--ink)}
+.q{position:relative}.q>*{position:relative;z-index:1}
+#ascii{position:absolute!important;z-index:0!important;right:-2vw;bottom:-1vh;margin:0;font:400 clamp(7px,1.15vh,11px)/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:0;color:var(--ink);opacity:.42;pointer-events:none;user-select:none;white-space:pre}
 [hidden]{display:none!important}
 @media(max-width:780px){
 .paper{inset:64px 0 0}header{height:64px}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:14px;font-size:12px}
@@ -120,7 +122,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .opt{grid-template-columns:minmax(0,1fr);gap:10px}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
-.nav{position:sticky;bottom:0;background:var(--bg);padding-bottom:12px}}
+.nav{position:sticky;bottom:0;background:var(--bg);padding-bottom:12px}#ascii{display:none}}
 @media(prefers-reduced-motion:reduce){.screen,.who span,.tap span.o{animation:none}}
 </style>
 </head>
@@ -154,6 +156,53 @@ const idBytes=id=>fromB32(id.replace("-","")+"00");
 function shortSeal(id,r,i){const body=enc.encode(r+(i?"\n"+i:"")),idb=idBytes(id),d=new Uint8Array(idb.length+body.length);d.set(idb);d.set(body,idb.length);const s=rnd(256),k=ks(s*2654435761+7,d.length),o=new Uint8Array(d.length+1);o[0]=s;d.forEach((c,j)=>o[j+1]=c^k[j]);return toB32(o)}
 function shortOpen(code){code=code.includes("#")?code.split("#").pop():code;const o=fromB32(code);if(o.length<7)throw 0;const s=o[0],d=o.slice(1),k=ks(s*2654435761+7,d.length),p=d.map((c,j)=>c^k[j]);const txt=dec.decode(p.slice(5));if(!txt||txt.includes("\uFFFD"))throw 0;const [r,...rest]=txt.split("\n");const id=toB32(p.slice(0,5)).replace(/-/g,"").slice(0,6);return{id:id.slice(0,3)+"-"+id.slice(3),r,i:rest.join("\n")}}
 
+
+/* ---------- regalo ASCII 3D ---------- */
+const asciiEl=document.createElement("pre");asciiEl.id="ascii";asciiEl.setAttribute("aria-hidden","true");
+{
+const COLS=78,ROWS=44,RAMP=" .:-=+*#%@";
+const hyp=Math.hypot,mx=Math.max,mn=Math.min;
+const sdBox=(x,y,z,a,b,c)=>{const qx=Math.abs(x)-a,qy=Math.abs(y)-b,qz=Math.abs(z)-c;return hyp(mx(qx,0),mx(qy,0),mx(qz,0))+mn(mx(qx,qy,qz),0)};
+const torus=(x,y,z,R,r)=>hyp(hyp(x,y)-R,z)-r;
+function scene(x,y,z){
+  const yb=y+.22;
+  const box=sdBox(x,yb,z,.70,.53,.70)-.04;
+  const rib=mn(sdBox(x,yb,z,.745,.575,.11),sdBox(x,yb,z,.11,.575,.745));
+  const c=Math.cos(.55),s=Math.sin(.55);
+  const lx=x+.31,ly=y-.56,rx=x-.31;
+  const l1=torus(lx*c-ly*s,(lx*s+ly*c)*1.2,z*1.5,.29,.075);
+  const l2=torus(rx*c+ly*s,(-rx*s+ly*c)*1.2,z*1.5,.29,.075);
+  const knot=hyp(x,y-.40,z)-.11;
+  const r=mn(rib,l1,l2,knot);
+  return r<box+.004?[r,1]:[box,0];
+}
+let ang=.7;
+function frame(){
+  const ca=Math.cos(ang),sa=Math.sin(ang);
+  const ro=[0,1.75,-4.3],ta=[0,.02,0];
+  let fx=ta[0]-ro[0],fy=ta[1]-ro[1],fz=ta[2]-ro[2];const fl=hyp(fx,fy,fz);fx/=fl;fy/=fl;fz/=fl;
+  let rx=fz,rz=-fx;const rl=hyp(rx,rz);rx/=rl;rz/=rl;const ux=-rz*fy,uy=rz*fx-rx*fz,uz=rx*fy;
+  const L=[-.75,.45,-.55],ll=hyp(...L);L[0]/=ll;L[1]/=ll;L[2]/=ll;
+  const out=[];
+  for(let r=0;r<ROWS;r++){let line="";const v=(r+.5-ROWS/2)/(ROWS/2)*.27;
+    for(let c=0;c<COLS;c++){const u=(c+.5-COLS/2)/(ROWS/2)*.27*.6;
+      let dx=fx*1+rx*u+ux*v,dy=fy*1+uy*v,dz=fz*1+rz*u+uz*v;const dl=hyp(dx,dy,dz);dx/=dl;dy/=dl;dz/=dl;
+      let t=2.8,hit=-1,px=0,py=0,pz=0,m=0;
+      for(let i=0;i<48&&t<6.2;i++){const wx=ro[0]+dx*t,wy=ro[1]+dy*t,wz=ro[2]+dz*t;
+        px=wx*ca-wz*sa;py=wy;pz=wx*sa+wz*ca;const [d,mm]=scene(px,py,pz);if(d<.004){hit=t;m=mm;break}t+=d}
+      if(hit<0){line+=" ";continue}
+      const e=.01,n0=scene(px+e,py,pz)[0]-scene(px-e,py,pz)[0],n1=scene(px,py+e,pz)[0]-scene(px,py-e,pz)[0],n2=scene(px,py,pz+e)[0]-scene(px,py,pz-e)[0];
+      const nl=hyp(n0,n1,n2)||1;const nx=n0/nl,ny=n1/nl,nz=n2/nl;
+      const wnx=nx*ca+nz*sa,wnz=-nx*sa+nz*ca;
+      let lum=.12+.88*mx(0,wnx*L[0]+ny*L[1]+wnz*L[2]);
+      line+=m?"=+*#%@"[mn(5,Math.floor(lum*5.99))]:".:-=+*"[mn(5,Math.floor(lum*5.99))]}
+    out.push(line)}
+  asciiEl.textContent=out.join("\n");
+}
+const still=matchMedia("(prefers-reduced-motion:reduce)").matches;
+frame();
+if(!still){let last=0;const loop=ts=>{if(!document.hidden&&ts-last>40){ang+=(ts-last)/1000*.55;last=ts;frame()}else if(!last)last=ts;requestAnimationFrame(loop)};requestAnimationFrame(loop)}
+}
 /* ---------- estado ---------- */
 let st=store.get("ai-draft");
 if(!st||!Array.isArray(st.people))st={people:Array.from({length:3},()=>({n:"",e:"",i:"",x:[]})),last:{},hist:"",price:"",org:"",date:"",place:"",note:""};
@@ -210,7 +259,7 @@ ver:(r,msg)=>shell(0,"Tu amigo invisible",r?"Te toca regalar a…":"Abre tu resu
   "",r?r.id:"?")
 };
 let cur=1;
-function show(v,arg,msg){cur=v;$("#app").innerHTML=views[v](arg,msg);bind(v,arg);
+function show(v,arg,msg){cur=v;$("#app").innerHTML=views[v](arg,msg);const qq=$("#app .q");if(qq)qq.appendChild(asciiEl);bind(v,arg);
   $("#mOrg").setAttribute("aria-pressed",v!=="ver");$("#mVer").setAttribute("aria-pressed",v==="ver");
   const f=$("#app input.big");if(f&&v!=="send"&&matchMedia("(min-width:781px)").matches)f.focus({preventScroll:true});window.scrollTo(0,0)}
 function validate(to){const ps=active();
