@@ -35,18 +35,18 @@ h1{font-weight:400;font-size:clamp(var(--t2),3.1vw,var(--t3));line-height:1.08;l
 .count{margin-top:auto;font-weight:400;font-size:clamp(var(--t4),min(13vw,24vh),var(--t6));line-height:.76;letter-spacing:-.06em;white-space:nowrap}
 .count.sm{font-size:clamp(var(--t3),5.6vw,var(--t4));line-height:.9;letter-spacing:-.04em}
 .a{display:flex;flex-direction:column;min-height:0;grid-column:3}
-.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow:auto;scrollbar-width:thin}
-.list{flex:0 1 auto;min-height:0;overflow:auto;scrollbar-width:thin;padding-right:8px;margin-right:-8px;overscroll-behavior:contain}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+.list{flex:0 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;overscroll-behavior:contain}
 .list.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 55px),transparent);mask-image:linear-gradient(#000 calc(100% - 55px),transparent)}
 .list>.field:first-child,.list>.opt:first-child,.list>.row:first-child,.list>.srow:first-child{border-top:1px solid var(--line)}
-.opt-tag{font-size:var(--t0);letter-spacing:.1em;color:var(--mute);opacity:.7;margin-left:8px}
-.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:34px;align-items:baseline}
-.pair>div{display:flex;align-items:baseline;gap:13px}.pre{font-size:var(--t1);color:var(--mute);flex:none}
+.opt-tag{font:inherit;letter-spacing:inherit;color:var(--mute);margin-left:.6em}
 .cur{font-size:clamp(var(--t2),2.6vw,var(--t3));color:var(--mute)}
-.area{resize:vertical;line-height:1.3;min-height:calc(3*1.3em + 16px);font-size:var(--t2)!important;display:block}
+.area{resize:vertical;line-height:1.2;min-height:calc(3*1.2em + 16px);display:block}
+input[type=date].big{font-family:inherit;color:var(--ink);min-height:55px}input[type=date].big:invalid,input[type=date].big:not(:valid){color:var(--mute)}
+input[type=date]::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer;width:.6em;height:.6em}
 .field.bad{border-bottom-color:var(--acc)}.field.bad label{color:var(--acc)}
 .field.hist{border-top:0;margin-top:21px}.field.hist .small{margin-top:8px}
-.nav{display:flex;justify-content:space-between;align-items:center;padding-top:21px;border-top:1px solid var(--line);margin-top:21px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-top:21px;border-top:1px solid light-dark(#fff,rgba(255,255,255,.22));margin-top:21px}
 .nav button{font:500 var(--t2) "Inter Tight",sans-serif;letter-spacing:-.02em;background:none;border:0;color:var(--ink);cursor:pointer;min-height:48px;padding:0}
 .nav .next{display:inline-flex;gap:14px;align-items:center}
 .nav .next::after{content:"→";transition:transform .2s}
@@ -55,16 +55,16 @@ h1{font-weight:400;font-size:clamp(var(--t2),3.1vw,var(--t3));line-height:1.08;l
 button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
 button:disabled{opacity:.35;cursor:not-allowed}
 /* filas grandes */
-.row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:13px;border-bottom:1px solid var(--line);min-height:var(--t4)}
+.row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:baseline;gap:13px;border-bottom:1px solid var(--line);min-height:var(--t4)}
 .row:first-child{border-top:1px solid var(--line)}
 .idx{font-size:var(--t0);color:var(--mute);font-variant-numeric:tabular-nums}
 .big{font:400 clamp(var(--t2),3.1vw,var(--t3)) "Inter Tight",sans-serif;letter-spacing:-.03em;width:100%;border:0;background:none;color:var(--ink);padding:8px 0;min-height:55px}
 .big::placeholder{color:var(--mute);opacity:.55}
 .big:focus{outline:none}
 .row:focus-within{border-bottom-color:var(--ink)}
-.tool{display:flex;gap:4px}
-.tool button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--mute);font:400 20px "Inter Tight",sans-serif;cursor:pointer}
-.tool button:hover{border-color:var(--ink);color:var(--ink)}
+.tool{display:flex;gap:8px;align-self:center}
+.tool button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--mute);display:grid;place-items:center;padding:0;line-height:0;cursor:pointer}
+.tool button:hover{border-color:var(--ink);color:var(--ink)}.tool svg{width:21px;height:21px;pointer-events:none}
 .extra{grid-column:2/4;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 0 14px}
 .small{font:400 17px "Inter Tight",sans-serif;width:100%;border:0;border-bottom:1px solid var(--line);background:var(--field);color:var(--ink);padding:12px 10px;min-height:46px;border-radius:4px 4px 0 0}
 .small::placeholder{color:var(--mute)}
@@ -121,13 +121,13 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .msg{font-size:15px;color:var(--acc);min-height:22px;margin-top:10px}
 .ok{color:var(--ink)}
 .q{position:relative}.q>*{position:relative;z-index:1}
-#ascii{position:absolute!important;z-index:0!important;left:50%;bottom:0;transform:translateX(-50%);margin:0;font:400 9px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:0;color:var(--ink);opacity:.2;pointer-events:none;user-select:none;white-space:pre}
+#ascii{position:absolute!important;z-index:0!important;left:0;bottom:0;margin:0;font:400 9px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:0;color:var(--ink);opacity:.2;pointer-events:none;user-select:none;white-space:pre}
 [hidden]{display:none!important}
 @media(max-width:780px){
 :root{--g:0px}.paper{inset:64px 0 0}header{height:64px;padding:0 calc(2*var(--dot))}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:21px;font-size:12px}
 .screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:34px;padding:calc(2*var(--dot)) calc(2*var(--dot)) calc(3*var(--dot))}.q,.a{grid-column:1}
 .count{order:-1;font-size:var(--t4);margin:0 0 21px}.count.sm{font-size:var(--t3)}
-.q p{margin-top:12px}.list{overflow:visible;margin-right:0;padding-right:0}.list.more{-webkit-mask-image:none;mask-image:none}.pair{gap:13px}
+.q p{margin-top:12px}.list{overflow:visible}.list.more{-webkit-mask-image:none;mask-image:none}
 .opt{grid-template-columns:minmax(0,1fr);gap:10px}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
@@ -185,9 +185,9 @@ function scene(x,y,z){
   const r=mn(rib,l1,l2,knot);
   return r<box+.004?[r,1]:[box,0];
 }
-let ang=.7;
-function frame(){
-  const ca=Math.cos(ang),sa=Math.sin(ang);
+let ang=.7,crop=null;
+function grid(a){
+  const ca=Math.cos(a),sa=Math.sin(a);
   const ro=[0,1.75,-4.3],ta=[0,.02,0];
   let fx=ta[0]-ro[0],fy=ta[1]-ro[1],fz=ta[2]-ro[2];const fl=hyp(fx,fy,fz);fx/=fl;fy/=fl;fz/=fl;
   let rx=fz,rz=-fx;const rl=hyp(rx,rz);rx/=rl;rz/=rl;const ux=-rz*fy,uy=rz*fx-rx*fz,uz=rx*fy;
@@ -206,15 +206,17 @@ function frame(){
       let lum=.12+.88*mx(0,wnx*L[0]+ny*L[1]+wnz*L[2]);
       line+=m?"=+*#%@"[mn(5,Math.floor(lum*5.99))]:".:-=+*"[mn(5,Math.floor(lum*5.99))]}
     out.push(line)}
-  asciiEl.textContent=out.join("\n");
-}
+  return out}
+{let c0=COLS,c1=0,r0=ROWS,r1=0;for(let k=0;k<16;k++){grid(k*Math.PI/16).forEach((l,r)=>{const a=l.search(/\S/);if(a<0)return;const b=l.trimEnd().length;c0=mn(c0,a);c1=mx(c1,b);r0=mn(r0,r);r1=mx(r1,r+1)})}
+ crop=c1>c0?{c0,c1,r0,r1}:{c0:0,c1:COLS,r0:0,r1:ROWS}}
+function frame(){asciiEl.textContent=grid(ang).slice(crop.r0,crop.r1).map(l=>l.slice(crop.c0,crop.c1).padEnd(crop.c1-crop.c0)).join("\n")}
 const still=matchMedia("(prefers-reduced-motion:reduce)").matches;
 frame();
 if(!still){let last=0;const loop=ts=>{if(!document.hidden&&ts-last>40){ang+=(ts-last)/1000*.55;last=ts;frame()}else if(!last)last=ts;requestAnimationFrame(loop)};requestAnimationFrame(loop)}
 }
 function fitAscii(){const q=$("#app .q");if(!q||!asciiEl.isConnected||!q.clientWidth)return;asciiEl.style.fontSize="10px";const w=asciiEl.offsetWidth,hh=asciiEl.offsetHeight;if(!w)return;
-  const t=q.querySelector("p")||q.querySelector("h1");const maxH=Math.max(t?q.getBoundingClientRect().bottom-t.getBoundingClientRect().bottom-21:0,q.clientHeight*.5);
-  let fs=10*q.clientWidth*1.618/w;if(hh*fs/10>maxH)fs=10*maxH/hh;asciiEl.style.fontSize=fs.toFixed(2)+"px"}
+  const t=q.querySelector("p")||q.querySelector("h1");const maxH=Math.max(t?q.getBoundingClientRect().bottom-t.getBoundingClientRect().bottom-21:0,q.clientHeight*.618);
+  let fs=10*q.clientWidth/w;if(hh*fs/10>maxH)fs=10*maxH/hh;asciiEl.style.fontSize=fs.toFixed(2)+"px"}
 addEventListener("resize",fitAscii);
 /* ---------- estado ---------- */
 let st=store.get("ai-draft");
@@ -244,8 +246,8 @@ const OPT='<span class="opt-tag">Opcional</span>';
 const views={
 1:()=>shell(1,"Paso uno","¿Quién participa?","Escribe un nombre por línea. Con el botón + puedes añadir su email y una pista de regalo.",
   `<div class="list" id="rows">${st.people.map((p,i)=>`<div class="row"><span class="idx">${String(i+1).padStart(2,"0")}</span>
-    <input class="big" data-f="n" data-i="${i}" value="${esc(p.n)}" placeholder="${i===0?"Tu nombre":"Nombre"}" aria-label="Nombre ${i+1}" autocomplete="off">
-    <div class="tool"><button data-more="${i}" aria-label="Email y pista">+</button><button data-del="${i}" aria-label="Quitar">×</button></div>
+    <input class="big" data-f="n" data-i="${i}" value="${esc(p.n)}" placeholder="${i===st.people.findIndex(q=>!q.n.trim())?"Escribe un nombre":""}" aria-label="Nombre ${i+1}" autocomplete="off">
+    <div class="tool"><button data-more="${i}" aria-label="Email y pista"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg></button><button data-del="${i}" aria-label="Quitar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
     <div class="extra"${p.e||p.i?"":" hidden"} id="ex${i}"><input class="small" type="email" data-f="e" data-i="${i}" value="${esc(p.e)}" placeholder="Email (opcional)"><input class="small" data-f="i" data-i="${i}" value="${esc(p.i)}" placeholder="Pista de regalo para quien le toque"></div></div>`).join("")}</div>
    <button class="add" id="add">+ Añadir persona</button><div class="msg" id="m1"></div>`,navs(1)),
 2:()=>{const ps=active();return shell(2,"Paso dos","¿A quién no debería tocarle cada uno?","Su pareja, a quien le regaló el año pasado… Toca los nombres que quieras evitar. Si no hay ninguno, sigue.",
@@ -253,11 +255,11 @@ const views={
   <div class="field hist"><label for="hist">Código de historial del año pasado ${OPT}</label><input class="small" id="hist" value="${esc(st.hist)}" placeholder="H1-…" autocomplete="off"></div></div><div class="msg" id="m2"></div>`,navs(2))},
 3:()=>shell(3,"Paso tres","Las reglas del juego","Irán en el mensaje que recibe cada persona.",
   `<div class="list">
-   <div class="field" id="f-price"><label>Presupuesto</label><div class="pair"><div><span class="pre">desde</span><input class="big" id="pmin" data-r="pmin" value="${esc(st.pmin)}" placeholder="—" inputmode="decimal" autocomplete="off" aria-label="Presupuesto mínimo (opcional)"></div><div><span class="pre">hasta</span><input class="big" id="price" data-r="price" value="${esc(st.price)}" placeholder="30" inputmode="decimal" autocomplete="off" aria-label="Presupuesto máximo"></div><span class="cur">€</span></div></div>
-   <div class="field" id="f-date"><label for="date">Cuándo se dan los regalos</label><input class="big" id="date" data-r="date" value="${esc(st.date)}" placeholder="24 de diciembre, en la cena" autocomplete="off"></div>
-   <div class="field"><label for="place">Dónde ${OPT}</label><input class="big" id="place" data-r="place" value="${esc(st.place)}" placeholder="Casa de los abuelos" autocomplete="off"></div>
-   <div class="field"><label for="org">Organiza ${OPT}</label><input class="big" id="org" data-r="org" value="${esc(st.org)}" placeholder="Tu nombre" autocomplete="off"></div>
-   <div class="field"><label for="note">Mensaje para todos ${OPT}</label><textarea class="big area" id="note" data-r="note" rows="3" placeholder="Nada de calcetines. Y quien llegue tarde, paga el café.">${esc(st.note)}</textarea></div>
+   <div class="field" id="f-price"><label for="price">Presupuesto</label><input class="big" id="price" data-r="price" value="${esc(st.price)}" placeholder="30 €" autocomplete="off"></div>
+   <div class="field" id="f-date"><label for="date">Cuándo</label><input class="big" type="date" id="date" data-r="date" value="${/^\d{4}-\d{2}-\d{2}$/.test(st.date||"")?st.date:""}" min="${new Date().toISOString().slice(0,10)}"></div>
+   <div class="field" id="f-place"><label for="place">Dónde</label><input class="big" id="place" data-r="place" value="${esc(st.place)}" placeholder="Casa de los abuelos" autocomplete="off"></div>
+   <div class="field" id="f-org"><label for="org">Organiza</label><input class="big" id="org" data-r="org" value="${esc(st.org)}" placeholder="Quién envía los enlaces" autocomplete="off"></div>
+   <div class="field"><label for="note">Mensaje para todos ${OPT}</label><textarea class="big area" id="note" data-r="note" rows="3" placeholder="Nada de calcetines.">${esc(st.note)}</textarea></div>
   </div><div class="msg" id="m3"></div>`,navs(3)),
 4:()=>{const ps=active(),c=countAll(allowed(ps));return shell(4,"Paso cuatro","Listo para sortear",`${ps.length} personas: ${ps.map(p=>esc(p.n.trim())).join(", ")}.`,
   `<div class="huge">${c>=2e6?"2M+":c}</div><div>${c===0?"Con estas exclusiones no hay ningún sorteo posible. Vuelve atrás y quita alguna.":c===1?"único sorteo posible: no habrá sorpresa.":"sorteos posibles. Saldrá uno al azar, todos igual de probables."}</div>
@@ -283,10 +285,9 @@ function show(v,arg,msg){cur=v;$("#app").innerHTML=views[v](arg,msg);const qq=$(
 function validate(to){const ps=active();
   if(to>1&&ps.length<3)return"Hacen falta al menos 3 personas.";
   if(to>1&&ps.map(p=>norm(p.n)).some((v,i,a)=>a.indexOf(v)!==i))return"Hay nombres repetidos: añade una inicial para distinguirlos.";
-  if(to>3&&cur===3){const miss=[];if(!(st.price||"").trim())miss.push(["f-price","el presupuesto máximo"]);if(!(st.date||"").trim())miss.push(["f-date","cuándo se dan los regalos"]);
+  if(to>3&&cur===3){const miss=[["price","f-price","el presupuesto"],["date","f-date","la fecha"],["place","f-place","el lugar"],["org","f-org","quién organiza"]].filter(([k])=>!(st[k]||"").trim()).map(x=>[x[1],x[2]]);
     $$(".field.bad").forEach(f=>f.classList.remove("bad"));miss.forEach(([id])=>$("#"+id).classList.add("bad"));
-    if(miss.length)return"Falta "+miss.map(m=>m[1]).join(" y ")+".";
-    if(st.pmin&&parseFloat(st.pmin.replace(",","."))>parseFloat(st.price.replace(",",".")))return"El mínimo no puede ser mayor que el máximo."}
+    if(miss.length)return(miss.length>1?"Faltan ":"Falta ")+miss.map(m=>m[1]).join(", ").replace(/, ([^,]*)$/," y $1")+".";}
   return""}
 function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1");if(m)m.textContent=e;return}}
   if(n===4&&result){show("send");return}show(n)}
@@ -294,8 +295,8 @@ function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1
 /* ---------- mensaje ---------- */
 const baseUrl=()=>(($("#url")&&$("#url").value.trim())||result.url||PAGE_URL).split("#")[0];
 const eur=v=>{v=(v||"").trim();return/^\d+([.,]\d+)?$/.test(v)?v+" €":v};
-const budget=()=>{const mn=(st.pmin||"").trim(),mx=(st.price||"").trim();if(!mx)return"";return mn?`entre ${mn.replace(/\s*€$/,"")} y ${eur(mx)}`:`hasta ${eur(mx)}`};
-function msgFor(p){const L=[["Presupuesto",budget()],["Cuándo",st.date],["Dónde",st.place]].filter(x=>(x[1]||"").trim()).map(x=>`${x[0]}: ${x[1].trim()}`);
+const fdate=d=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(d||""))return d||"";const t=new Date(d+"T12:00:00");return t.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})};
+function msgFor(p){const L=[["Presupuesto",eur(st.price)],["Cuándo",fdate(st.date)],["Dónde",st.place]].filter(x=>(x[1]||"").trim()).map(x=>`${x[0]}: ${x[1].trim()}`);
   return [`Hola, ${p.n}: ya tienes tu amigo invisible.`,``,`Ábrelo aquí (solo lo verás tú):`,baseUrl()+"#"+p.code,...(L.length?[``,...L]:[]),...((st.note||"").trim()?[``,st.note.trim()]:[]),``,`Sorteo nº ${result.id}${(st.org||"").trim()?` · organiza ${st.org.trim()}`:""}. Tiene que ser el mismo número para todos.`].join("\n")}
 
 /* ---------- eventos ---------- */
@@ -311,7 +312,7 @@ function bind(v,arg){
   }
   if(v===2){$$("[data-ex]").forEach(b=>b.onclick=()=>{const p=st.people[+b.dataset.ex],j=+b.dataset.to2;p.x=p.x.includes(j)?p.x.filter(x=>x!==j):[...p.x,j];b.setAttribute("aria-pressed",p.x.includes(j));save()});
     const hi=$("#hist");hi.oninput=()=>{st.hist=hi.value.trim();save();$("#m2").textContent=loadHist()};$("#m2").textContent=loadHist()}
-  if(v===3)$$("[data-r]").forEach(el=>{el.oninput=()=>{st[el.dataset.r]=el.value;save();const f=el.closest(".field");if(f)f.classList.remove("bad");$("#m3").textContent=""};
+  if(v===3)$$("[data-r]").forEach(el=>{el.oninput=el.onchange=()=>{st[el.dataset.r]=el.value;save();const f=el.closest(".field");if(f)f.classList.remove("bad");$("#m3").textContent=""};
     if(el.tagName!=="TEXTAREA")el.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const all=$$("[data-r]"),k=all.indexOf(el);all[k+1]?all[k+1].focus():goTo(4)}}});
   if(v===4)$("#draw").onclick=()=>{const ps=active(),p=draw(allowed(ps));if(!p){$("#m4").textContent="No se ha encontrado un sorteo válido.";return}
     const ALPHA="23456789ABCDEFGHJKMNPQRSTVWXYZ";let id="";for(let i=0;i<6;i++)id+=ALPHA[rnd(ALPHA.length)];id=id.slice(0,3)+"-"+id.slice(3);
