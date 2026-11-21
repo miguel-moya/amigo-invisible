@@ -30,7 +30,7 @@ main{position:relative;z-index:1}
 @keyframes in{from{opacity:0;transform:translateY(14px)}}
 .q{display:flex;flex-direction:column;min-height:0;grid-column:1}
 .label{font-weight:500;font-size:var(--t0);letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:21px;line-height:1}
-h1{font-weight:400;font-size:clamp(var(--t2),3.1vw,var(--t3));line-height:1.08;letter-spacing:-.03em;margin:0;text-wrap:balance}
+h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;letter-spacing:-.03em;margin:0;text-wrap:balance}
 .q p{color:var(--mute);margin:21px 0 0;font-size:var(--t1);line-height:1.618}
 .count{margin-top:auto;font-weight:400;font-size:clamp(var(--t4),min(13vw,24vh),var(--t6));line-height:.76;letter-spacing:-.06em;white-space:nowrap}
 .count.sm{font-size:clamp(var(--t3),5.6vw,var(--t4));line-height:.9;letter-spacing:-.04em}
@@ -55,13 +55,19 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer;wi
 button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
 button:disabled{opacity:.35;cursor:not-allowed}
 /* filas grandes */
-.row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:baseline;gap:13px;border-bottom:1px solid var(--line);min-height:var(--t4)}
+.row{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,.618fr) 44px;align-items:baseline;gap:13px;border-bottom:1px solid var(--line);min-height:var(--t4)}
+.mail{font:400 var(--t1) "Inter Tight",sans-serif;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);padding:8px 0;min-height:44px;width:100%;transition:opacity .2s}
+.mail::placeholder{color:var(--mute)}.mail:focus{outline:none;border-bottom-color:var(--ink)}
+.row:not(:focus-within) .mail:placeholder-shown{opacity:0;pointer-events:none}
+.row:not(:focus-within) .mail:not(:placeholder-shown){border-bottom-color:transparent;color:var(--mute)}
+.row.empty .tool,.row.empty .mail{visibility:hidden}
+.big::placeholder{transition:opacity .2s}.row.empty:not(:focus-within) .big::placeholder{opacity:.32}
 .row:first-child{border-top:1px solid var(--line)}
 .idx{font-size:var(--t0);color:var(--mute);font-variant-numeric:tabular-nums}
 .big{font:400 clamp(var(--t2),3.1vw,var(--t3)) "Inter Tight",sans-serif;letter-spacing:-.03em;width:100%;border:0;background:none;color:var(--ink);padding:8px 0;min-height:55px}
 .big::placeholder{color:var(--mute);opacity:.55}
 .big:focus{outline:none}
-.row:focus-within{border-bottom-color:var(--ink)}
+.row:focus-within{border-bottom-color:var(--ink)}.row .big:placeholder-shown{font-size:clamp(var(--t2),3.1vw,var(--t3))}
 .tool{display:flex;gap:8px;align-self:center}
 .tool button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--mute);display:grid;place-items:center;padding:0;line-height:0;cursor:pointer}
 .tool button:hover{border-color:var(--ink);color:var(--ink)}.tool svg{width:21px;height:21px;pointer-events:none}
@@ -128,7 +134,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:34px;padding:calc(2*var(--dot)) calc(2*var(--dot)) calc(3*var(--dot))}.q,.a{grid-column:1}
 .count{order:-1;font-size:var(--t4);margin:0 0 21px}.count.sm{font-size:var(--t3)}
 .q p{margin-top:12px}.list{overflow:visible}.list.more{-webkit-mask-image:none;mask-image:none}
-.opt{grid-template-columns:minmax(0,1fr);gap:10px}.extra,.meta{grid-template-columns:minmax(0,1fr)}
+.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row:not(:focus-within) .mail:placeholder-shown{display:none}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
 .nav{position:sticky;bottom:0;background:var(--bg);padding-bottom:12px}#ascii{display:none}}
@@ -224,6 +230,9 @@ if(!st||!Array.isArray(st.people))st={people:Array.from({length:3},()=>({n:"",e:
 let histPairs=[],result=store.get("ai-result");if(!result||result.v!==2)result=null;
 if(st.last){Object.entries(st.last).forEach(([a,b])=>{const p=st.people[+a];if(p&&!p.x.includes(+b))p.x.push(+b)});delete st.last}
 const save=()=>store.set("ai-draft",st);
+const blank=()=>({n:"",e:"",i:"",x:[]});
+function tidy(){const P=st.people;while(P.length>3&&!P[P.length-1].n.trim()&&!P[P.length-2].n.trim()&&!P[P.length-1].e)P.pop();
+  while(P.length<3)P.push(blank());if(P[P.length-1].n.trim())P.push(blank());save()}
 const norm=s=>s.trim().toLowerCase();
 const active=()=>st.people.map((p,i)=>({...p,idx:i})).filter(p=>p.n.trim());
 function allowed(ps){return ps.map(a=>ps.map(b=>{
@@ -236,6 +245,10 @@ function loadHist(){histPairs=[];if(!st.hist)return"";try{const h=unseal("H1-",s
 loadHist();
 
 /* ---------- pantallas ---------- */
+const rowHTML=(p,i)=>`<div class="row${p.n.trim()?"":" empty"}"><span class="idx">${String(i+1).padStart(2,"0")}</span>
+    <input class="big" data-f="n" data-i="${i}" value="${esc(p.n)}" placeholder="Añadir participante" aria-label="Participante ${i+1}" autocomplete="off">
+    <input class="mail" type="email" data-f="e" data-i="${i}" value="${esc(p.e)}" placeholder="email (opcional)" aria-label="Email de participante ${i+1}" autocomplete="off">
+    <div class="tool"><button data-del="${i}" aria-label="Quitar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>`;
 const TOTAL=4;
 const shell=(n,label,title,text,body,nav,countTxt)=>`<section class="screen">
   <div class="q"><div class="label">${label}</div><h1>${title}</h1>${text?`<p>${text}</p>`:""}<div class="count${countTxt?" sm":""}">${countTxt||`${n}/${TOTAL}`}</div></div>
@@ -244,13 +257,10 @@ const navs=(n,nextTxt="Siguiente")=>`<div class="nav">${n>1?`<button class="back
 const OPT='<span class="opt-tag">Opcional</span>';
 
 const views={
-1:()=>shell(1,"Paso uno","¿Quién participa?","Escribe un nombre por línea. Con el botón + puedes añadir su email y una pista de regalo.",
-  `<div class="list" id="rows">${st.people.map((p,i)=>`<div class="row"><span class="idx">${String(i+1).padStart(2,"0")}</span>
-    <input class="big" data-f="n" data-i="${i}" value="${esc(p.n)}" placeholder="${i===st.people.findIndex(q=>!q.n.trim())?"Escribe un nombre":""}" aria-label="Nombre ${i+1}" autocomplete="off">
-    <div class="tool"><button data-more="${i}" aria-label="Email y pista"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16"/></svg></button><button data-del="${i}" aria-label="Quitar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    <div class="extra"${p.e||p.i?"":" hidden"} id="ex${i}"><input class="small" type="email" data-f="e" data-i="${i}" value="${esc(p.e)}" placeholder="Email (opcional)"><input class="small" data-f="i" data-i="${i}" value="${esc(p.i)}" placeholder="Pista de regalo para quien le toque"></div></div>`).join("")}</div>
-   <button class="add" id="add">+ Añadir persona</button><div class="msg" id="m1"></div>`,navs(1)),
-2:()=>{const ps=active();return shell(2,"Paso dos","¿A quién no debería tocarle cada uno?","Su pareja, a quien le regaló el año pasado… Toca los nombres que quieras evitar. Si no hay ninguno, sigue.",
+1:()=>{tidy();return shell(1,"Paso uno","¿Quién participa?","Un nombre por línea, mínimo tres. Al seleccionar a alguien puedes añadir su email si quieres enviárselo por correo.",
+  `<div class="list" id="rows">${st.people.map(rowHTML).join("")}</div>
+   <div class="msg" id="m1"></div>`,navs(1))},
+2:()=>{const ps=active();return shell(2,"Paso dos","Excepciones","¿A quién no debería tocarle cada uno? Su pareja, a quien le regaló el año pasado… Toca los nombres que quieras evitar. Si no hay ninguno, sigue.",
   `<div class="list">${ps.map(a=>`<div class="opt"><div class="nm">${esc(a.n)}</div><div class="chips">${ps.filter(b=>b.idx!==a.idx).map(b=>`<button class="chip" data-ex="${a.idx}" data-to2="${b.idx}" aria-pressed="${a.x.includes(b.idx)}">${esc(b.n)}</button>`).join("")}</div></div>`).join("")}
   <div class="field hist"><label for="hist">Código de historial del año pasado ${OPT}</label><input class="small" id="hist" value="${esc(st.hist)}" placeholder="H1-…" autocomplete="off"></div></div><div class="msg" id="m2"></div>`,navs(2))},
 3:()=>shell(3,"Paso tres","Las reglas del juego","Irán en el mensaje que recibe cada persona.",
@@ -303,12 +313,13 @@ function msgFor(p){const L=[["Presupuesto",eur(st.price)],["Cuándo",fdate(st.da
 function bind(v,arg){
   $$("[data-to]").forEach(b=>b.onclick=()=>goTo(+b.dataset.to));
   if(v===1){
-    $("#rows").addEventListener("input",e=>{const t=e.target;if(t.dataset.f){st.people[t.dataset.i][t.dataset.f]=t.value;save();$("#m1").textContent=""}});
-    $("#rows").addEventListener("keydown",e=>{const t=e.target;if(e.key==="Enter"&&t.dataset.f==="n"){e.preventDefault();const i=+t.dataset.i,nx=$(`[data-f="n"][data-i="${i+1}"]`);if(nx)nx.focus();else if(t.value.trim()){st.people.push({n:"",e:"",i:"",x:[]});save();show(1);$(`[data-f="n"][data-i="${i+1}"]`).focus()}}});
-    $("#rows").addEventListener("click",e=>{const t=e.target;
-      if(t.dataset.more!=null){const x=$("#ex"+t.dataset.more);x.hidden=!x.hidden;if(!x.hidden)x.querySelector("input").focus()}
-      if(t.dataset.del!=null){const d=+t.dataset.del;st.people.splice(d,1);st.people.forEach(p=>p.x=p.x.filter(j=>j!==d).map(j=>j>d?j-1:j));const L={};if(!st.people.length)st.people.push({n:"",e:"",i:"",x:[]});save();show(1)}});
-    $("#add").onclick=()=>{st.people.push({n:"",e:"",i:"",x:[]});save();show(1);$$('[data-f="n"]').pop().focus()};
+    $("#rows").addEventListener("input",e=>{const t=e.target;if(!t.dataset.f)return;const i=+t.dataset.i;st.people[i][t.dataset.f]=t.value;save();$("#m1").textContent="";
+      if(t.dataset.f==="n"){t.closest(".row").classList.toggle("empty",!t.value.trim());
+        if(t.value.trim()&&i===st.people.length-1){st.people.push(blank());save();$("#rows").insertAdjacentHTML("beforeend",rowHTML(st.people[i+1],i+1))}}});
+    $("#rows").addEventListener("keydown",e=>{const t=e.target;if(e.key!=="Enter")return;e.preventDefault();const i=+t.dataset.i;
+      if(t.dataset.f==="n"){const m=$(`[data-f="e"][data-i="${i}"]`);const nx=$(`[data-f="n"][data-i="${i+1}"]`);if(nx)nx.focus();else m.focus()}
+      else{const nx=$(`[data-f="n"][data-i="${i+1}"]`);if(nx)nx.focus()}});
+    $("#rows").addEventListener("click",e=>{const t=e.target.closest("[data-del]");if(!t)return;const d=+t.dataset.del;st.people.splice(d,1);st.people.forEach(p=>p.x=p.x.filter(j=>j!==d).map(j=>j>d?j-1:j));save();show(1)});
   }
   if(v===2){$$("[data-ex]").forEach(b=>b.onclick=()=>{const p=st.people[+b.dataset.ex],j=+b.dataset.to2;p.x=p.x.includes(j)?p.x.filter(x=>x!==j):[...p.x,j];b.setAttribute("aria-pressed",p.x.includes(j));save()});
     const hi=$("#hist");hi.oninput=()=>{st.hist=hi.value.trim();save();$("#m2").textContent=loadHist()};$("#m2").textContent=loadHist()}
@@ -316,7 +327,7 @@ function bind(v,arg){
     if(el.tagName!=="TEXTAREA")el.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const all=$$("[data-r]"),k=all.indexOf(el);all[k+1]?all[k+1].focus():goTo(4)}}});
   if(v===4)$("#draw").onclick=()=>{const ps=active(),p=draw(allowed(ps));if(!p){$("#m4").textContent="No se ha encontrado un sorteo válido.";return}
     const ALPHA="23456789ABCDEFGHJKMNPQRSTVWXYZ";let id="";for(let i=0;i<6;i++)id+=ALPHA[rnd(ALPHA.length)];id=id.slice(0,3)+"-"+id.slice(3);
-    result={v:2,id,url:PAGE_URL,people:ps.map((a,i)=>{const b=ps[p[i]];return{n:a.n.trim(),e:a.e.trim(),code:shortSeal(id,b.n.trim(),b.i.trim()),sent:false}}),hist:seal("H1-",{id,p:ps.map((a,i)=>[norm(a.n),norm(ps[p[i]].n)])})};
+    result={v:2,id,url:PAGE_URL,people:ps.map((a,i)=>{const b=ps[p[i]];return{n:a.n.trim(),e:a.e.trim(),code:shortSeal(id,b.n.trim(),""),sent:false}}),hist:seal("H1-",{id,p:ps.map((a,i)=>[norm(a.n),norm(ps[p[i]].n)])})};
     store.set("ai-result",result);show("send")};
   if(v==="send"){
     $("#url").onchange=()=>{result.url=$("#url").value.trim();store.set("ai-result",result);show("send")}}
