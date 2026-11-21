@@ -32,11 +32,20 @@ main{position:relative;z-index:1}
 .label{font-weight:500;font-size:var(--t0);letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:21px;line-height:1}
 h1{font-weight:400;font-size:clamp(var(--t2),3.1vw,var(--t3));line-height:1.08;letter-spacing:-.03em;margin:0;text-wrap:balance}
 .q p{color:var(--mute);margin:21px 0 0;font-size:var(--t1);line-height:1.618}
-.count{margin-top:auto;font-weight:400;font-size:clamp(var(--t5),13vw,var(--t6));line-height:.76;letter-spacing:-.06em;white-space:nowrap}
+.count{margin-top:auto;font-weight:400;font-size:clamp(var(--t4),min(13vw,24vh),var(--t6));line-height:.76;letter-spacing:-.06em;white-space:nowrap}
 .count.sm{font-size:clamp(var(--t3),5.6vw,var(--t4));line-height:.9;letter-spacing:-.04em}
 .a{display:flex;flex-direction:column;min-height:0;grid-column:3}
-.body{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;justify-content:center;padding-right:6px;scrollbar-width:thin}
-.body.start{justify-content:flex-start}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow:auto;scrollbar-width:thin}
+.list{flex:0 1 auto;min-height:0;overflow:auto;scrollbar-width:thin;padding-right:8px;margin-right:-8px;overscroll-behavior:contain}
+.list.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 55px),transparent);mask-image:linear-gradient(#000 calc(100% - 55px),transparent)}
+.list>.field:first-child,.list>.opt:first-child,.list>.row:first-child,.list>.srow:first-child{border-top:1px solid var(--line)}
+.opt-tag{font-size:var(--t0);letter-spacing:.1em;color:var(--mute);opacity:.7;margin-left:8px}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:34px;align-items:baseline}
+.pair>div{display:flex;align-items:baseline;gap:13px}.pre{font-size:var(--t1);color:var(--mute);flex:none}
+.cur{font-size:clamp(var(--t2),2.6vw,var(--t3));color:var(--mute)}
+.area{resize:vertical;line-height:1.3;min-height:calc(3*1.3em + 16px);font-size:var(--t2)!important;display:block}
+.field.bad{border-bottom-color:var(--acc)}.field.bad label{color:var(--acc)}
+.field.hist{border-top:0;margin-top:21px}.field.hist .small{margin-top:8px}
 .nav{display:flex;justify-content:space-between;align-items:center;padding-top:21px;border-top:1px solid var(--line);margin-top:21px}
 .nav button{font:500 var(--t2) "Inter Tight",sans-serif;letter-spacing:-.02em;background:none;border:0;color:var(--ink);cursor:pointer;min-height:48px;padding:0}
 .nav .next{display:inline-flex;gap:14px;align-items:center}
@@ -76,7 +85,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .field label{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding-top:6px}
 .field .big{font-size:clamp(var(--t2),2.6vw,var(--t3));min-height:55px;padding:4px 0 8px}
 /* sortear */
-.huge{font-size:clamp(var(--t5),13vw,var(--t6));line-height:.85;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+.huge{font-size:clamp(var(--t4),min(13vw,21vh),var(--t6));line-height:.85;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
 .huge+div{font-size:var(--t2);letter-spacing:-.02em;margin-top:13px;line-height:1.3}
 .facts{list-style:none;padding:0;margin:34px 0 0;color:var(--mute);display:grid;gap:10px;max-width:52ch}
 .facts li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px}
@@ -112,13 +121,13 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .msg{font-size:15px;color:var(--acc);min-height:22px;margin-top:10px}
 .ok{color:var(--ink)}
 .q{position:relative}.q>*{position:relative;z-index:1}
-#ascii{position:absolute!important;z-index:0!important;left:50%;bottom:0;transform:translateX(-50%);margin:0;font:400 clamp(6px,.98vh,9.5px)/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:0;color:var(--ink);opacity:.2;pointer-events:none;user-select:none;white-space:pre}
+#ascii{position:absolute!important;z-index:0!important;left:50%;bottom:0;transform:translateX(-50%);margin:0;font:400 9px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:0;color:var(--ink);opacity:.2;pointer-events:none;user-select:none;white-space:pre}
 [hidden]{display:none!important}
 @media(max-width:780px){
 :root{--g:0px}.paper{inset:64px 0 0}header{height:64px;padding:0 calc(2*var(--dot))}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:21px;font-size:12px}
 .screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:34px;padding:calc(2*var(--dot)) calc(2*var(--dot)) calc(3*var(--dot))}.q,.a{grid-column:1}
 .count{order:-1;font-size:var(--t4);margin:0 0 21px}.count.sm{font-size:var(--t3)}
-.q p{margin-top:12px}.body{overflow:visible;justify-content:flex-start}
+.q p{margin-top:12px}.list{overflow:visible;margin-right:0;padding-right:0}.list.more{-webkit-mask-image:none;mask-image:none}.pair{gap:13px}
 .opt{grid-template-columns:minmax(0,1fr);gap:10px}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
@@ -203,16 +212,20 @@ const still=matchMedia("(prefers-reduced-motion:reduce)").matches;
 frame();
 if(!still){let last=0;const loop=ts=>{if(!document.hidden&&ts-last>40){ang+=(ts-last)/1000*.55;last=ts;frame()}else if(!last)last=ts;requestAnimationFrame(loop)};requestAnimationFrame(loop)}
 }
+function fitAscii(){const q=$("#app .q");if(!q||!asciiEl.isConnected||!q.clientWidth)return;asciiEl.style.fontSize="10px";const w=asciiEl.offsetWidth,hh=asciiEl.offsetHeight;if(!w)return;
+  const t=q.querySelector("p")||q.querySelector("h1");const maxH=Math.max(t?q.getBoundingClientRect().bottom-t.getBoundingClientRect().bottom-21:0,q.clientHeight*.5);
+  let fs=10*q.clientWidth*1.618/w;if(hh*fs/10>maxH)fs=10*maxH/hh;asciiEl.style.fontSize=fs.toFixed(2)+"px"}
+addEventListener("resize",fitAscii);
 /* ---------- estado ---------- */
 let st=store.get("ai-draft");
 if(!st||!Array.isArray(st.people))st={people:Array.from({length:3},()=>({n:"",e:"",i:"",x:[]})),last:{},hist:"",price:"",org:"",date:"",place:"",note:""};
 let histPairs=[],result=store.get("ai-result");if(!result||result.v!==2)result=null;
+if(st.last){Object.entries(st.last).forEach(([a,b])=>{const p=st.people[+a];if(p&&!p.x.includes(+b))p.x.push(+b)});delete st.last}
 const save=()=>store.set("ai-draft",st);
 const norm=s=>s.trim().toLowerCase();
 const active=()=>st.people.map((p,i)=>({...p,idx:i})).filter(p=>p.n.trim());
 function allowed(ps){return ps.map(a=>ps.map(b=>{
   if(a.idx===b.idx||a.x.includes(b.idx))return false;
-  if(st.last[a.idx]!=null&&+st.last[a.idx]===b.idx)return false;
   if(histPairs.some(h=>h[0]===norm(a.n)&&h[1]===norm(b.n)))return false;
   return true}))}
 function countAll(A,cap=2e6){const n=A.length,used=new Array(n).fill(false);let c=0;(function go(i){if(c>=cap)return;if(i===n){c++;return}for(let j=0;j<n;j++)if(!used[j]&&A[i][j]){used[j]=true;go(i+1);used[j]=false}})(0);return c}
@@ -221,35 +234,40 @@ function loadHist(){histPairs=[];if(!st.hist)return"";try{const h=unseal("H1-",s
 loadHist();
 
 /* ---------- pantallas ---------- */
-const TOTAL=5;
+const TOTAL=4;
 const shell=(n,label,title,text,body,nav,countTxt)=>`<section class="screen">
   <div class="q"><div class="label">${label}</div><h1>${title}</h1>${text?`<p>${text}</p>`:""}<div class="count${countTxt?" sm":""}">${countTxt||`${n}/${TOTAL}`}</div></div>
-  <div class="a"><div class="body${n===1||n===2||n===3?" start":""}">${body}</div>${nav}</div></section>`;
+  <div class="a"><div class="body">${body}</div>${nav}</div></section>`;
 const navs=(n,nextTxt="Siguiente")=>`<div class="nav">${n>1?`<button class="back" data-to="${n-1}">Atrás</button>`:"<span></span>"}<button class="next" data-to="${n+1}">${nextTxt}</button></div>`;
+const OPT='<span class="opt-tag">Opcional</span>';
 
 const views={
-1:()=>shell(1,"Paso uno","¿Quién juega?","Escribe un nombre por línea. Con el botón + puedes añadir su email y una pista de regalo.",
-  `<div id="rows">${st.people.map((p,i)=>`<div class="row"><span class="idx">${String(i+1).padStart(2,"0")}</span>
+1:()=>shell(1,"Paso uno","¿Quién participa?","Escribe un nombre por línea. Con el botón + puedes añadir su email y una pista de regalo.",
+  `<div class="list" id="rows">${st.people.map((p,i)=>`<div class="row"><span class="idx">${String(i+1).padStart(2,"0")}</span>
     <input class="big" data-f="n" data-i="${i}" value="${esc(p.n)}" placeholder="${i===0?"Tu nombre":"Nombre"}" aria-label="Nombre ${i+1}" autocomplete="off">
     <div class="tool"><button data-more="${i}" aria-label="Email y pista">+</button><button data-del="${i}" aria-label="Quitar">×</button></div>
     <div class="extra"${p.e||p.i?"":" hidden"} id="ex${i}"><input class="small" type="email" data-f="e" data-i="${i}" value="${esc(p.e)}" placeholder="Email (opcional)"><input class="small" data-f="i" data-i="${i}" value="${esc(p.i)}" placeholder="Pista de regalo para quien le toque"></div></div>`).join("")}</div>
    <button class="add" id="add">+ Añadir persona</button><div class="msg" id="m1"></div>`,navs(1)),
-2:()=>{const ps=active();return shell(2,"Paso dos","¿Alguien no puede regalar a alguien?","Por ejemplo, las parejas. Toca los nombres a los que cada persona no puede regalar. Si nadie, sigue.",
-  ps.map(a=>`<div class="opt"><div class="nm">${esc(a.n)}</div><div class="chips">${ps.filter(b=>b.idx!==a.idx).map(b=>`<button class="chip" data-ex="${a.idx}" data-to2="${b.idx}" aria-pressed="${a.x.includes(b.idx)}">${esc(b.n)}</button>`).join("")}</div></div>`).join(""),navs(2))},
-3:()=>{const ps=active();return shell(3,"Paso tres","El año pasado, ¿a quién regaló cada uno?","Esas parejas no se repetirán. Si guardaste el código de historial del año pasado, pégalo abajo y no hace falta marcar nada.",
-  ps.map(a=>`<div class="opt"><div class="nm">${esc(a.n)}</div><div class="chips">${ps.filter(b=>b.idx!==a.idx).map(b=>`<button class="chip" data-last="${a.idx}" data-to3="${b.idx}" aria-pressed="${st.last[a.idx]!=null&&+st.last[a.idx]===b.idx}">${esc(b.n)}</button>`).join("")}</div></div>`).join("")+
-  `<div class="field" style="border-top:0;margin-top:8px"><label for="hist">Código de historial (opcional)</label><input class="big" id="hist" style="font-size:22px" value="${esc(st.hist)}" placeholder="H1-…" autocomplete="off"></div><div class="msg" id="m3"></div>`,navs(3))},
-4:()=>shell(4,"Paso cuatro","Las reglas del juego","Todo es opcional. Irá en el mensaje que recibe cada persona.",
-  [["price","Precio máximo","30 €"],["date","Cuándo","24 de diciembre, en la cena"],["place","Dónde","Casa de los abuelos"],["org","Organiza","Tu nombre"],["note","Mensaje para todos","Nada de calcetines"]].map(([k,l,ph])=>`<div class="field"><label for="${k}">${l}</label><input class="big" id="${k}" data-r="${k}" value="${esc(st[k])}" placeholder="${ph}" autocomplete="off"></div>`).join(""),navs(4)),
-5:()=>{const ps=active(),c=countAll(allowed(ps));return shell(5,"Paso cinco","Listo para sortear",`${ps.length} personas: ${ps.map(p=>esc(p.n.trim())).join(", ")}.`,
+2:()=>{const ps=active();return shell(2,"Paso dos","¿A quién no debería tocarle cada uno?","Su pareja, a quien le regaló el año pasado… Toca los nombres que quieras evitar. Si no hay ninguno, sigue.",
+  `<div class="list">${ps.map(a=>`<div class="opt"><div class="nm">${esc(a.n)}</div><div class="chips">${ps.filter(b=>b.idx!==a.idx).map(b=>`<button class="chip" data-ex="${a.idx}" data-to2="${b.idx}" aria-pressed="${a.x.includes(b.idx)}">${esc(b.n)}</button>`).join("")}</div></div>`).join("")}
+  <div class="field hist"><label for="hist">Código de historial del año pasado ${OPT}</label><input class="small" id="hist" value="${esc(st.hist)}" placeholder="H1-…" autocomplete="off"></div></div><div class="msg" id="m2"></div>`,navs(2))},
+3:()=>shell(3,"Paso tres","Las reglas del juego","Irán en el mensaje que recibe cada persona.",
+  `<div class="list">
+   <div class="field" id="f-price"><label>Presupuesto</label><div class="pair"><div><span class="pre">desde</span><input class="big" id="pmin" data-r="pmin" value="${esc(st.pmin)}" placeholder="—" inputmode="decimal" autocomplete="off" aria-label="Presupuesto mínimo (opcional)"></div><div><span class="pre">hasta</span><input class="big" id="price" data-r="price" value="${esc(st.price)}" placeholder="30" inputmode="decimal" autocomplete="off" aria-label="Presupuesto máximo"></div><span class="cur">€</span></div></div>
+   <div class="field" id="f-date"><label for="date">Cuándo se dan los regalos</label><input class="big" id="date" data-r="date" value="${esc(st.date)}" placeholder="24 de diciembre, en la cena" autocomplete="off"></div>
+   <div class="field"><label for="place">Dónde ${OPT}</label><input class="big" id="place" data-r="place" value="${esc(st.place)}" placeholder="Casa de los abuelos" autocomplete="off"></div>
+   <div class="field"><label for="org">Organiza ${OPT}</label><input class="big" id="org" data-r="org" value="${esc(st.org)}" placeholder="Tu nombre" autocomplete="off"></div>
+   <div class="field"><label for="note">Mensaje para todos ${OPT}</label><textarea class="big area" id="note" data-r="note" rows="3" placeholder="Nada de calcetines. Y quien llegue tarde, paga el café.">${esc(st.note)}</textarea></div>
+  </div><div class="msg" id="m3"></div>`,navs(3)),
+4:()=>{const ps=active(),c=countAll(allowed(ps));return shell(4,"Paso cuatro","Listo para sortear",`${ps.length} personas: ${ps.map(p=>esc(p.n.trim())).join(", ")}.`,
   `<div class="huge">${c>=2e6?"2M+":c}</div><div>${c===0?"Con estas exclusiones no hay ningún sorteo posible. Vuelve atrás y quita alguna.":c===1?"único sorteo posible: no habrá sorpresa.":"sorteos posibles. Saldrá uno al azar, todos igual de probables."}</div>
    <ul class="facts"><li>Se usa el generador aleatorio criptográfico del navegador.</li><li>Tú no verás el resultado: cada persona recibe un enlace cerrado.</li><li>Cada sorteo lleva un número. Si todos tenéis el mismo, nadie ha repetido el sorteo a escondidas.</li></ul>
-   <button class="go" id="draw"${c===0?" disabled":""}>Sortear</button><div class="msg" id="m5"></div>`,`<div class="nav"><button class="back" data-to="4">Atrás</button><span></span></div>`)},
+   <div class="msg" id="m4"></div>`,`<div class="nav"><button class="back" data-to="3">Atrás</button><button class="next" id="draw"${c===0?" disabled":""}>Sortear</button></div>`)},
 send:()=>shell(0,"Sorteo hecho","Envía a cada uno su enlace","Un toque en el enlace y ven su resultado. El mensaje nunca lleva el nombre de a quién le toca. Todos tienen que ver este número:",
-  result.people.map((p,i)=>`<div class="srow"><div class="nm">${esc(p.n)}${p.sent?"<small>Enviado</small>":""}</div><div class="links">
+  `<div class="list">`+result.people.map((p,i)=>`<div class="srow"><div class="nm">${esc(p.n)}${p.sent?"<small>Enviado</small>":""}</div><div class="links">
    <a href="https://wa.me/?text=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">WhatsApp ↗</a>
    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.e)}&su=${encodeURIComponent("Tu amigo invisible · sorteo "+result.id)}&body=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">Gmail ↗</a>
-   <button data-copy="${i}">Copiar</button><button data-mark="${i}">${p.sent?"Desmarcar":"Marcar"}</button></div></div>`).join("")+
+   <button data-copy="${i}">Copiar</button><button data-mark="${i}">${p.sent?"Desmarcar":"Marcar"}</button></div></div>`).join("")+`</div>`+
   `<div class="meta"><div><label for="url">Enlace de la página</label><input class="small" id="url" value="${esc(result.url||PAGE_URL)}"></div>
    <div><label for="histOut">Código de historial para el año que viene</label><div class="inline"><input class="small" id="histOut" readonly value="${esc(result.hist)}"><div class="links"><button id="copyHist">Copiar</button></div></div></div></div>`,
   `<div class="nav"><button class="back" id="redo">Nuevo sorteo</button><span></span></div>`,result.id),
@@ -259,19 +277,25 @@ ver:(r,msg)=>shell(0,"Tu amigo invisible",r?"Te toca regalar a…":"Abre tu resu
   "",r?r.id:"?")
 };
 let cur=1;
-function show(v,arg,msg){cur=v;$("#app").innerHTML=views[v](arg,msg);const qq=$("#app .q");if(qq)qq.appendChild(asciiEl);bind(v,arg);
+function show(v,arg,msg){cur=v;$("#app").innerHTML=views[v](arg,msg);const qq=$("#app .q");if(qq)qq.appendChild(asciiEl);bind(v,arg);fitAscii();$$("#app .list").forEach(l=>{const u=()=>l.classList.toggle("more",l.scrollHeight-l.scrollTop-l.clientHeight>4);l.onscroll=u;u()});
   $("#mOrg").setAttribute("aria-pressed",v!=="ver");$("#mVer").setAttribute("aria-pressed",v==="ver");
   const f=$("#app input.big");if(f&&v!=="send"&&matchMedia("(min-width:781px)").matches)f.focus({preventScroll:true});window.scrollTo(0,0)}
 function validate(to){const ps=active();
   if(to>1&&ps.length<3)return"Hacen falta al menos 3 personas.";
   if(to>1&&ps.map(p=>norm(p.n)).some((v,i,a)=>a.indexOf(v)!==i))return"Hay nombres repetidos: añade una inicial para distinguirlos.";
+  if(to>3&&cur===3){const miss=[];if(!(st.price||"").trim())miss.push(["f-price","el presupuesto máximo"]);if(!(st.date||"").trim())miss.push(["f-date","cuándo se dan los regalos"]);
+    $$(".field.bad").forEach(f=>f.classList.remove("bad"));miss.forEach(([id])=>$("#"+id).classList.add("bad"));
+    if(miss.length)return"Falta "+miss.map(m=>m[1]).join(" y ")+".";
+    if(st.pmin&&parseFloat(st.pmin.replace(",","."))>parseFloat(st.price.replace(",",".")))return"El mínimo no puede ser mayor que el máximo."}
   return""}
 function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1");if(m)m.textContent=e;return}}
-  if(n===5&&result){show("send");return}show(n)}
+  if(n===4&&result){show("send");return}show(n)}
 
 /* ---------- mensaje ---------- */
 const baseUrl=()=>(($("#url")&&$("#url").value.trim())||result.url||PAGE_URL).split("#")[0];
-function msgFor(p){const L=[["Precio máximo",st.price],["Cuándo",st.date],["Dónde",st.place]].filter(x=>(x[1]||"").trim()).map(x=>`${x[0]}: ${x[1].trim()}`);
+const eur=v=>{v=(v||"").trim();return/^\d+([.,]\d+)?$/.test(v)?v+" €":v};
+const budget=()=>{const mn=(st.pmin||"").trim(),mx=(st.price||"").trim();if(!mx)return"";return mn?`entre ${mn.replace(/\s*€$/,"")} y ${eur(mx)}`:`hasta ${eur(mx)}`};
+function msgFor(p){const L=[["Presupuesto",budget()],["Cuándo",st.date],["Dónde",st.place]].filter(x=>(x[1]||"").trim()).map(x=>`${x[0]}: ${x[1].trim()}`);
   return [`Hola, ${p.n}: ya tienes tu amigo invisible.`,``,`Ábrelo aquí (solo lo verás tú):`,baseUrl()+"#"+p.code,...(L.length?[``,...L]:[]),...((st.note||"").trim()?[``,st.note.trim()]:[]),``,`Sorteo nº ${result.id}${(st.org||"").trim()?` · organiza ${st.org.trim()}`:""}. Tiene que ser el mismo número para todos.`].join("\n")}
 
 /* ---------- eventos ---------- */
@@ -282,14 +306,14 @@ function bind(v,arg){
     $("#rows").addEventListener("keydown",e=>{const t=e.target;if(e.key==="Enter"&&t.dataset.f==="n"){e.preventDefault();const i=+t.dataset.i,nx=$(`[data-f="n"][data-i="${i+1}"]`);if(nx)nx.focus();else if(t.value.trim()){st.people.push({n:"",e:"",i:"",x:[]});save();show(1);$(`[data-f="n"][data-i="${i+1}"]`).focus()}}});
     $("#rows").addEventListener("click",e=>{const t=e.target;
       if(t.dataset.more!=null){const x=$("#ex"+t.dataset.more);x.hidden=!x.hidden;if(!x.hidden)x.querySelector("input").focus()}
-      if(t.dataset.del!=null){const d=+t.dataset.del;st.people.splice(d,1);st.people.forEach(p=>p.x=p.x.filter(j=>j!==d).map(j=>j>d?j-1:j));const L={};Object.entries(st.last).forEach(([a,b])=>{a=+a;b=+b;if(a!==d&&b!==d)L[a>d?a-1:a]=b>d?b-1:b});st.last=L;if(!st.people.length)st.people.push({n:"",e:"",i:"",x:[]});save();show(1)}});
+      if(t.dataset.del!=null){const d=+t.dataset.del;st.people.splice(d,1);st.people.forEach(p=>p.x=p.x.filter(j=>j!==d).map(j=>j>d?j-1:j));const L={};if(!st.people.length)st.people.push({n:"",e:"",i:"",x:[]});save();show(1)}});
     $("#add").onclick=()=>{st.people.push({n:"",e:"",i:"",x:[]});save();show(1);$$('[data-f="n"]').pop().focus()};
   }
-  if(v===2)$$("[data-ex]").forEach(b=>b.onclick=()=>{const p=st.people[+b.dataset.ex],j=+b.dataset.to2;p.x=p.x.includes(j)?p.x.filter(x=>x!==j):[...p.x,j];b.setAttribute("aria-pressed",p.x.includes(j));save()});
-  if(v===3){$$("[data-last]").forEach(b=>b.onclick=()=>{const a=b.dataset.last,j=+b.dataset.to3;if(st.last[a]!=null&&+st.last[a]===j)delete st.last[a];else st.last[a]=j;save();$$(`[data-last="${a}"]`).forEach(c=>c.setAttribute("aria-pressed",st.last[a]!=null&&+st.last[a]===+c.dataset.to3))});
-    const h=$("#hist");h.oninput=()=>{st.hist=h.value.trim();save();$("#m3").textContent=loadHist()};$("#m3").textContent=loadHist()}
-  if(v===4)$$("[data-r]").forEach(el=>{el.oninput=()=>{st[el.dataset.r]=el.value;save()};el.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const all=$$("[data-r]"),k=all.indexOf(el);all[k+1]?all[k+1].focus():goTo(5)}}});
-  if(v===5)$("#draw").onclick=()=>{const ps=active(),p=draw(allowed(ps));if(!p){$("#m5").textContent="No se ha encontrado un sorteo válido.";return}
+  if(v===2){$$("[data-ex]").forEach(b=>b.onclick=()=>{const p=st.people[+b.dataset.ex],j=+b.dataset.to2;p.x=p.x.includes(j)?p.x.filter(x=>x!==j):[...p.x,j];b.setAttribute("aria-pressed",p.x.includes(j));save()});
+    const hi=$("#hist");hi.oninput=()=>{st.hist=hi.value.trim();save();$("#m2").textContent=loadHist()};$("#m2").textContent=loadHist()}
+  if(v===3)$$("[data-r]").forEach(el=>{el.oninput=()=>{st[el.dataset.r]=el.value;save();const f=el.closest(".field");if(f)f.classList.remove("bad");$("#m3").textContent=""};
+    if(el.tagName!=="TEXTAREA")el.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const all=$$("[data-r]"),k=all.indexOf(el);all[k+1]?all[k+1].focus():goTo(4)}}});
+  if(v===4)$("#draw").onclick=()=>{const ps=active(),p=draw(allowed(ps));if(!p){$("#m4").textContent="No se ha encontrado un sorteo válido.";return}
     const ALPHA="23456789ABCDEFGHJKMNPQRSTVWXYZ";let id="";for(let i=0;i<6;i++)id+=ALPHA[rnd(ALPHA.length)];id=id.slice(0,3)+"-"+id.slice(3);
     result={v:2,id,url:PAGE_URL,people:ps.map((a,i)=>{const b=ps[p[i]];return{n:a.n.trim(),e:a.e.trim(),code:shortSeal(id,b.n.trim(),b.i.trim()),sent:false}}),hist:seal("H1-",{id,p:ps.map((a,i)=>[norm(a.n),norm(ps[p[i]].n)])})};
     store.set("ai-result",result);show("send")};
