@@ -75,7 +75,7 @@ h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;l
 .tcol button:hover{background:var(--field)}.tcol button.on{background:var(--ink);color:var(--bg)}
 .field.bad{border-bottom-color:var(--acc)}.field.bad label{color:var(--acc)}
 .hint{font-size:var(--t0);color:var(--mute);margin-top:8px;line-height:1.5}.opt.prev{border-bottom:0}
-.nav{display:flex;justify-content:space-between;align-items:center;padding-top:13px;border-top:1px solid light-dark(#fff,rgba(255,255,255,.22));margin-top:21px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-top:13px;border-top:1px solid #fff;margin-top:21px}
 .nav button{font:500 var(--t2) "Inter Tight",sans-serif;letter-spacing:-.02em;background:none;border:0;color:var(--ink);cursor:pointer;min-height:48px;padding:0}
 .nav .next{display:inline-flex;gap:14px;align-items:center}
 .nav .next::after{content:"→";transition:transform .2s}
@@ -172,7 +172,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .ov-b{width:min(760px,100%)}
 .ov-p{color:var(--mute);font-size:var(--t1);line-height:1.5;margin:13px 0 0;max-width:52ch}
 .ov-in{font-size:clamp(var(--t3),5vw,var(--t4))!important;border-bottom:1px solid var(--ink)!important;padding:8px 0 13px!important;min-height:0!important}
-.ov-a{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin-top:55px}.ov-a .go{margin:0}
+.ov-a{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin-top:55px}.ov-b>.ov-a:first-child{margin-top:0}.ov-a .go{font-size:clamp(var(--t3),4vw,var(--t4));white-space:nowrap}.ov-a .go{margin:0}
 body.ov-on main,body.ov-on header{filter:blur(1px)}
 .lab-n{display:none}
 [hidden]{display:none!important}
@@ -428,9 +428,9 @@ const ov=document.createElement("div");ov.className="ov";ov.hidden=true;ov.setAt
 function mailModal(){const pend=result.people.filter(p=>p.e&&!p.sent);if(!pend.length||!mailUrl())return;const cfg=mailCfg(),n=pend.length;
   ov.innerHTML=`<div class="ov-b">
    ${cfg?"":`<input class="big ov-in" id="keyIn" name="clave-sorteo" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" placeholder="Clave de envío" aria-label="Clave de envío">`}
-   <p class="ov-p">${cfg?"Los resultados pueden salir solos ahora mismo.":"Con la clave, los resultados se envían solos."} Sin ella, tendrás que enviarlos tú uno a uno.</p>
+   ${cfg?"":`<p class="ov-p">Con la clave, los resultados se envían solos por email. Sin ella, tendrás que enviarlos tú uno a uno.</p>`}
    <div class="msg" id="mm"></div>
-   <div class="ov-a"><button class="go" id="mailGo">Enviar automáticamente</button><button class="lnk" id="manual">No tengo la clave, los enviaré uno a uno</button></div></div>`;
+   <div class="ov-a"><button class="go" id="mailGo">${result.people.some(p=>p.via==="mail")?"Enviar a los que faltan":"Enviar por email"}</button><button class="lnk" id="manual">${cfg?"Prefiero enviarlos uno a uno":"No tengo la clave, los enviaré uno a uno"}</button></div></div>`;
   ov.hidden=false;document.body.classList.add("ov-on");const k=$("#keyIn");if(k){k.focus();k.onkeydown=e=>{if(e.key==="Enter")$("#mailGo").click()}}}
 function closeModal(){ov.hidden=true;document.body.classList.remove("ov-on")}
 ov.addEventListener("click",e=>{const t=e.target.closest("#mailGo,#manual");if(e.target===ov){closeModal();return}if(!t)return;
