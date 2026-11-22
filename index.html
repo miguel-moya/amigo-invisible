@@ -38,14 +38,18 @@ h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;l
 .count.sm{font-size:clamp(var(--t3),5.6vw,var(--t4));line-height:.9;letter-spacing:-.04em}
 .a{display:flex;flex-direction:column;min-height:0;grid-column:3}
 .body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:transparent transparent}
-.list{flex:0 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding-right:21px;scrollbar-width:thin;scrollbar-color:transparent transparent;transition:scrollbar-color .3s}
-.list:hover,.body:hover{scrollbar-color:var(--line) transparent}
+.list{flex:0 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:transparent transparent;transition:scrollbar-color .3s}
+.list.scroll{padding-right:21px}.list:hover,.body:hover{scrollbar-color:var(--line) transparent}
 .list::-webkit-scrollbar,.body::-webkit-scrollbar{width:4px}.list::-webkit-scrollbar-track,.body::-webkit-scrollbar-track{background:transparent}
 .list::-webkit-scrollbar-thumb,.body::-webkit-scrollbar-thumb{background:transparent;border-radius:4px}.list:hover::-webkit-scrollbar-thumb,.body:hover::-webkit-scrollbar-thumb{background:var(--line)}
-.sent-c{font-weight:500;color:var(--ink)}.links [data-mark]{min-width:5.6em;text-align:left}
+.sent-c{font-weight:500;color:var(--ink)}
+.mailbar{display:flex;align-items:center;gap:21px;flex-wrap:wrap;padding-bottom:21px}.mailbar .go{margin:0;padding:0;font-size:var(--t3)}.mailbar .hint{margin:0;max-width:34ch}
+.lnk{font:500 15px "Inter Tight",sans-serif;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);padding:8px 0 4px;cursor:pointer;text-decoration:none;min-height:40px}.lnk:hover{border-bottom-color:var(--ink)}.lnk.strong{border-bottom-color:var(--ink)}
+.cfg{padding-bottom:21px}.cfg .field:first-child{padding-top:0}.cfg .small{background:none;padding-left:0;border-bottom:0}.cfg-b{display:flex;justify-content:space-between;gap:21px;flex-wrap:wrap;padding-top:13px}.cfg-b span{display:flex;gap:21px}
+.srow .nm small.mute{color:var(--mute)}.links [data-mark]{min-width:5.6em;text-align:left}
 .warn{font-size:var(--t1);color:var(--acc);max-width:46ch;line-height:1.4}.warn-b{display:flex;gap:34px;flex:none}
 .list.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 55px),transparent);mask-image:linear-gradient(#000 calc(100% - 55px),transparent)}
-.opt-tag{font:inherit;letter-spacing:inherit;color:var(--mute);margin-left:.6em}
+.opt-tag{font-size:10.5px;letter-spacing:.1em;color:var(--mute);margin-left:.5em;vertical-align:.45em;opacity:.8}
 .cur{font-size:clamp(var(--t2),2.6vw,var(--t3));color:var(--mute)}
 .areabox{display:flex;align-items:flex-end;min-height:calc(2*1.2*clamp(var(--t2),2.6vw,var(--t3)) + 12px)}
 .area{resize:none;line-height:1.2;display:block;overflow:hidden;min-height:0!important;height:calc(1.2em + 12px);padding:4px 0 8px!important}
@@ -149,6 +153,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .q{position:relative}.q>*{position:relative;z-index:1}
 #ascii{position:absolute!important;z-index:0!important;left:0;bottom:0;margin:0;font:400 9px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:0;color:var(--ink);opacity:.2;pointer-events:none;user-select:none;white-space:pre}
 @media(max-width:1679px) and (min-width:781px){:root{--t2:22.25px;--t3:36px;--t4:58.25px;--t5:94.25px;--t6:152.5px}.q p{font-size:15.5px}.label{margin-bottom:13px}}
+.list.plan{flex:1 1 auto;display:flex;flex-direction:column}.list.plan>.field:last-child{margin-top:auto;border-bottom:0}.a:has(.list.plan) .nav{margin-top:0}.body>.msg:first-child{margin:0 0 13px}
 [hidden]{display:none!important}
 @media(max-width:780px){
 :root{--g:0px}.paper{inset:64px 0 0}header{height:64px;padding:0 calc(2*var(--dot))}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:16px;font-size:11px;letter-spacing:.06em}.top .theme{margin-left:8px}.dk{display:none}.brand{font-size:17px}.pop{right:16px;padding:16px}.cal-w,.cal-d{grid-template-columns:repeat(7,minmax(0,1fr))}.cal-d button{width:42px;height:42px}.tcols{grid-template-columns:1fr 1fr}.when{gap:21px}
@@ -304,7 +309,7 @@ function loadHist(){histPairs=[];prev=null;const H=store.get("ai-hist")||[];cons
 const rowHTML=(p,i)=>`<div class="row${p.n.trim()?"":" empty"}"><span class="idx">${String(i+1).padStart(2,"0")}</span>
     <input class="big" data-f="n" data-i="${i}" value="${esc(p.n)}" placeholder="Participante" aria-label="Participante ${i+1}" autocomplete="off">
     <input class="mail" type="email" data-f="e" data-i="${i}" value="${esc(p.e)}" placeholder="email (opcional)" aria-label="Email de participante ${i+1}" autocomplete="off">
-    <div class="tool"><button data-del="${i}" aria-label="Quitar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>`;
+    <div class="tool"><button data-del="${i}" tabindex="-1" aria-label="Quitar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>`;
 const TOTAL=4;
 const shell=(n,label,title,text,body,nav,countTxt)=>`<section class="screen">
   <div class="q"><div class="label">${label}</div><h1>${title}</h1>${text?`<p>${text}</p>`:""}<div class="count${countTxt?" sm":""}">${countTxt||`${n}/${TOTAL}`}</div></div>
@@ -315,28 +320,33 @@ const OPT='<span class="opt-tag">Opcional</span>';
 const views={
 1:()=>{tidy();return shell(1,"Paso uno","¿Quién participa?","Un nombre por línea, mínimo tres. Al seleccionar a alguien puedes añadir su email si quieres enviárselo por correo.",
   `<div class="list" id="rows">${st.people.map(rowHTML).join("")}</div>
-   <button class="add" id="add">+ Añadir participante</button><div class="msg" id="m1"></div>`,navs(1))},
+   <div class="msg" id="m1"></div>`,`<div class="nav"><button class="back" id="add">+ Añadir participante</button><button class="next" data-to="2">Siguiente</button></div>`)},
 2:()=>{const ps=active();loadHist();return shell(2,"Paso dos","Excepciones","¿A quién no debería tocarle cada uno? Su pareja, a quien le regaló el año pasado… Toca los nombres que quieras evitar. Si no hay ninguno, sigue.",
   `<div class="list">${ps.map(a=>`<div class="opt"><div class="nm">${esc(a.n)}</div><div class="chips">${ps.filter(b=>b.idx!==a.idx).map(b=>`<button class="chip" data-ex="${a.idx}" data-to2="${b.idx}" aria-pressed="${a.x.includes(b.idx)}">${esc(b.n)}</button>`).join("")}</div></div>`).join("")}
   ${prev?`<div class="opt prev"><div class="nm">Sorteo anterior</div><div><button class="chip" id="usePrev" aria-pressed="${st.usePrev!==false}">No repetir sus ${prev.n} parejas</button><div class="hint">Sorteo ${esc(prev.id)} del ${new Date(prev.date).toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"})}, guardado en este navegador. Las parejas no se muestran.</div></div></div>`:""}</div><div class="msg" id="m2"></div>`,navs(2))},
 3:()=>shell(3,"Paso tres","El plan","Presupuesto, fecha y lugar. Irá en el mensaje que recibe cada persona.",
-  `<div class="list">
+  `<div class="msg" id="m3"></div><div class="list plan">
    <div class="field" id="f-price"><label for="price">Presupuesto</label><input class="big" id="price" data-r="price" value="${esc(st.price)}" placeholder="30 €" autocomplete="off"></div>
    <div class="field" id="f-date"><label>Cuándo</label><div class="when"><button type="button" class="pick${st.date?"":" ph"}" id="pickDate">${st.date?dlabel(st.date):"Fecha"}</button><button type="button" class="pick${st.time?"":" ph"}" id="pickTime">${st.time||"Hora"}</button></div></div>
    <div class="field" id="f-place"><label for="place">Dónde</label><input class="big" id="place" data-r="place" value="${esc(st.place)}" placeholder="Casa de los abuelos" autocomplete="off"></div>
    <div class="field" id="f-org"><label for="org">Organiza</label><input class="big" id="org" data-r="org" value="${esc(st.org)}" placeholder="Quién envía los enlaces" autocomplete="off"></div>
    <div class="field"><label for="note">Mensaje para todos ${OPT}</label><div class="areabox"><textarea class="big area" id="note" data-r="note" rows="1" placeholder="Nada de calcetines.">${esc(st.note)}</textarea></div></div>
-  </div><div class="msg" id="m3"></div>`,navs(3)),
+  </div>`,navs(3)),
 4:()=>{loadHist();const ps=active(),c=countAll(allowed(ps));return shell(4,"Paso cuatro","Listo para sortear",(()=>{const ex=ps.reduce((s,a)=>s+a.x.filter(j=>ps.some(b=>b.idx===j)).length,0)+(histPairs.length);return`${ps.length} participantes${ex?` y ${ex} ${ex===1?"pareja evitada":"parejas evitadas"}`:""}.`})(),
   `<div class="huge">${c>=2e6?"2M+":c}</div><div>${c===0?"Con estas exclusiones no hay ningún sorteo posible. Vuelve atrás y quita alguna.":c===1?"único sorteo posible: no habrá sorpresa.":"sorteos posibles. Saldrá uno al azar, todos igual de probables."}</div>
    <ul class="facts"><li>Se usa el generador aleatorio criptográfico del navegador.</li><li>Tú no verás el resultado: cada persona recibe un enlace cerrado.</li><li>Cada sorteo lleva un número. Si todos tenéis el mismo, nadie ha repetido el sorteo a escondidas.</li></ul>
    <button class="go" id="draw"${c===0?" disabled":""}>Sortear</button><div class="msg" id="m4"></div>`,`<div class="nav"><button class="back" data-to="3">Atrás</button><span></span></div>`)},
-send:()=>{const ns=result.people.filter(p=>p.sent).length,N=result.people.length;return shell(0,"Sorteo realizado","Envía a cada uno su enlace",`Con un toque cada uno ve su resultado; el mensaje nunca dice a quién le toca. <b class="sent-c">${ns===N?"Todos enviados.":`Enviados: ${ns} de ${N}.`}</b> Número de sorteo, igual para todos:`,
-  `<div class="list">`+result.people.map((p,i)=>`<div class="srow"><div class="nm">${esc(p.n)}${p.sent?"<small>Enviado</small>":""}</div><div class="links">
-   <a href="https://wa.me/?text=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">WhatsApp ↗</a>
-   <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.e)}&su=${encodeURIComponent("Tu amigo invisible · sorteo "+result.id)}&body=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">Gmail ↗</a>
-   <button data-copy="${i}">Copiar</button><button data-mark="${i}">${p.sent?"Desmarcar":"Marcar"}</button></div></div>`).join("")+`</div>`+
-  "",
+send:()=>{const P=result.people,ns=P.filter(p=>p.sent).length,N=P.length,cfg=mailCfg(),pend=P.filter(p=>p.e&&!p.sent),anyMail=P.some(p=>p.e);
+  const bar=!anyMail?"":cfg?(pend.length?`<div class="mailbar"><button class="go" id="sendMails">Enviar ${pend.length} ${pend.length===1?"email":"emails"}</button><span class="hint">Salen desde tu Gmail a quien tiene correo. Al resto, por WhatsApp.</span></div>`:"")
+    :`<div class="mailbar"><span class="hint">Los emails pueden salir solos desde tu Gmail.</span><button class="lnk" id="cfgOpen">Configurar envío automático</button></div>`;
+  const panel=`<div class="cfg" id="cfgPanel" hidden><div class="field"><label for="cfgUrl">Dirección del script de Google</label><input class="small" id="cfgUrl" value="${esc(cfg?cfg.url:"")}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off"></div>
+    <div class="field"><label for="cfgKey">Clave</label><input class="small" id="cfgKey" value="${esc(cfg?cfg.key:"")}" placeholder="La misma que pusiste en el script" autocomplete="off"></div>
+    <div class="cfg-b"><a class="lnk" href="https://github.com/miguel-moya/amigo-invisible/blob/main/EMAIL.md" target="_blank" rel="noopener">Cómo crear el script ↗</a><span><button class="lnk" id="cfgCancel">Cancelar</button><button class="lnk strong" id="cfgSave">Guardar y probar</button></span></div></div>`;
+  return shell(0,"Sorteo realizado","Envía a cada uno su enlace",`Con un toque cada uno ve su resultado; el mensaje nunca dice a quién le toca. <b class="sent-c">${ns===N?"Todos enviados.":`Enviados: ${ns} de ${N}.`}</b> Número de sorteo, igual para todos:`,
+  bar+panel+`<div class="msg" id="ms"></div><div class="list">`+P.map((p,i)=>{const auto=p.e&&cfg&&!p.sent;return`<div class="srow"><div class="nm">${esc(p.n)}${p.sent?`<small>${p.via==="mail"?"Enviado por email":"Enviado"}</small>`:auto?`<small class="mute">Por email</small>`:""}</div><div class="links">
+   ${p.via==="mail"?"":`<a href="https://wa.me/?text=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">WhatsApp ↗</a>`}
+   ${p.e&&!cfg?`<a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.e)}&su=${encodeURIComponent(SUBJ())}&body=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">Gmail ↗</a>`:""}
+   <button data-copy="${i}">Copiar</button>${p.via==="mail"?"":`<button data-mark="${i}">${p.sent?"Desmarcar":"Marcar"}</button>`}</div></div>`}).join("")+`</div>`,
   `<div class="nav" id="sendNav"><button class="back" data-undo="1">Editar participantes</button><button class="back" data-undo="4">Repetir sorteo</button></div>`,result.id)},
 ver:(r,msg)=>shell(0,"Tu amigo invisible",r?"Te toca regalar a…":"Abre tu resultado",r?"Solo lo verás tú. No lo enseñes, que se acaba la gracia.":"Pega el enlace o el código que te ha llegado por WhatsApp o email.",
   r?`<div class="reveal" id="rv"><button class="tap" id="tap"><span class="o"></span>Toca para descubrirlo</button></div>`
@@ -344,7 +354,7 @@ ver:(r,msg)=>shell(0,"Tu amigo invisible",r?"Te toca regalar a…":"Abre tu resu
   "",r?r.id:"?")
 };
 let cur=1;
-function show(v,arg,msg){cur=v;closePop();$("#app").innerHTML=views[v](arg,msg);const qq=$("#app .q");if(qq)qq.appendChild(asciiEl);bind(v,arg);fitAscii();$$("#app .list").forEach(l=>{const u=()=>l.classList.toggle("more",l.scrollHeight-l.scrollTop-l.clientHeight>4);l.onscroll=u;u()});
+function show(v,arg,msg){cur=v;closePop();$("#app").innerHTML=views[v](arg,msg);const qq=$("#app .q");if(qq)qq.appendChild(asciiEl);bind(v,arg);fitAscii();$$("#app .list").forEach(l=>{const u=()=>{l.classList.toggle("more",l.scrollHeight-l.scrollTop-l.clientHeight>4)};l.onscroll=u;l.classList.toggle("scroll",l.scrollHeight>l.clientHeight+2);u()});
   $("#mOrg").setAttribute("aria-pressed",v!=="ver");$("#mVer").setAttribute("aria-pressed",v==="ver");
   const f=$("#app input.big");if(f&&v!=="send"&&matchMedia("(min-width:781px)").matches)f.focus({preventScroll:true});window.scrollTo(0,0)}
 const okMail=m=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m);
@@ -358,8 +368,27 @@ function validate(to){const ps=active();
     $$(".field.bad").forEach(f=>f.classList.remove("bad"));miss.forEach(([id])=>$("#"+id).classList.add("bad"));
     if(miss.length)return(miss.length>1?"Faltan ":"Falta ")+miss.map(m=>m[1]).join(", ").replace(/, ([^,]*)$/," y $1")+".";}
   return""}
-function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1");if(m)m.textContent=e;return}}
+function compact(){const map={},P=[];st.people.forEach((p,i)=>{if(p.n.trim()){map[i]=P.length;P.push(p)}});P.forEach(p=>p.x=p.x.filter(j=>j in map).map(j=>map[j]));st.people=P;save()}
+function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1");if(m)m.textContent=e;return}if(cur===1)compact()}
   if(n===4&&result){show("send");return}show(n)}
+
+/* ---------- email automático (Google Apps Script) ---------- */
+const mailCfg=()=>{const c=store.get("ai-mail");return c&&c.url&&c.key?c:null};
+const SUBJ=()=>`Tu amigo invisible · sorteo ${result.id}`;
+function htmlFor(p){const L=[["Presupuesto",eur(st.price)],["Cuándo",fdate(st.date)+(st.time?`, a las ${st.time}`:"")],["Dónde",st.place]].filter(x=>(x[1]||"").trim());const link=baseUrl()+"#"+p.code;
+  return `<div style="font-family:Helvetica,Arial,sans-serif;color:#141413;max-width:520px;padding:8px">
+<p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#c4391f;margin:0 0 18px">Amigo invisible</p>
+<h1 style="font-weight:400;font-size:30px;line-height:1.1;margin:0 0 26px">Hola, ${esc(p.n)}: ya tienes tu amigo invisible.</h1>
+<p style="margin:0 0 30px"><a href="${link}" style="display:inline-block;padding:14px 24px;background:#141413;color:#ffffff;border-radius:999px;text-decoration:none;font-size:16px">Descubrir a quién le regalo →</a></p>
+<table style="border-collapse:collapse;width:100%;font-size:15px">${L.map(([k,v])=>`<tr><td style="padding:10px 0;border-top:1px solid #dedbd6;color:#7a766f;width:120px">${k}</td><td style="padding:10px 0;border-top:1px solid #dedbd6">${esc(v)}</td></tr>`).join("")}</table>
+${(st.note||"").trim()?`<p style="font-size:15px;margin:22px 0 0">${esc(st.note.trim())}</p>`:""}
+<p style="font-size:12px;color:#7a766f;margin:30px 0 0">Sorteo nº ${result.id}${(st.org||"").trim()?` · organiza ${esc(st.org.trim())}`:""}. Tiene que ser el mismo número para todos.<br>Si el botón no funciona, copia este enlace: ${link}</p></div>`}
+async function callScript(cfg,payload){const r=await fetch(cfg.url,{method:"POST",body:JSON.stringify({...payload,key:cfg.key})});const j=await r.json();if(!j.ok)throw new Error(j.error||"Error del script");return j}
+async function sendMails(btn){const cfg=mailCfg(),list=result.people.filter(p=>p.e&&!p.sent);if(!cfg||!list.length)return;btn.disabled=true;btn.textContent="Enviando…";
+  try{const j=await callScript(cfg,{mails:list.map(p=>({to:p.e,subject:SUBJ(),body:msgFor(p),html:htmlFor(p)}))});
+    const bad=[];(j.res||[]).forEach(x=>{const p=list.find(q=>q.e===x.to);if(!p)return;if(x.ok){p.sent=true;p.via="mail"}else bad.push(p.n)});store.set("ai-result",result);show("send");
+    if(bad.length)$("#ms").textContent=`No se pudo enviar a ${bad.join(", ")}. Revisa su email o envíaselo por WhatsApp.`}
+  catch(err){btn.disabled=false;btn.textContent="Reintentar";$("#ms").textContent=/clave/i.test(err.message)?"La clave no coincide con la del script.":"No se pudo confirmar el envío. Antes de reintentar, mira en Enviados de tu Gmail si los correos salieron."}}
 
 /* ---------- mensaje ---------- */
 const baseUrl=()=>PAGE_URL.split("#")[0];
@@ -378,7 +407,7 @@ function bind(v,arg){
     $("#rows").addEventListener("keydown",e=>{const t=e.target;if(e.key!=="Enter")return;e.preventDefault();const i=+t.dataset.i;
       if(t.dataset.f==="n"){const m=$(`[data-f="e"][data-i="${i}"]`);const nx=$(`[data-f="n"][data-i="${i+1}"]`);if(nx)nx.focus();else if(t.value.trim())$("#add").click()}
       else{const nx=$(`[data-f="n"][data-i="${i+1}"]`);if(nx)nx.focus()}});
-    $("#add").onclick=()=>{const i=st.people.length;st.people.push(blank());save();$("#rows").insertAdjacentHTML("beforeend",rowHTML(st.people[i],i));const n=$(`[data-f="n"][data-i="${i}"]`);n.focus();n.scrollIntoView({block:"nearest"})};
+    $("#add").onclick=()=>{const em=st.people.findIndex(q=>!q.n.trim());if(em>=0){$(`[data-f="n"][data-i="${em}"]`).focus();return}const i=st.people.length;st.people.push(blank());save();$("#rows").insertAdjacentHTML("beforeend",rowHTML(st.people[i],i));const n=$(`[data-f="n"][data-i="${i}"]`);n.focus();n.scrollIntoView({block:"nearest"})};
     $("#rows").addEventListener("click",e=>{const t=e.target.closest("[data-del]");if(!t)return;const d=+t.dataset.del;st.people.splice(d,1);st.people.forEach(p=>p.x=p.x.filter(j=>j!==d).map(j=>j>d?j-1:j));save();show(1)});
   }
   if(v===2){$$("[data-ex]").forEach(b=>b.onclick=()=>{const p=st.people[+b.dataset.ex],j=+b.dataset.to2;p.x=p.x.includes(j)?p.x.filter(x=>x!==j):[...p.x,j];b.setAttribute("aria-pressed",p.x.includes(j));save()});
@@ -399,6 +428,14 @@ function bind(v,arg){
     else{const open=()=>{try{show("ver",shortOpen($("#code").value))}catch(e){$("#mv").textContent="Ese código no es válido. Revisa que esté completo."}};
       $("#openCode").onclick=open;$("#code").onkeydown=e=>{if(e.key==="Enter")open()}}}
 }
+$("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("#sendMails,#cfgOpen,#cfgCancel,#cfgSave");if(!t)return;
+  if(t.id==="sendMails"){sendMails(t);return}
+  if(t.id==="cfgOpen"){$("#cfgPanel").hidden=false;t.closest(".mailbar").hidden=true;$("#cfgUrl").focus();return}
+  if(t.id==="cfgCancel"){show("send");return}
+  if(t.id==="cfgSave"){const c={url:$("#cfgUrl").value.trim(),key:$("#cfgKey").value.trim()};if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(c.url)){$("#ms").textContent="La dirección tiene que ser la del script publicado: empieza por https://script.google.com y acaba en /exec.";return}
+    if(!c.key){$("#ms").textContent="Falta la clave.";return}t.textContent="Probando…";
+    try{const j=await callScript(c,{test:true});store.set("ai-mail",c);show("send");$("#ms").className="msg ok";$("#ms").textContent=`Conectado. Puedes enviar hasta ${j.quota??"unos 100"} emails hoy.`}
+    catch(err){t.textContent="Guardar y probar";$("#ms").textContent=/clave/i.test(err.message)?"El script responde, pero la clave no coincide.":"No se pudo conectar con el script. Revisa que esté publicado con acceso para «Cualquier usuario»."}}});
 function discard(to){store.set("ai-hist",(store.get("ai-hist")||[]).filter(x=>x.id!==result.id));result=null;store.del("ai-result");show(to)}
 $("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("[data-sent],[data-copy],[data-mark],[data-undo],[data-ok],[data-cancel]");if(!t)return;
       if(t.dataset.undo){const to=+t.dataset.undo,ns=result.people.filter(p=>p.sent).length;if(!ns){discard(to);return}
