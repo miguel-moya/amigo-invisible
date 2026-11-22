@@ -29,7 +29,7 @@ header{height:72px;display:flex;align-items:center;justify-content:space-between
 .top button:hover{opacity:.7}.top button[aria-pressed=true]{opacity:1}
 .top .theme{width:44px;height:44px;padding:0;margin-left:13px;margin-right:-12px;opacity:1;display:inline-grid;place-items:center;vertical-align:middle}.theme svg{width:21px;height:21px;transition:transform .4s}:root[data-theme=dark] .theme svg{transform:rotate(180deg)}
 main{position:relative;z-index:1}
-.screen{display:grid;grid-template-columns:minmax(0,.236fr) minmax(0,.146fr) minmax(0,.618fr);height:calc(100dvh - 72px);overflow:clip;padding:calc(5*var(--dot)) calc(var(--g) + 3*var(--dot)) calc(var(--g) + 5*var(--dot));animation:in .5s cubic-bezier(.2,.7,.2,1)}
+.screen{display:grid;grid-template-columns:minmax(0,.236fr) minmax(0,.146fr) minmax(0,.618fr);height:calc(100dvh - 72px);overflow:clip;padding:calc(4*var(--dot)) calc(var(--g) + 3*var(--dot)) calc(var(--g) + 4*var(--dot));animation:in .5s cubic-bezier(.2,.7,.2,1)}
 @keyframes in{from{opacity:0;transform:translateY(14px)}}
 .q{display:flex;flex-direction:column;min-height:0;grid-column:1}
 .label{font-weight:500;font-size:var(--t0);letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:21px;line-height:1}
@@ -49,7 +49,7 @@ h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;l
 .cfg{padding-bottom:21px}.cfg .field:first-child{padding-top:0}.cfg .small{background:none;padding-left:0;border-bottom:0}.cfg-b{display:flex;justify-content:space-between;gap:21px;flex-wrap:wrap;padding-top:13px}.cfg-b span{display:flex;gap:21px}
 .srow .nm small.mute{color:var(--mute)}.links [data-mark]{min-width:5.6em;text-align:left}
 .warn{font-size:var(--t1);color:var(--acc);max-width:46ch;line-height:1.4}.warn-b{display:flex;gap:34px;flex:none}
-.list.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 55px),transparent);mask-image:linear-gradient(#000 calc(100% - 55px),transparent)}
+.list.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 110px),transparent);mask-image:linear-gradient(#000 calc(100% - 110px),transparent)}
 .opt-tag{display:inline-block;font-size:8px;line-height:1;letter-spacing:.08em;color:var(--mute);margin-left:7px;vertical-align:top;position:relative;top:3px}
 .cur{font-size:clamp(var(--t2),2.6vw,var(--t3));color:var(--mute)}
 .areabox{display:flex;align-items:flex-end;min-height:calc(2*1.2*clamp(var(--t2),2.6vw,var(--t3)) + 8px)}
@@ -75,7 +75,7 @@ h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;l
 .tcol button:hover{background:var(--field)}.tcol button.on{background:var(--ink);color:var(--bg)}
 .field.bad{border-bottom-color:var(--acc)}.field.bad label{color:var(--acc)}
 .hint{font-size:var(--t0);color:var(--mute);margin-top:8px;line-height:1.5}.opt.prev{border-bottom:0}
-.nav{display:flex;justify-content:space-between;align-items:center;padding-top:21px;border-top:1px solid light-dark(#fff,rgba(255,255,255,.22));margin-top:21px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-top:13px;border-top:1px solid light-dark(#fff,rgba(255,255,255,.22));margin-top:21px}
 .nav button{font:500 var(--t2) "Inter Tight",sans-serif;letter-spacing:-.02em;background:none;border:0;color:var(--ink);cursor:pointer;min-height:48px;padding:0}
 .nav .next{display:inline-flex;gap:14px;align-items:center}
 .nav .next::after{content:"→";transition:transform .2s}
@@ -170,11 +170,11 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .rv-n{font-size:var(--t0);color:var(--mute);margin-top:34px}
 .ov{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:34px;background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:in .3s cubic-bezier(.2,.7,.2,1)}
 .ov-b{width:min(760px,100%)}
-.ov-b h2{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;letter-spacing:-.03em;margin:0}
-.ov-b p{color:var(--mute);font-size:var(--t1);line-height:1.618;margin:21px 0 34px;max-width:52ch}
+.ov-p{color:var(--mute);font-size:var(--t1);line-height:1.5;margin:13px 0 0;max-width:52ch}
 .ov-in{font-size:clamp(var(--t3),5vw,var(--t4))!important;border-bottom:1px solid var(--ink)!important;padding:8px 0 13px!important;min-height:0!important}
-.ov-a{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin-top:34px}.ov-a .go{margin:0}
+.ov-a{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin-top:55px}.ov-a .go{margin:0}
 body.ov-on main,body.ov-on header{filter:blur(1px)}
+.lab-n{display:none}
 [hidden]{display:none!important}
 @media(max-width:780px){
 :root{--g:0px}.paper{inset:64px 0 0}header{height:64px;padding:0 calc(2*var(--dot))}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:16px;font-size:11px;letter-spacing:.06em}.top .theme{margin-left:8px}.dk{display:none}.brand{font-size:17px}.pop{right:16px;padding:16px}.cal-w,.cal-d{grid-template-columns:repeat(7,minmax(0,1fr))}.cal-d button{width:42px;height:42px}.tcols{grid-template-columns:1fr 1fr}.when{gap:21px}
@@ -184,7 +184,12 @@ body.ov-on main,body.ov-on header{filter:blur(1px)}
 .opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.ov{padding:21px;place-items:end stretch}.ov-a .go{font-size:var(--t2);white-space:nowrap}.ov-a{gap:21px}.mailstep .go{font-size:var(--t2);white-space:nowrap;margin:21px 0 13px;gap:13px}.nav#sendNav{flex-wrap:nowrap}.nav#sendNav button{font-size:17px}.rv-s{grid-template-columns:minmax(0,1fr);position:relative}.gslot{position:absolute;inset:0;grid-column:1}.gslot #ascii{display:block;opacity:.14}.rv-t{position:relative;z-index:1}.rv-d{grid-template-columns:repeat(2,minmax(0,1fr))}.rv-d>div:nth-child(3){grid-column:1/-1}.rv-d dd{font-size:19px}.rv-go{margin-top:34px}.mailbar{gap:13px}.mailbar .go{font-size:var(--t2);white-space:nowrap}.mailbar .key{width:100%}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
-.nav{position:sticky;bottom:0;background:var(--bg);padding-bottom:12px}#ascii{display:none}}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);margin:0;padding:13px calc(2*var(--dot)) calc(13px + env(safe-area-inset-bottom))}#ascii{display:none}
+:root{--t1:16px;--t2:20px;--t3:28px;--t4:40px;--t5:64px;--t6:96px}
+.screen{padding-bottom:110px;align-content:start}h1{font-size:var(--t3)!important}.q p{font-size:15px}
+.count{display:none}.lab-t{display:none}.lab-n{display:inline}.label{margin-bottom:13px}
+.row{min-height:55px}.nav button{font-size:var(--t2)}.go{font-size:var(--t3)}
+.rv-h{font-size:clamp(40px,12vw,56px)}.rv-t .who{font-size:clamp(64px,22vw,110px)}.cd{font-size:160px}}
 @media(prefers-reduced-motion:reduce){.screen,.who span,.tap span.o{animation:none}}
 </style>
 </head>
@@ -335,7 +340,7 @@ const rowHTML=(p,i)=>`<div class="row${p.n.trim()?"":" empty"}"><span class="idx
     <div class="tool"><button data-del="${i}" tabindex="-1" aria-label="Quitar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>`;
 const TOTAL=4;
 const shell=(n,label,title,text,body,nav,countTxt)=>`<section class="screen">
-  <div class="q"><div class="label">${label}</div><h1>${title}</h1>${text?`<p>${text}</p>`:""}<div class="count${countTxt?" sm":""}">${countTxt||`${n}/${TOTAL}`}</div></div>
+  <div class="q"><div class="label"><span class="lab-t">${label}</span><span class="lab-n">${countTxt?(countTxt==="?"?label:label+" · "+countTxt):`${n}/${TOTAL}`}</span></div><h1>${title}</h1>${text?`<p>${text}</p>`:""}<div class="count${countTxt?" sm":""}">${countTxt||`${n}/${TOTAL}`}</div></div>
   <div class="a"><div class="body">${body}</div>${nav}</div></section>`;
 const navs=(n,nextTxt="Siguiente")=>`<div class="nav">${n>1?`<button class="back" data-to="${n-1}">Atrás</button>`:"<span></span>"}<button class="next" data-to="${n+1}">${nextTxt}</button></div>`;
 const OPT='<span class="opt-tag">Opcional</span>';
@@ -421,12 +426,11 @@ async function sendMails(btn,key){const list=result.people.filter(p=>p.e&&!p.sen
 /* ---------- ventana de clave para enviar emails ---------- */
 const ov=document.createElement("div");ov.className="ov";ov.hidden=true;ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");document.body.appendChild(ov);
 function mailModal(){const pend=result.people.filter(p=>p.e&&!p.sent);if(!pend.length||!mailUrl())return;const cfg=mailCfg(),n=pend.length;
-  ov.innerHTML=`<div class="ov-b"><div class="label">Sorteo realizado · envío por email</div>
-   <h2>${cfg?`¿Enviamos ${n===1?"el email":`los ${n} emails`}?`:"Clave de envío"}</h2>
-   <p>${cfg?"":"Es la clave que pusiste en el script de Google. Sirve para que tu Gmail pueda enviar los emails. "}Recibirán su enlace por email: ${pend.map(p=>esc(p.n)).join(", ")}.</p>
-   ${cfg?"":`<input class="big ov-in" id="keyIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escribe la clave" aria-label="Clave de envío">`}
+  ov.innerHTML=`<div class="ov-b">
+   ${cfg?"":`<input class="big ov-in" id="keyIn" name="clave-sorteo" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" placeholder="Clave de envío" aria-label="Clave de envío">`}
+   <p class="ov-p">${cfg?"Los resultados pueden salir solos ahora mismo.":"Con la clave, los resultados se envían solos."} Sin ella, tendrás que enviarlos tú uno a uno.</p>
    <div class="msg" id="mm"></div>
-   <div class="ov-a"><button class="go" id="mailGo">Enviar ${n} ${n===1?"email":"emails"}</button><button class="lnk" id="manual">No la tengo, los enviaré a mano</button></div></div>`;
+   <div class="ov-a"><button class="go" id="mailGo">Enviar automáticamente</button><button class="lnk" id="manual">No tengo la clave, los enviaré uno a uno</button></div></div>`;
   ov.hidden=false;document.body.classList.add("ov-on");const k=$("#keyIn");if(k){k.focus();k.onkeydown=e=>{if(e.key==="Enter")$("#mailGo").click()}}}
 function closeModal(){ov.hidden=true;document.body.classList.remove("ov-on")}
 ov.addEventListener("click",e=>{const t=e.target.closest("#mailGo,#manual");if(e.target===ov){closeModal();return}if(!t)return;
