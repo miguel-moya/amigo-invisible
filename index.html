@@ -37,8 +37,13 @@ h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;l
 .count{margin-top:auto;font-weight:400;font-size:clamp(var(--t4),min(13vw,24vh),var(--t6));line-height:.76;letter-spacing:-.06em;white-space:nowrap}
 .count.sm{font-size:clamp(var(--t3),5.6vw,var(--t4));line-height:.9;letter-spacing:-.04em}
 .a{display:flex;flex-direction:column;min-height:0;grid-column:3}
-.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
-.list{flex:0 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;overscroll-behavior:contain}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:transparent transparent}
+.list{flex:0 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding-right:21px;scrollbar-width:thin;scrollbar-color:transparent transparent;transition:scrollbar-color .3s}
+.list:hover,.body:hover{scrollbar-color:var(--line) transparent}
+.list::-webkit-scrollbar,.body::-webkit-scrollbar{width:4px}.list::-webkit-scrollbar-track,.body::-webkit-scrollbar-track{background:transparent}
+.list::-webkit-scrollbar-thumb,.body::-webkit-scrollbar-thumb{background:transparent;border-radius:4px}.list:hover::-webkit-scrollbar-thumb,.body:hover::-webkit-scrollbar-thumb{background:var(--line)}
+.sent-c{font-weight:500;color:var(--ink)}.links [data-mark]{min-width:5.6em;text-align:left}
+.warn{font-size:var(--t1);color:var(--acc);max-width:46ch;line-height:1.4}.warn-b{display:flex;gap:34px;flex:none}
 .list.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 55px),transparent);mask-image:linear-gradient(#000 calc(100% - 55px),transparent)}
 .opt-tag{font:inherit;letter-spacing:inherit;color:var(--mute);margin-left:.6em}
 .cur{font-size:clamp(var(--t2),2.6vw,var(--t3));color:var(--mute)}
@@ -109,7 +114,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 /* sortear */
 .huge{font-size:clamp(var(--t4),min(13vw,21vh),var(--t6));line-height:.85;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
 .huge+div{font-size:var(--t2);letter-spacing:-.02em;margin-top:13px;line-height:1.3}
-.facts{list-style:none;padding:0;margin:34px 0 0;color:var(--mute);display:grid;gap:10px;max-width:52ch}
+.facts{list-style:none;padding:0;margin:34px 0 0;color:var(--mute);display:grid;gap:10px}
 .facts li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px}
 .facts li::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--acc);margin-top:8px}
 .go{display:flex;align-items:center;gap:21px;font:400 clamp(var(--t3),4vw,var(--t4)) "Inter Tight",sans-serif;letter-spacing:-.04em;background:none;border:0;color:var(--ink);cursor:pointer;padding:18px 0;margin-top:26px;min-height:64px;text-align:left}
@@ -149,7 +154,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 :root{--g:0px}.paper{inset:64px 0 0}header{height:64px;padding:0 calc(2*var(--dot))}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:16px;font-size:11px;letter-spacing:.06em}.top .theme{margin-left:8px}.dk{display:none}.brand{font-size:17px}.pop{right:16px;padding:16px}.cal-w,.cal-d{grid-template-columns:repeat(7,minmax(0,1fr))}.cal-d button{width:42px;height:42px}.tcols{grid-template-columns:1fr 1fr}.when{gap:21px}
 .screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:34px;padding:calc(2*var(--dot)) calc(2*var(--dot)) calc(3*var(--dot))}.q,.a{grid-column:1}
 .count{order:-1;font-size:var(--t4);margin:0 0 21px}.count.sm{font-size:var(--t3)}
-.q p{margin-top:12px}.list{overflow:visible}.list.more{-webkit-mask-image:none;mask-image:none}
+.q p{margin-top:12px}.list{overflow:visible;padding-right:0}.nav#sendNav{flex-wrap:wrap;gap:13px}.warn-b{gap:21px}.list.more{-webkit-mask-image:none;mask-image:none}
 .opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
@@ -322,17 +327,17 @@ const views={
    <div class="field" id="f-org"><label for="org">Organiza</label><input class="big" id="org" data-r="org" value="${esc(st.org)}" placeholder="Quién envía los enlaces" autocomplete="off"></div>
    <div class="field"><label for="note">Mensaje para todos ${OPT}</label><div class="areabox"><textarea class="big area" id="note" data-r="note" rows="1" placeholder="Nada de calcetines.">${esc(st.note)}</textarea></div></div>
   </div><div class="msg" id="m3"></div>`,navs(3)),
-4:()=>{loadHist();const ps=active(),c=countAll(allowed(ps));return shell(4,"Paso cuatro","Listo para sortear",`${ps.length} personas: ${ps.map(p=>esc(p.n.trim())).join(", ")}.`,
+4:()=>{loadHist();const ps=active(),c=countAll(allowed(ps));return shell(4,"Paso cuatro","Listo para sortear",(()=>{const ex=ps.reduce((s,a)=>s+a.x.filter(j=>ps.some(b=>b.idx===j)).length,0)+(histPairs.length);return`${ps.length} participantes${ex?` y ${ex} ${ex===1?"pareja evitada":"parejas evitadas"}`:""}.`})(),
   `<div class="huge">${c>=2e6?"2M+":c}</div><div>${c===0?"Con estas exclusiones no hay ningún sorteo posible. Vuelve atrás y quita alguna.":c===1?"único sorteo posible: no habrá sorpresa.":"sorteos posibles. Saldrá uno al azar, todos igual de probables."}</div>
    <ul class="facts"><li>Se usa el generador aleatorio criptográfico del navegador.</li><li>Tú no verás el resultado: cada persona recibe un enlace cerrado.</li><li>Cada sorteo lleva un número. Si todos tenéis el mismo, nadie ha repetido el sorteo a escondidas.</li></ul>
    <button class="go" id="draw"${c===0?" disabled":""}>Sortear</button><div class="msg" id="m4"></div>`,`<div class="nav"><button class="back" data-to="3">Atrás</button><span></span></div>`)},
-send:()=>shell(0,"Sorteo hecho","Envía a cada uno su enlace","Un toque en el enlace y ven su resultado. El mensaje nunca lleva el nombre de a quién le toca. Todos tienen que ver este número:",
+send:()=>{const ns=result.people.filter(p=>p.sent).length,N=result.people.length;return shell(0,"Sorteo realizado","Envía a cada uno su enlace",`Con un toque cada uno ve su resultado; el mensaje nunca dice a quién le toca. <b class="sent-c">${ns===N?"Todos enviados.":`Enviados: ${ns} de ${N}.`}</b> Número de sorteo, igual para todos:`,
   `<div class="list">`+result.people.map((p,i)=>`<div class="srow"><div class="nm">${esc(p.n)}${p.sent?"<small>Enviado</small>":""}</div><div class="links">
    <a href="https://wa.me/?text=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">WhatsApp ↗</a>
    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.e)}&su=${encodeURIComponent("Tu amigo invisible · sorteo "+result.id)}&body=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">Gmail ↗</a>
    <button data-copy="${i}">Copiar</button><button data-mark="${i}">${p.sent?"Desmarcar":"Marcar"}</button></div></div>`).join("")+`</div>`+
-  `<div class="meta"><div><label for="url">Enlace de la página</label><input class="small" id="url" value="${esc(result.url||PAGE_URL)}"></div></div>`,
-  `<div class="nav"><button class="back" id="redo">Nuevo sorteo</button><span></span></div>`,result.id),
+  "",
+  `<div class="nav" id="sendNav"><button class="back" data-undo="1">Editar participantes</button><button class="back" data-undo="4">Repetir sorteo</button></div>`,result.id)},
 ver:(r,msg)=>shell(0,"Tu amigo invisible",r?"Te toca regalar a…":"Abre tu resultado",r?"Solo lo verás tú. No lo enseñes, que se acaba la gracia.":"Pega el enlace o el código que te ha llegado por WhatsApp o email.",
   r?`<div class="reveal" id="rv"><button class="tap" id="tap"><span class="o"></span>Toca para descubrirlo</button></div>`
    :`<div class="reveal"><div class="field"><label for="code">Tu código</label><input class="big" id="code" placeholder="8K2QM-X7TRA-4PNV1" autocomplete="off"></div><div class="msg" id="mv">${msg||""}</div><button class="go" id="openCode">Abrir</button></div>`,
@@ -357,7 +362,7 @@ function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1
   if(n===4&&result){show("send");return}show(n)}
 
 /* ---------- mensaje ---------- */
-const baseUrl=()=>(($("#url")&&$("#url").value.trim())||result.url||PAGE_URL).split("#")[0];
+const baseUrl=()=>PAGE_URL.split("#")[0];
 const eur=v=>{v=(v||"").trim();return/^\d+([.,]\d+)?$/.test(v)?v+" €":v};
 const fdate=d=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(d||""))return d||"";const t=new Date(d+"T12:00:00");return t.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})};
 function msgFor(p){const L=[["Presupuesto",eur(st.price)],["Cuándo",fdate(st.date)+(st.time?`, a las ${st.time}`:"")],["Dónde",st.place]].filter(x=>(x[1]||"").trim()).map(x=>`${x[0]}: ${x[1].trim()}`);
@@ -387,8 +392,6 @@ function bind(v,arg){
     const ALPHA="23456789ABCDEFGHJKMNPQRSTVWXYZ";let id="";for(let i=0;i<6;i++)id+=ALPHA[rnd(ALPHA.length)];id=id.slice(0,3)+"-"+id.slice(3);
     result={v:2,id,url:PAGE_URL,people:ps.map((a,i)=>{const b=ps[p[i]];return{n:a.n.trim(),e:a.e.trim(),code:shortSeal(id,b.n.trim(),""),sent:false}}),hist:seal("H1-",{id,p:ps.map((a,i)=>[norm(a.n),norm(ps[p[i]].n)])})};
     const H=(store.get("ai-hist")||[]).filter(x=>x.id!==id).slice(-4);H.push({id,t:Date.now(),h:result.hist});store.set("ai-hist",H);store.set("ai-result",result);show("send")};
-  if(v==="send"){
-    $("#url").onchange=()=>{result.url=$("#url").value.trim();store.set("ai-result",result);show("send")}}
   if(v==="ver"){
     if(arg){const reveal=()=>{const rv=$("#rv");rv.innerHTML=`<div class="who" aria-live="polite">${[...arg.r].map((c,k)=>`<span style="animation-delay:${k*45}ms">${c===" "?"&nbsp;":esc(c)}</span>`).join("")}</div>
         <dl class="after">${arg.i?`<div><dt>Su pista</dt><dd>${esc(arg.i)}</dd></div>`:""}<div><dt>Número de sorteo</dt><dd>${esc(arg.id)}: tiene que coincidir con el de los demás</dd></div><div><dt>Precio, fecha y lugar</dt><dd>En el mensaje que te llegó</dd></div></dl>`};
@@ -396,8 +399,12 @@ function bind(v,arg){
     else{const open=()=>{try{show("ver",shortOpen($("#code").value))}catch(e){$("#mv").textContent="Ese código no es válido. Revisa que esté completo."}};
       $("#openCode").onclick=open;$("#code").onkeydown=e=>{if(e.key==="Enter")open()}}}
 }
-$("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("[data-sent],[data-copy],[data-mark],#redo");if(!t)return;
-            if(t.id==="redo"){store.set("ai-hist",(store.get("ai-hist")||[]).filter(x=>x.id!==result.id));result=null;store.del("ai-result");show(4);return}
+function discard(to){store.set("ai-hist",(store.get("ai-hist")||[]).filter(x=>x.id!==result.id));result=null;store.del("ai-result");show(to)}
+$("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("[data-sent],[data-copy],[data-mark],[data-undo],[data-ok],[data-cancel]");if(!t)return;
+      if(t.dataset.undo){const to=+t.dataset.undo,ns=result.people.filter(p=>p.sent).length;if(!ns){discard(to);return}
+        $("#sendNav").innerHTML=`<span class="warn">Ya has enviado ${ns} ${ns===1?"enlace":"enlaces"}. Si sigues, este sorteo se descarta y esos enlaces dejarán de valer.</span><span class="warn-b"><button class="back" data-cancel>Cancelar</button><button class="next" data-ok="${to}">${to===1?"Editar":"Repetir"}</button></span>`;return}
+      if(t.dataset.cancel!=null){show("send");return}
+      if(t.dataset.ok){discard(+t.dataset.ok);return}
       if(t.dataset.copy!=null){const p=result.people[+t.dataset.copy];try{await navigator.clipboard.writeText(msgFor(p));t.textContent="Copiado";p.sent=true;store.set("ai-result",result);setTimeout(()=>show("send"),1100)}catch(err){t.textContent="No se pudo copiar"}return}
       if(t.dataset.mark!=null){const p=result.people[+t.dataset.mark];p.sent=!p.sent;store.set("ai-result",result);show("send");return}
       if(t.dataset.sent!=null){result.people[+t.dataset.sent].sent=true;store.set("ai-result",result);setTimeout(()=>show("send"),400)}});
