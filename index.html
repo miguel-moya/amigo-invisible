@@ -128,9 +128,9 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .srow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 20px;align-items:center;border-bottom:1px solid var(--line);padding:14px 0}
 .srow .nm{font-size:clamp(var(--t2),2.6vw,var(--t3));letter-spacing:-.03em;display:flex;align-items:center;gap:12px}
 .srow .nm small{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
-.links{display:flex;gap:6px 18px;flex-wrap:wrap;justify-content:flex-end}
-.links a,.links button{font:500 15px "Inter Tight",sans-serif;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);padding:10px 0 4px;cursor:pointer;text-decoration:none;min-height:44px}
-.links a:hover,.links button:hover{border-bottom-color:var(--ink)}
+.links{display:flex;gap:6px 21px;flex-wrap:wrap;justify-content:flex-end;align-items:center}.links a,.links button{display:inline-flex;align-items:center;line-height:1}
+.links a,.links button{font:500 15px "Inter Tight",sans-serif;color:var(--ink);background:none;border:0;padding:10px 0 4px;cursor:pointer;text-decoration:none;min-height:44px}
+.links a:hover,.links button:hover{color:var(--acc)}
 .meta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:22px}
 .meta label{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
 .inline{display:flex;gap:10px;align-items:end}
@@ -346,8 +346,7 @@ send:()=>{const P=result.people,ns=P.filter(p=>p.sent).length,N=P.length,cfg=mai
   return shell(0,"Sorteo realizado","Envía a cada uno su enlace",`Con un toque cada uno ve su resultado; el mensaje nunca dice a quién le toca. <b class="sent-c">${ns===N?"Todos enviados.":`Enviados: ${ns} de ${N}.`}</b> Número de sorteo, igual para todos:`,
   bar+panel+`<div class="msg" id="ms"></div><div class="list">`+P.map((p,i)=>{const auto=p.e&&cfg&&!p.sent;return`<div class="srow"><div class="nm">${esc(p.n)}${p.sent?`<small>${p.via==="mail"?"Enviado por email":"Enviado"}</small>`:auto?`<small class="mute">Por email</small>`:""}</div><div class="links">
    ${p.via==="mail"?"":`<a href="https://wa.me/?text=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">WhatsApp ↗</a>`}
-   ${p.e&&!cfg?`<a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.e)}&su=${encodeURIComponent(SUBJ())}&body=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">Gmail ↗</a>`:""}
-   <button data-copy="${i}">Copiar</button>${p.via==="mail"?"":`<button data-mark="${i}">${p.sent?"Desmarcar":"Marcar"}</button>`}</div></div>`}).join("")+`</div>`,
+   <button data-copy="${i}">Copiar</button></div></div>`}).join("")+`</div>`,
   `<div class="nav" id="sendNav"><button class="back" data-undo="1">Editar participantes</button><button class="back" data-undo="4">Repetir sorteo</button></div>`,result.id)},
 ver:(r,msg)=>shell(0,"Tu amigo invisible",r?"Te toca regalar a…":"Abre tu resultado",r?"Solo lo verás tú. No lo enseñes, que se acaba la gracia.":"Pega el enlace o el código que te ha llegado por WhatsApp o email.",
   r?`<div class="reveal" id="rv"><button class="tap" id="tap"><span class="o"></span>Toca para descubrirlo</button></div>`
@@ -391,7 +390,7 @@ async function sendMails(btn){const cfg=mailCfg(),list=result.people.filter(p=>p
   try{const j=await callScript(cfg,{mails:list.map(p=>({to:p.e,subject:SUBJ(),body:msgFor(p),html:htmlFor(p)}))});
     const bad=[];(j.res||[]).forEach(x=>{const p=list.find(q=>q.e===x.to);if(!p)return;if(x.ok){p.sent=true;p.via="mail"}else bad.push(p.n)});store.set("ai-result",result);show("send");
     if(bad.length)$("#ms").textContent=`No se pudo enviar a ${bad.join(", ")}. Revisa su email o envíaselo por WhatsApp.`}
-  catch(err){btn.disabled=false;btn.textContent="Reintentar";$("#ms").textContent=/clave/i.test(err.message)?"La clave no coincide con la del script.":"No se pudo confirmar el envío. Antes de reintentar, mira en Enviados de tu Gmail si los correos salieron."}}
+  catch(err){if(/clave/i.test(err.message)){const c=store.get("ai-mail")||{};delete c.key;store.set("ai-mail",c);show("send");$("#ms").textContent="La clave guardada ya no es la del script. Escribe la nueva.";return}btn.disabled=false;btn.textContent="Reintentar";$("#ms").textContent="No se pudo confirmar el envío. Antes de reintentar, mira en Enviados de tu Gmail si los correos salieron."}}
 
 /* ---------- mensaje ---------- */
 const baseUrl=()=>PAGE_URL.split("#")[0];
