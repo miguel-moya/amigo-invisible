@@ -158,7 +158,15 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .rv-s{grid-template-columns:minmax(0,.618fr) minmax(0,.382fr);gap:5vw}
 .rv-t{grid-column:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
 .rv-h{font-size:clamp(var(--t4),8vw,var(--t6));line-height:.95;letter-spacing:-.05em;text-wrap:balance}
-.rv-go{margin-top:55px}
+.rv-s.intro{grid-template-columns:minmax(0,1fr)}.rv-s.intro>*{grid-area:1/1}
+.rv-s.intro .rv-t{align-items:center;text-align:center;justify-content:center}.rv-s.intro .rv-h{font-size:clamp(var(--t3),5vw,var(--t5))}
+.rv-s.intro .gslot #ascii{opacity:.16}.gslot{pointer-events:none}.rv-t{position:relative;z-index:1}
+.rv-tap{display:flex;flex-direction:column;align-items:center;gap:21px;margin-top:55px;background:none;border:0;color:var(--ink);cursor:pointer;font:400 var(--t2) "Inter Tight",sans-serif;letter-spacing:-.02em}
+.rv-tap .o{width:89px;height:89px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;transition:transform .3s}
+.rv-tap .o::after{content:"";width:21px;height:21px;border-radius:50%;background:var(--acc);animation:pulse 1.6s ease-in-out infinite}
+.rv-tap:hover .o{transform:scale(1.06)}
+@keyframes pulse{50%{transform:scale(1.5)}}
+.rv-s.intro .cd{text-align:center}
 .gslot{grid-column:2;position:relative;min-height:0}.gslot>*{z-index:0}
 .gslot #ascii{left:50%!important;top:50%;bottom:auto!important;transform:translate(-50%,-50%);opacity:.32}
 .cd{font-size:clamp(160px,24vw,360px);line-height:.8;letter-spacing:-.06em;font-variant-numeric:tabular-nums;animation:cd .85s cubic-bezier(.2,.7,.2,1) both}
@@ -178,14 +186,15 @@ body.ov-on main,body.ov-on header{filter:blur(1px)}
 .money{display:flex;align-items:baseline;gap:.18em}.money .big{width:auto;flex:none;min-width:1ch}.eur{font-size:clamp(var(--t2),2.6vw,var(--t3));letter-spacing:-.03em;color:var(--ink)}.money.ph .eur{color:var(--mute);opacity:.55}
 .mob-draw{display:none}
 html.ov-lock,html.ov-lock body{overflow:hidden;overscroll-behavior:none}.ov{overflow-y:auto;overscroll-behavior:contain}
+.mob-draw::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--acc);flex:none}
 [hidden]{display:none!important}
 @media(max-width:780px){
 :root{--g:0px}.paper{inset:64px 0 0}header{height:64px;padding:0 calc(2*var(--dot))}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:16px;font-size:11px;letter-spacing:.06em}.top .theme{margin-left:8px}.dk{display:none}.brand{font-size:17px}.pop{right:16px;padding:16px}.cal-w,.cal-d{grid-template-columns:repeat(7,minmax(0,1fr))}.cal-d button{width:42px;height:42px}.tcols{grid-template-columns:1fr 1fr}.when{gap:21px}
 .screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:34px;padding:calc(2*var(--dot)) calc(2*var(--dot)) calc(3*var(--dot))}.q,.a{grid-column:1}
 .count{order:-1;font-size:var(--t4);margin:0 0 21px}.count.sm{font-size:var(--t3)}
 .q p{margin-top:12px}.list{overflow:visible;padding-right:0}.nav#sendNav{flex-wrap:wrap;gap:13px}.warn-b{gap:21px}.list.more,.list.less{-webkit-mask-image:none;mask-image:none}
-.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.ov-a .go{font-size:var(--t2);white-space:nowrap}.ov-a{gap:21px}.mailstep .go{font-size:var(--t2);white-space:nowrap;margin:21px 0 13px;gap:13px}.nav#sendNav{flex-wrap:nowrap}.nav#sendNav button{font-size:17px}.rv-s{grid-template-columns:minmax(0,1fr);position:relative}.gslot{position:absolute;inset:0;grid-column:1}.gslot #ascii{display:block;opacity:.14}.rv-t{position:relative;z-index:1}.rv-d{grid-template-columns:repeat(2,minmax(0,1fr))}.rv-d>div:nth-child(3){grid-column:1/-1}.rv-d dd{font-size:19px}.rv-go{margin-top:34px}.mailbar{gap:13px}.mailbar .go{font-size:var(--t2);white-space:nowrap}.mailbar .key{width:100%}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
-.srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
+.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin:-10px 0 4px;min-height:30px;padding:0}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.ov-a .go{font-size:var(--t2);white-space:nowrap}.ov-a{gap:21px}.mailstep .go{font-size:var(--t2);white-space:nowrap;margin:21px 0 13px;gap:13px}.nav#sendNav{flex-wrap:nowrap}.nav#sendNav button{font-size:17px}.rv-s{grid-template-columns:minmax(0,1fr);position:relative}.gslot{position:absolute;inset:calc(2*var(--dot)) calc(2*var(--dot)) 160px;grid-column:1}.rv-s.intro .gslot{position:absolute}.rv-s.intro .rv-t{min-height:calc(100dvh - 64px - 32px - 160px)}.rv-tap .o{width:72px;height:72px}.gslot #ascii{display:block;opacity:.14}.rv-t{position:relative;z-index:1}.rv-d{grid-template-columns:repeat(2,minmax(0,1fr))}.rv-d>div:nth-child(3){grid-column:1/-1}.rv-d dd{font-size:19px}.rv-go{margin-top:34px}.mailbar{gap:13px}.mailbar .go{font-size:var(--t2);white-space:nowrap}.mailbar .key{width:100%}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
+.srow{grid-template-columns:minmax(0,1fr) auto}.links{justify-content:flex-end;flex-wrap:nowrap;gap:16px}.srow .nm{flex-direction:column;align-items:flex-start;gap:2px}.srow .nm small{font-size:9px}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);margin:0;padding:13px calc(2*var(--dot)) calc(13px + env(safe-area-inset-bottom))}#ascii{display:none}
 :root{--t1:16px;--t2:20px;--t3:28px;--t4:40px;--t5:64px;--t6:96px}
@@ -194,7 +203,7 @@ html.ov-lock,html.ov-lock body{overflow:hidden;overscroll-behavior:none}.ov{over
 .row{padding:8px 0}.tool button{width:36px;height:36px}.tool svg{width:18px;height:18px}
 .chip{font-size:14px;padding:5px 12px 5px 8px;min-height:34px;gap:7px}.chip::before{width:12px;height:12px}.chips{gap:6px}
 .pick,.field .big,.eur{min-height:44px}
-.facts,#draw{display:none!important}.nav .mob-draw{display:inline-flex;align-items:center;gap:10px;font:500 var(--t2) "Inter Tight",sans-serif;background:var(--ink);color:var(--bg);border:0;border-radius:999px;padding:12px 26px;cursor:pointer}.nav .mob-draw:disabled{opacity:.35}
+.facts,#draw{display:none!important}.nav .mob-draw{display:inline-flex;align-items:center;gap:13px;font:500 var(--t3) "Inter Tight",sans-serif;letter-spacing:-.02em;background:var(--ink);color:var(--bg);border:0;border-radius:999px;padding:16px 34px 16px 26px;cursor:pointer}.nav .mob-draw:disabled{opacity:.35}
 .ov{place-items:start stretch;padding:34px 21px}h1{font-size:var(--t3)!important}.q p{font-size:15px}
 .count{display:none}.lab-t{display:none}.lab-n{display:inline}.label{margin-bottom:13px}
 .row{min-height:55px}.nav button{font-size:var(--t2)}.go{font-size:var(--t3)}
@@ -379,12 +388,12 @@ send:()=>{const P=result.people,ns=P.filter(p=>p.sent).length,N=P.length,cfg=mai
   const panel=mailUrl()?"":`<div class="cfg" id="cfgPanel" hidden><div class="field"><label for="cfgUrl">Dirección del script de Google</label><input class="big" id="cfgUrl" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off"></div>
     <div class="field"><label for="cfgKey">Clave</label><input class="big" id="cfgKey" placeholder="La misma que pusiste en el script" autocomplete="off"></div>
     <div class="cfg-b"><a class="lnk" href="https://github.com/miguel-moya/amigo-invisible/blob/main/EMAIL.md" target="_blank" rel="noopener">Cómo crear el script</a><span><button class="lnk" id="cfgCancel">Cancelar</button><button class="lnk strong" id="cfgSave">Guardar y probar</button></span></div></div>`;
-  return shell(0,"Sorteo realizado","Envía a cada uno su enlace",`Con un toque cada uno ve su resultado; el mensaje nunca dice a quién le toca. <b class="sent-c">${(()=>{const m=P.filter(p=>p.via==="mail").length,r=N-ns;return(m?`Enviados por email: ${m}. `:"")+(r?`Pendientes: ${r}.`:"Todos gestionados.")})()}</b> Número de sorteo, igual para todos:`,
+  return shell(0,"Sorteo realizado","Envía a cada uno su enlace",`Con un toque cada uno ve su resultado; el mensaje nunca dice a quién le toca. <b class="sent-c">${(()=>{const m=P.filter(p=>p.via==="mail").length,r=N-ns;return(m?`Enviados por email: ${m}. `:"")+(r?`Pendientes: ${r}.`:"Todos gestionados.")})()}</b>`,
   top+panel+`<div class="msg${result.flash?" ok":""}" id="ms">${esc(result.flash||"")}</div><div class="list">`+P.map((p,i)=>`<div class="srow"><div class="nm">${esc(p.n)}${p.sent?`<small class="${p.via==="mail"?"":"mute"}">${p.via==="mail"?"Enviado por email":p.via==="wa"?"Abierto en WhatsApp":"Copiado"}</small>`:""}</div><div class="links">
    ${p.via==="mail"?"":`<a href="https://wa.me/?text=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.1A8 8 0 1 1 20 11.5z"/></svg><span>WhatsApp</span></a>`}
    <button data-copy="${i}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copiar</span></button></div></div>`).join("")+`</div>`,
   `<div class="nav" id="sendNav"><button class="back" data-undo="1">Editar participantes</button><button class="back" data-undo="4">Repetir sorteo</button></div>`,result.id)},
-ver:(r,msg)=>r?`<section class="screen rv-s"><div class="rv-t" id="rv"><div class="label">Resultado del sorteo</div><h1 class="rv-h">Tu amigo invisible es…</h1><button class="go rv-go" id="tap">Toca para descubrirlo</button></div><div class="q gslot"></div></section>`
+ver:(r,msg)=>r?`<section class="screen rv-s intro"><div class="rv-t" id="rv"><div class="label">Resultado del sorteo</div><h1 class="rv-h">Tu amigo invisible es…</h1><button class="rv-tap" id="tap"><span class="o"></span><span>Toca para descubrirlo</span></button></div><div class="q gslot"></div></section>`
   :shell(0,"Tu amigo invisible","Abre tu resultado","Lo normal es pulsar el enlace que te llegó por WhatsApp o en el email. Si no se abre, cópialo entero y pégalo aquí.",
    `<div class="reveal"><div class="field"><label for="code">Tu enlace</label><input class="big" id="code" placeholder="Pega aquí el enlace" autocomplete="off"></div><div class="msg" id="mv">${msg||""}</div><button class="go" id="openCode">Abrir</button></div>`,
   "","?")
@@ -416,7 +425,7 @@ const SUBJ=()=>`Tu amigo invisible · sorteo ${result.id}`;
 function htmlFor(p){const L=[["Presupuesto",eur(st.price)],["Cuándo",fdate(st.date)+(st.time?`, a las ${st.time}`:"")],["Dónde",st.place]].filter(x=>(x[1]||"").trim());const link=baseUrl()+"#"+p.code;
   return `<div style="font-family:Helvetica,Arial,sans-serif;color:#141413;max-width:520px;padding:8px">
 <p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#c4391f;margin:0 0 18px">Amigo invisible</p>
-<h1 style="font-weight:400;font-size:30px;line-height:1.1;margin:0 0 26px">Hola, ${esc(p.n)}: ya tienes tu amigo invisible.</h1>
+<h1 style="font-weight:400;font-size:30px;line-height:1.1;margin:0 0 26px">Hola ${esc(p.n)},<br>ya tienes tu amigo invisible.</h1>
 <p style="margin:0 0 30px"><a href="${link}" style="display:inline-block;padding:14px 24px;background:#141413;color:#ffffff;border-radius:999px;text-decoration:none;font-size:16px">Descubrir a quién le regalo →</a></p>
 <p style="font-size:12px;color:#7a766f;margin:30px 0 0">Sorteo nº ${result.id}${(st.org||"").trim()?` · organiza ${esc(st.org.trim())}`:""}. Tiene que ser el mismo número para todos.<br>Si el botón no funciona, copia este enlace: ${link}</p></div>`}
 async function callScript(cfg,payload){const r=await fetch(cfg.url,{method:"POST",body:JSON.stringify({...payload,key:cfg.key})});const j=await r.json();if(!j.ok)throw new Error(j.error||"Error del script");return j}
@@ -452,7 +461,7 @@ const baseUrl=()=>PAGE_URL.split("#")[0];
 const eur=v=>{v=(v||"").trim();return/^\d+([.,]\d+)?$/.test(v)?v+" €":v};
 const fdate=d=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(d||""))return d||"";const t=new Date(d+"T12:00:00");return t.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})};
 function msgFor(p){const L=[["Presupuesto",eur(st.price)],["Cuándo",fdate(st.date)+(st.time?`, a las ${st.time}`:"")],["Dónde",st.place]].filter(x=>(x[1]||"").trim()).map(x=>`${x[0]}: ${x[1].trim()}`);
-  return [`Hola, ${p.n}: ya tienes tu amigo invisible.`,``,`Descúbrelo aquí (solo lo verás tú):`,baseUrl()+"#"+p.code,``,`Sorteo nº ${result.id}${(st.org||"").trim()?` · organiza ${st.org.trim()}`:""}. Tiene que ser el mismo número para todos.`].join("\n")}
+  return [`Hola ${p.n},`,`ya tienes tu amigo invisible.`,``,`Descúbrelo aquí (solo lo verás tú):`,baseUrl()+"#"+p.code,``,`Sorteo nº ${result.id}${(st.org||"").trim()?` · organiza ${st.org.trim()}`:""}. Tiene que ser el mismo número para todos.`].join("\n")}
 
 /* ---------- eventos ---------- */
 function bind(v,arg){
@@ -483,7 +492,7 @@ function bind(v,arg){
     const H=(store.get("ai-hist")||[]).filter(x=>x.id!==id).slice(-4);H.push({id,t:Date.now(),h:result.hist});store.set("ai-hist",H);store.set("ai-result",result);show("send");mailModal()};
   if(v==="ver"){
     if(arg){const rv=$("#rv");
-      const reveal=()=>{SPIN=1;const D=[["Presupuesto",eur(arg.pr)],["Cuándo",arg.dt?(()=>{const d=new Date(arg.dt+"T12:00:00");return`${d.getDate()} de ${MES[d.getMonth()]}`})()+(arg.tm?`, ${arg.tm}`:""):""],["Dónde",arg.pl]].filter(x=>x[1]);
+      const reveal=()=>{SPIN=1;$("#app .rv-s").classList.remove("intro");setTimeout(fitAscii,30);const D=[["Presupuesto",eur(arg.pr)],["Cuándo",arg.dt?(()=>{const d=new Date(arg.dt+"T12:00:00");return`${d.getDate()} de ${MES[d.getMonth()]}`})()+(arg.tm?`, ${arg.tm}`:""):""],["Dónde",arg.pl]].filter(x=>x[1]);
         rv.innerHTML=`<div class="label">Resultado del sorteo</div><div class="who" aria-live="polite">${[...arg.r].map((c,k)=>`<span style="animation-delay:${k*55}ms">${c===" "?"&nbsp;":esc(c)}</span>`).join("")}</div>
         <div class="rv-d">${D.map(([k,v])=>`<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}${arg.nt?`<div class="full"><dt>Mensaje</dt><dd>${esc(arg.nt)}</dd></div>`:""}</div>
         <p class="rv-n">Sorteo nº ${esc(arg.id)}${arg.og?` · organiza ${esc(arg.og)}`:""}. Tiene que coincidir con el de los demás.</p>`};
