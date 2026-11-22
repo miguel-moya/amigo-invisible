@@ -24,9 +24,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 "Inter Tight"
 header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--g);position:relative;z-index:2}
 .brand{font-weight:600;font-size:22px;letter-spacing:-.03em}
 .brand i{font-style:normal;color:var(--acc)}
-.top a,.top button{font:500 var(--t0) "Inter Tight",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:none;border:0;padding:10px 0;margin-left:89px;cursor:pointer;min-height:44px;opacity:.38;transition:opacity .2s}
+.top a,.top button{font:500 var(--t0) "Inter Tight",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:none;border:0;padding:10px 0;margin-left:34px;cursor:pointer;min-height:44px;opacity:.38;transition:opacity .2s}
 .top button:hover{opacity:.7}.top button[aria-pressed=true]{opacity:1}
-.top .theme{width:44px;height:44px;padding:0;margin-left:55px;margin-right:-12px;opacity:1;display:inline-grid;place-items:center;vertical-align:middle}.theme svg{width:21px;height:21px;transition:transform .4s}:root[data-theme=dark] .theme svg{transform:rotate(180deg)}
+.top .theme{width:44px;height:44px;padding:0;margin-left:13px;margin-right:-12px;opacity:1;display:inline-grid;place-items:center;vertical-align:middle}.theme svg{width:21px;height:21px;transition:transform .4s}:root[data-theme=dark] .theme svg{transform:rotate(180deg)}
 main{position:relative;z-index:1}
 .screen{display:grid;grid-template-columns:minmax(0,.236fr) minmax(0,.146fr) minmax(0,.618fr);height:calc(100dvh - 72px);overflow:clip;padding:calc(5*var(--dot)) calc(var(--g) + 3*var(--dot)) calc(var(--g) + 5*var(--dot));animation:in .5s cubic-bezier(.2,.7,.2,1)}
 @keyframes in{from{opacity:0;transform:translateY(14px)}}
@@ -163,7 +163,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .cd{font-size:clamp(160px,24vw,360px);line-height:.8;letter-spacing:-.06em;font-variant-numeric:tabular-nums;animation:cd .85s cubic-bezier(.2,.7,.2,1) both}
 @keyframes cd{0%{opacity:0;transform:scale(1.35)}25%{opacity:1;transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:scale(.92)}}
 .rv-t .who{font-size:clamp(var(--t5),13vw,240px);margin:0 0 13px}
-.rv-d{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:21px 34px;margin-top:34px;padding-top:21px;border-top:1px solid var(--line)}
+.rv-d{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr);gap:21px 34px;margin-top:34px;padding-top:21px;border-top:1px solid var(--line)}
 .rv-d dt{font-size:var(--t0);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:5px}
 .rv-d dd{margin:0;font-size:var(--t2);letter-spacing:-.02em;line-height:1.2}.rv-d .full{grid-column:1/-1}
 .rv-n{font-size:var(--t0);color:var(--mute);margin-top:34px}
@@ -173,7 +173,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:34px;padding:calc(2*var(--dot)) calc(2*var(--dot)) calc(3*var(--dot))}.q,.a{grid-column:1}
 .count{order:-1;font-size:var(--t4);margin:0 0 21px}.count.sm{font-size:var(--t3)}
 .q p{margin-top:12px}.list{overflow:visible;padding-right:0}.nav#sendNav{flex-wrap:wrap;gap:13px}.warn-b{gap:21px}.list.more{-webkit-mask-image:none;mask-image:none}
-.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.mailstep .go{font-size:var(--t2);white-space:nowrap;margin:21px 0 13px;gap:13px}.nav#sendNav{flex-wrap:nowrap}.nav#sendNav button{font-size:17px}.rv-s{grid-template-columns:minmax(0,1fr);position:relative}.gslot{position:absolute;inset:0;grid-column:1}.gslot #ascii{display:block;opacity:.14}.rv-t{position:relative;z-index:1}.rv-d{grid-template-columns:repeat(2,minmax(0,1fr))}.rv-d dd{font-size:19px}.rv-go{margin-top:34px}.mailbar{gap:13px}.mailbar .go{font-size:var(--t2);white-space:nowrap}.mailbar .key{width:100%}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
+.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.mailstep .go{font-size:var(--t2);white-space:nowrap;margin:21px 0 13px;gap:13px}.nav#sendNav{flex-wrap:nowrap}.nav#sendNav button{font-size:17px}.rv-s{grid-template-columns:minmax(0,1fr);position:relative}.gslot{position:absolute;inset:0;grid-column:1}.gslot #ascii{display:block;opacity:.14}.rv-t{position:relative;z-index:1}.rv-d{grid-template-columns:repeat(2,minmax(0,1fr))}.rv-d>div:nth-child(3){grid-column:1/-1}.rv-d dd{font-size:19px}.rv-go{margin-top:34px}.mailbar{gap:13px}.mailbar .go{font-size:var(--t2);white-space:nowrap}.mailbar .key{width:100%}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
 .nav{position:sticky;bottom:0;background:var(--bg);padding-bottom:12px}#ascii{display:none}}
@@ -348,7 +348,7 @@ const views={
    <div class="field"><label for="note" class="lab-row"><span>Mensaje para todos${OPT}</span><span class="count-n" id="noteN">${(st.note||"").length} / 140</span></label><div class="areabox"><textarea class="big area" id="note" data-r="note" rows="1" maxlength="140" placeholder="Nada de calcetines.">${esc((st.note||"").slice(0,140))}</textarea></div></div>
   </div>`,navs(3)),
 4:()=>{loadHist();const ps=active(),c=countAll(allowed(ps));return shell(4,"Paso cuatro","Listo para sortear",(()=>{const ex=ps.reduce((s,a)=>s+a.x.filter(j=>ps.some(b=>b.idx===j)).length,0)+(histPairs.length);return`${ps.length} participantes${ex?` y ${ex} ${ex===1?"pareja evitada":"parejas evitadas"}`:""}.`})(),
-  `<div class="huge">${c>=2e6?"2M+":c}</div><div>${c===0?"Con estas exclusiones no hay ningún sorteo posible. Vuelve atrás y quita alguna.":c===1?"único sorteo posible: no habrá sorpresa.":"sorteos posibles. Saldrá uno al azar, todos igual de probables."}</div>
+  `<div class="huge">${c>=2e6?"2M+":c}</div><div>${c===0?"Con estas exclusiones no hay ningún sorteo posible. Vuelve atrás y quita alguna.":c===1?"…único sorteo posible: no habrá sorpresa.":"…sorteos posibles. Saldrá uno al azar, todos igual de probables."}</div>
    <ul class="facts"><li>Se usa el generador aleatorio criptográfico del navegador.</li><li>Tú no verás el resultado: cada persona recibe un enlace cerrado.</li><li>Cada sorteo lleva un número. Si todos tenéis el mismo, nadie ha repetido el sorteo a escondidas.</li></ul>
    <button class="go" id="draw"${c===0?" disabled":""}>Sortear</button><div class="msg" id="m4"></div>`,`<div class="nav"><button class="back" data-to="3">Atrás</button><span></span></div>`)},
 send:()=>{const P=result.people,ns=P.filter(p=>p.sent).length,N=P.length,cfg=mailCfg(),pend=P.filter(p=>p.e&&!p.sent),anyMail=P.some(p=>p.e);
@@ -367,7 +367,7 @@ send:()=>{const P=result.people,ns=P.filter(p=>p.sent).length,N=P.length,cfg=mai
    ${p.via==="mail"?"":`<a href="https://wa.me/?text=${encodeURIComponent(msgFor(p))}" target="_blank" rel="noopener" data-sent="${i}">WhatsApp ↗</a>`}
    <button data-copy="${i}">Copiar</button></div></div>`).join("")+`</div>`,
   `<div class="nav" id="sendNav"><button class="back" data-undo="1">Editar participantes</button><button class="back" data-undo="4">Repetir sorteo</button></div>`,result.id)},
-ver:(r,msg)=>r?`<section class="screen rv-s"><div class="rv-t" id="rv"><div class="label">Tu amigo invisible</div><h1 class="rv-h">Tu amigo invisible es…</h1><button class="go rv-go" id="tap">Toca para descubrirlo</button></div><div class="q gslot"></div></section>`
+ver:(r,msg)=>r?`<section class="screen rv-s"><div class="rv-t" id="rv"><div class="label">Resultado del sorteo</div><h1 class="rv-h">Tu amigo invisible es…</h1><button class="go rv-go" id="tap">Toca para descubrirlo</button></div><div class="q gslot"></div></section>`
   :shell(0,"Tu amigo invisible","Abre tu resultado","Lo normal es pulsar el enlace que te llegó por WhatsApp o en el email. Si no se abre, cópialo entero y pégalo aquí.",
    `<div class="reveal"><div class="field"><label for="code">Tu enlace</label><input class="big" id="code" placeholder="Pega aquí el enlace" autocomplete="off"></div><div class="msg" id="mv">${msg||""}</div><button class="go" id="openCode">Abrir</button></div>`,
   "","?")
@@ -449,11 +449,11 @@ function bind(v,arg){
   if(v==="send"){const k=$("#keyIn");if(k){k.focus({preventScroll:true});k.onkeydown=e=>{if(e.key==="Enter")$("#mailGo").click()}}}
   if(v==="ver"){
     if(arg){const rv=$("#rv");
-      const reveal=()=>{SPIN=1;const D=[["Presupuesto",eur(arg.pr)],["Cuándo",arg.dt?(()=>{const d=new Date(arg.dt+"T12:00:00");return`${d.getDate()} de ${MES[d.getMonth()]}`})()+(arg.tm?`, ${arg.tm}`:""):""],["Dónde",arg.pl],["Organiza",arg.og]].filter(x=>x[1]);
-        rv.innerHTML=`<div class="label">Tu amigo invisible es</div><div class="who" aria-live="polite">${[...arg.r].map((c,k)=>`<span style="animation-delay:${k*55}ms">${c===" "?"&nbsp;":esc(c)}</span>`).join("")}</div>
+      const reveal=()=>{SPIN=1;const D=[["Presupuesto",eur(arg.pr)],["Cuándo",arg.dt?(()=>{const d=new Date(arg.dt+"T12:00:00");return`${d.getDate()} de ${MES[d.getMonth()]}`})()+(arg.tm?`, ${arg.tm}`:""):""],["Dónde",arg.pl]].filter(x=>x[1]);
+        rv.innerHTML=`<div class="label">Resultado del sorteo</div><div class="who" aria-live="polite">${[...arg.r].map((c,k)=>`<span style="animation-delay:${k*55}ms">${c===" "?"&nbsp;":esc(c)}</span>`).join("")}</div>
         <div class="rv-d">${D.map(([k,v])=>`<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}${arg.nt?`<div class="full"><dt>Mensaje</dt><dd>${esc(arg.nt)}</dd></div>`:""}</div>
-        <p class="rv-n">Sorteo nº ${esc(arg.id)}. Tiene que coincidir con el de los demás.</p>`};
-      const count=n=>{if(n===0){reveal();return}rv.innerHTML=`<div class="label">Tu amigo invisible es</div><div class="cd" aria-live="assertive">${n}</div>`;setTimeout(()=>count(n-1),850)};
+        <p class="rv-n">Sorteo nº ${esc(arg.id)}${arg.og?` · organiza ${esc(arg.og)}`:""}. Tiene que coincidir con el de los demás.</p>`};
+      const count=n=>{if(n===0){reveal();return}rv.innerHTML=`<div class="label">Resultado del sorteo</div><div class="cd" aria-live="assertive">${n}</div>`;setTimeout(()=>count(n-1),850)};
       $("#tap").onclick=()=>{if(matchMedia("(prefers-reduced-motion:reduce)").matches){reveal();return}SPIN=9;count(3)}}
     else{const open=()=>{try{const v=$("#code").value.trim(),r=shortOpen(v);store.set("ai-mine",v.includes("#")?v.split("#").pop():v);show("ver",r)}catch(e){$("#mv").textContent="Ese código no es válido. Revisa que esté completo."}};
       $("#openCode").onclick=open;$("#code").onkeydown=e=>{if(e.key==="Enter")open()}}}
