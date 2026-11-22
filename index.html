@@ -43,7 +43,7 @@ h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;l
 .list::-webkit-scrollbar,.body::-webkit-scrollbar{width:4px}.list::-webkit-scrollbar-track,.body::-webkit-scrollbar-track{background:transparent}
 .list::-webkit-scrollbar-thumb,.body::-webkit-scrollbar-thumb{background:transparent;border-radius:4px}.list:hover::-webkit-scrollbar-thumb,.body:hover::-webkit-scrollbar-thumb{background:var(--line)}
 .sent-c{font-weight:500;color:var(--ink)}
-.mailbar{display:flex;align-items:center;gap:21px;flex-wrap:wrap;padding-bottom:21px}.mailbar .go{margin:0;padding:0;font-size:var(--t3)}.mailbar .hint{margin:0;max-width:34ch}
+.mailbar{display:flex;align-items:center;gap:21px;flex-wrap:wrap;padding-bottom:21px}.mailbar .go{margin:0;padding:0;font-size:var(--t3)}.mailbar .hint{margin:0;max-width:34ch}.mailbar .key{width:13em;font-size:var(--t1);background:none;border-bottom:1px solid var(--line);padding-left:0}
 .lnk{font:500 15px "Inter Tight",sans-serif;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);padding:8px 0 4px;cursor:pointer;text-decoration:none;min-height:40px}.lnk:hover{border-bottom-color:var(--ink)}.lnk.strong{border-bottom-color:var(--ink)}
 .cfg{padding-bottom:21px}.cfg .field:first-child{padding-top:0}.cfg .small{background:none;padding-left:0;border-bottom:0}.cfg-b{display:flex;justify-content:space-between;gap:21px;flex-wrap:wrap;padding-top:13px}.cfg-b span{display:flex;gap:21px}
 .srow .nm small.mute{color:var(--mute)}.links [data-mark]{min-width:5.6em;text-align:left}
@@ -160,7 +160,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:34px;padding:calc(2*var(--dot)) calc(2*var(--dot)) calc(3*var(--dot))}.q,.a{grid-column:1}
 .count{order:-1;font-size:var(--t4);margin:0 0 21px}.count.sm{font-size:var(--t3)}
 .q p{margin-top:12px}.list{overflow:visible;padding-right:0}.nav#sendNav{flex-wrap:wrap;gap:13px}.warn-b{gap:21px}.list.more{-webkit-mask-image:none;mask-image:none}
-.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
+.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.mailbar{gap:13px}.mailbar .go{font-size:var(--t2);white-space:nowrap}.mailbar .key{width:100%}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
 .nav{position:sticky;bottom:0;background:var(--bg);padding-bottom:12px}#ascii{display:none}}
@@ -338,6 +338,7 @@ const views={
    <button class="go" id="draw"${c===0?" disabled":""}>Sortear</button><div class="msg" id="m4"></div>`,`<div class="nav"><button class="back" data-to="3">Atrás</button><span></span></div>`)},
 send:()=>{const P=result.people,ns=P.filter(p=>p.sent).length,N=P.length,cfg=mailCfg(),pend=P.filter(p=>p.e&&!p.sent),anyMail=P.some(p=>p.e);
   const bar=!anyMail?"":cfg?(pend.length?`<div class="mailbar"><button class="go" id="sendMails">Enviar ${pend.length} ${pend.length===1?"email":"emails"}</button><span class="hint">Salen desde tu Gmail a quien tiene correo. Al resto, por WhatsApp.</span></div>`:"")
+    :mailUrl()?(pend.length?`<div class="mailbar"><input class="small key" id="keyIn" placeholder="Clave de envío" autocomplete="off" aria-label="Clave de envío"><button class="go" id="keySend">Enviar ${pend.length} ${pend.length===1?"email":"emails"}</button><span class="hint">Solo la primera vez en este dispositivo.</span></div>`:"")
     :`<div class="mailbar"><span class="hint">Los emails pueden salir solos desde tu Gmail.</span><button class="lnk" id="cfgOpen">Configurar envío automático</button></div>`;
   const panel=`<div class="cfg" id="cfgPanel" hidden><div class="field"><label for="cfgUrl">Dirección del script de Google</label><input class="small" id="cfgUrl" value="${esc(cfg?cfg.url:"")}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off"></div>
     <div class="field"><label for="cfgKey">Clave</label><input class="small" id="cfgKey" value="${esc(cfg?cfg.key:"")}" placeholder="La misma que pusiste en el script" autocomplete="off"></div>
@@ -373,7 +374,9 @@ function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1
   if(n===4&&result){show("send");return}show(n)}
 
 /* ---------- email automático (Google Apps Script) ---------- */
-const mailCfg=()=>{const c=store.get("ai-mail");return c&&c.url&&c.key?c:null};
+const MAIL_URL="";
+const mailUrl=()=>MAIL_URL||((store.get("ai-mail")||{}).url||"");
+const mailCfg=()=>{const c=store.get("ai-mail")||{},url=mailUrl();return url&&c.key?{url,key:c.key}:null};
 const SUBJ=()=>`Tu amigo invisible · sorteo ${result.id}`;
 function htmlFor(p){const L=[["Presupuesto",eur(st.price)],["Cuándo",fdate(st.date)+(st.time?`, a las ${st.time}`:"")],["Dónde",st.place]].filter(x=>(x[1]||"").trim());const link=baseUrl()+"#"+p.code;
   return `<div style="font-family:Helvetica,Arial,sans-serif;color:#141413;max-width:520px;padding:8px">
@@ -428,7 +431,10 @@ function bind(v,arg){
     else{const open=()=>{try{show("ver",shortOpen($("#code").value))}catch(e){$("#mv").textContent="Ese código no es válido. Revisa que esté completo."}};
       $("#openCode").onclick=open;$("#code").onkeydown=e=>{if(e.key==="Enter")open()}}}
 }
-$("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("#sendMails,#cfgOpen,#cfgCancel,#cfgSave");if(!t)return;
+$("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("#sendMails,#cfgOpen,#cfgCancel,#cfgSave,#keySend");if(!t)return;
+  if(t.id==="keySend"){const k=$("#keyIn").value.trim();if(!k){$("#ms").textContent="Escribe la clave de envío.";$("#keyIn").focus();return}t.disabled=true;t.textContent="Comprobando…";
+    try{await callScript({url:mailUrl(),key:k},{test:true});store.set("ai-mail",{...(store.get("ai-mail")||{}),key:k});show("send");sendMails($("#sendMails"))}
+    catch(err){t.disabled=false;t.textContent="Reintentar";$("#ms").textContent=/clave/i.test(err.message)?"Esa clave no es la del script.":"No se pudo conectar con el script de envío."}return}
   if(t.id==="sendMails"){sendMails(t);return}
   if(t.id==="cfgOpen"){$("#cfgPanel").hidden=false;t.closest(".mailbar").hidden=true;$("#cfgUrl").focus();return}
   if(t.id==="cfgCancel"){show("send");return}
