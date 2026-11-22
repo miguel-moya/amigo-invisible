@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Amigo invisible</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2711%27 fill=%27%23c4391f%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
 <script>try{const t=localStorage.getItem("ai-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
@@ -22,8 +23,8 @@ html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 "Inter Tight",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
 .paper{position:fixed;inset:72px var(--g) var(--g);border-radius:6px;background-image:radial-gradient(var(--dotc) 1px,transparent 1.2px);background-size:var(--dot) var(--dot);background-position:0 0;pointer-events:none}
 header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--g);position:relative;z-index:2}
-.brand{font-weight:600;font-size:22px;letter-spacing:-.03em}
-.brand i{font-style:normal;color:var(--acc)}
+.brand{font-weight:600;font-size:22px;letter-spacing:-.03em;white-space:nowrap}
+.brand i{display:inline-block;width:.3em;height:.3em;border-radius:50%;background:var(--acc);margin:0 .07em 0 .09em;vertical-align:baseline}
 .top a,.top button{font:500 var(--t0) "Inter Tight",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:none;border:0;padding:10px 0;margin-left:34px;cursor:pointer;min-height:44px;opacity:.38;transition:opacity .2s}
 .top button:hover{opacity:.7}.top button[aria-pressed=true]{opacity:1}
 .top .theme{width:44px;height:44px;padding:0;margin-left:13px;margin-right:-12px;opacity:1;display:inline-grid;place-items:center;vertical-align:middle}.theme svg{width:21px;height:21px;transition:transform .4s}:root[data-theme=dark] .theme svg{transform:rotate(180deg)}
@@ -34,8 +35,8 @@ main{position:relative;z-index:1}
 .label{font-weight:500;font-size:var(--t0);letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:21px;line-height:1}
 h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;letter-spacing:-.03em;margin:0;text-wrap:balance}
 .q p{color:var(--mute);margin:21px 0 0;font-size:var(--t1);line-height:1.618}
-.count{margin-top:auto;font-weight:400;font-size:clamp(var(--t4),min(13vw,24vh),var(--t6));line-height:.76;letter-spacing:-.06em;white-space:nowrap}
-.count.sm{font-size:clamp(var(--t3),5.6vw,var(--t4));line-height:.9;letter-spacing:-.04em}
+.count{margin-top:auto;font-weight:400;font-size:clamp(var(--t4),min(13vw,24vh),var(--t6));line-height:.76;letter-spacing:0;white-space:nowrap}
+.count.sm{font-size:clamp(var(--t3),5.6vw,var(--t4));line-height:.9;letter-spacing:0}
 .a{display:flex;flex-direction:column;min-height:0;grid-column:3}
 .body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:transparent transparent}
 .list{flex:0 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:transparent transparent;transition:scrollbar-color .3s}
@@ -49,7 +50,7 @@ h1{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;l
 .srow .nm small.mute{color:var(--mute)}.links [data-mark]{min-width:5.6em;text-align:left}
 .warn{font-size:var(--t1);color:var(--acc);max-width:46ch;line-height:1.4}.warn-b{display:flex;gap:34px;flex:none}
 .list.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 55px),transparent);mask-image:linear-gradient(#000 calc(100% - 55px),transparent)}
-.opt-tag{display:inline-block;font-size:8px;line-height:1;letter-spacing:.08em;color:var(--mute);margin-left:4px;vertical-align:top;position:relative;top:1px}
+.opt-tag{display:inline-block;font-size:8px;line-height:1;letter-spacing:.08em;color:var(--mute);margin-left:7px;vertical-align:top;position:relative;top:3px}
 .cur{font-size:clamp(var(--t2),2.6vw,var(--t3));color:var(--mute)}
 .areabox{display:flex;align-items:flex-end;min-height:calc(2*1.2*clamp(var(--t2),2.6vw,var(--t3)) + 8px)}
 .area{resize:none;line-height:1.2;display:block;overflow:hidden;min-height:0!important;height:calc(1.2em + 8px);padding:2px 0 6px!important}
@@ -167,13 +168,20 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .rv-d dt{font-size:var(--t0);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:5px}
 .rv-d dd{margin:0;font-size:var(--t2);letter-spacing:-.02em;line-height:1.2}.rv-d .full{grid-column:1/-1}
 .rv-n{font-size:var(--t0);color:var(--mute);margin-top:34px}
+.ov{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:34px;background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:in .3s cubic-bezier(.2,.7,.2,1)}
+.ov-b{width:min(760px,100%)}
+.ov-b h2{font-weight:400;font-size:clamp(var(--t3),4.5vw,var(--t4));line-height:1.02;letter-spacing:-.03em;margin:0}
+.ov-b p{color:var(--mute);font-size:var(--t1);line-height:1.618;margin:21px 0 34px;max-width:52ch}
+.ov-in{font-size:clamp(var(--t3),5vw,var(--t4))!important;border-bottom:1px solid var(--ink)!important;padding:8px 0 13px!important;min-height:0!important}
+.ov-a{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin-top:34px}.ov-a .go{margin:0}
+body.ov-on main,body.ov-on header{filter:blur(1px)}
 [hidden]{display:none!important}
 @media(max-width:780px){
 :root{--g:0px}.paper{inset:64px 0 0}header{height:64px;padding:0 calc(2*var(--dot))}.brand{font-size:19px}.top{display:flex;white-space:nowrap}.top a,.top button{margin-left:16px;font-size:11px;letter-spacing:.06em}.top .theme{margin-left:8px}.dk{display:none}.brand{font-size:17px}.pop{right:16px;padding:16px}.cal-w,.cal-d{grid-template-columns:repeat(7,minmax(0,1fr))}.cal-d button{width:42px;height:42px}.tcols{grid-template-columns:1fr 1fr}.when{gap:21px}
 .screen{grid-template-columns:minmax(0,1fr);height:auto;min-height:calc(100dvh - 64px);gap:34px;padding:calc(2*var(--dot)) calc(2*var(--dot)) calc(3*var(--dot))}.q,.a{grid-column:1}
 .count{order:-1;font-size:var(--t4);margin:0 0 21px}.count.sm{font-size:var(--t3)}
 .q p{margin-top:12px}.list{overflow:visible;padding-right:0}.nav#sendNav{flex-wrap:wrap;gap:13px}.warn-b{gap:21px}.list.more{-webkit-mask-image:none;mask-image:none}
-.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.mailstep .go{font-size:var(--t2);white-space:nowrap;margin:21px 0 13px;gap:13px}.nav#sendNav{flex-wrap:nowrap}.nav#sendNav button{font-size:17px}.rv-s{grid-template-columns:minmax(0,1fr);position:relative}.gslot{position:absolute;inset:0;grid-column:1}.gslot #ascii{display:block;opacity:.14}.rv-t{position:relative;z-index:1}.rv-d{grid-template-columns:repeat(2,minmax(0,1fr))}.rv-d>div:nth-child(3){grid-column:1/-1}.rv-d dd{font-size:19px}.rv-go{margin-top:34px}.mailbar{gap:13px}.mailbar .go{font-size:var(--t2);white-space:nowrap}.mailbar .key{width:100%}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
+.opt{grid-template-columns:minmax(0,1fr);gap:10px}.row{grid-template-columns:34px minmax(0,1fr) 44px;row-gap:0}.row .mail{grid-column:2/3;grid-row:2;margin-bottom:8px}.row .mail,.row:not(:focus-within) .mail:placeholder-shown{opacity:1;pointer-events:auto}.row.empty .mail{display:none}.ov{padding:21px;place-items:end stretch}.ov-a .go{font-size:var(--t2);white-space:nowrap}.ov-a{gap:21px}.mailstep .go{font-size:var(--t2);white-space:nowrap;margin:21px 0 13px;gap:13px}.nav#sendNav{flex-wrap:nowrap}.nav#sendNav button{font-size:17px}.rv-s{grid-template-columns:minmax(0,1fr);position:relative}.gslot{position:absolute;inset:0;grid-column:1}.gslot #ascii{display:block;opacity:.14}.rv-t{position:relative;z-index:1}.rv-d{grid-template-columns:repeat(2,minmax(0,1fr))}.rv-d>div:nth-child(3){grid-column:1/-1}.rv-d dd{font-size:19px}.rv-go{margin-top:34px}.mailbar{gap:13px}.mailbar .go{font-size:var(--t2);white-space:nowrap}.mailbar .key{width:100%}.facts{order:3;margin-top:21px}.go{margin-top:13px}h1{font-size:var(--t3)}.extra,.meta{grid-template-columns:minmax(0,1fr)}
 .srow{grid-template-columns:minmax(0,1fr)}.links{justify-content:flex-start}
 .after div{grid-template-columns:minmax(0,1fr);gap:2px}
 .nav{position:sticky;bottom:0;background:var(--bg);padding-bottom:12px}#ascii{display:none}}
@@ -183,7 +191,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 <body>
 <div class="paper" aria-hidden="true"></div>
 <header>
-  <div class="brand">amigo<i>.</i>invisible</div>
+  <div class="brand">amigo<i></i>invisible</div>
   <nav class="top"><button id="mOrg" aria-pressed="true">Organizar</button><button id="mVer" aria-pressed="false"><span class="dk">Mi </span>resultado</button><button id="theme" class="theme" aria-label="Cambiar a modo oscuro"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button></nav>
 </header>
 <main id="app"></main>
@@ -333,13 +341,13 @@ const navs=(n,nextTxt="Siguiente")=>`<div class="nav">${n>1?`<button class="back
 const OPT='<span class="opt-tag">Opcional</span>';
 
 const views={
-1:()=>{tidy();return shell(1,"Paso uno","¿Quién participa?","Un nombre por línea, mínimo tres. Al seleccionar a alguien puedes añadir su email si quieres enviárselo por correo.",
+1:()=>{tidy();return shell(1,"Paso uno","¿Quién participa?","Un nombre por línea, mínimo tres. Al seleccionar a alguien puedes añadir su email (opcional) si quieres enviárselo por correo.",
   `<div class="list" id="rows">${st.people.map(rowHTML).join("")}</div>
    <div class="msg" id="m1"></div>`,`<div class="nav"><button class="back" id="add">+ Añadir participante</button><button class="next" data-to="2">Siguiente</button></div>`)},
-2:()=>{const ps=active();loadHist();return shell(2,"Paso dos","Excepciones","¿A quién no debería tocarle cada uno? Su pareja, a quien le regaló el año pasado… Toca los nombres que quieras evitar. Si no hay ninguno, sigue.",
+2:()=>{const ps=active();loadHist();return shell(2,"Paso dos","¿Alguna excepción?","¿A quién no debería tocarle cada uno? Su pareja, a quien le regaló el año pasado… Toca los nombres que quieras evitar. Si no hay ninguno, sigue.",
   `<div class="list">${ps.map(a=>`<div class="opt"><div class="nm">${esc(a.n)}</div><div class="chips">${ps.filter(b=>b.idx!==a.idx).map(b=>`<button class="chip" data-ex="${a.idx}" data-to2="${b.idx}" aria-pressed="${a.x.includes(b.idx)}">${esc(b.n)}</button>`).join("")}</div></div>`).join("")}
   ${prev?`<div class="opt prev"><div class="nm">Sorteo anterior</div><div><button class="chip" id="usePrev" aria-pressed="${st.usePrev!==false}">No repetir sus ${prev.n} parejas</button><div class="hint">Sorteo ${esc(prev.id)} del ${new Date(prev.date).toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"})}, guardado en este navegador. Las parejas no se muestran.</div></div></div>`:""}</div><div class="msg" id="m2"></div>`,navs(2))},
-3:()=>shell(3,"Paso tres","El plan","Presupuesto, fecha y lugar. Irá en el mensaje que recibe cada persona.",
+3:()=>shell(3,"Paso tres","Tú organizas","Pon el presupuesto, la fecha y el lugar del encuentro. Irá en el mensaje que recibe cada persona.",
   `<div class="msg" id="m3"></div><div class="list plan">
    <div class="field" id="f-price"><label for="price">Presupuesto</label><input class="big" id="price" data-r="price" value="${esc(st.price)}" placeholder="30 €" autocomplete="off"></div>
    <div class="field" id="f-date"><label>Cuándo</label><div class="when"><button type="button" class="pick${st.date?"":" ph"}" id="pickDate">${st.date?dlabel(st.date):"Fecha"}</button><button type="button" class="pick${st.time?"":" ph"}" id="pickTime">${st.time||"Hora"}</button></div></div>
@@ -347,16 +355,11 @@ const views={
    <div class="field" id="f-org"><label for="org">Organiza</label><input class="big" id="org" data-r="org" value="${esc(st.org)}" placeholder="Quién envía los enlaces" autocomplete="off"></div>
    <div class="field"><label for="note" class="lab-row"><span>Mensaje para todos${OPT}</span><span class="count-n" id="noteN">${(st.note||"").length} / 140</span></label><div class="areabox"><textarea class="big area" id="note" data-r="note" rows="1" maxlength="140" placeholder="Nada de calcetines.">${esc((st.note||"").slice(0,140))}</textarea></div></div>
   </div>`,navs(3)),
-4:()=>{loadHist();const ps=active(),c=countAll(allowed(ps));return shell(4,"Paso cuatro","Listo para sortear",(()=>{const ex=ps.reduce((s,a)=>s+a.x.filter(j=>ps.some(b=>b.idx===j)).length,0)+(histPairs.length);return`${ps.length} participantes${ex?` y ${ex} ${ex===1?"pareja evitada":"parejas evitadas"}`:""}.`})(),
+4:()=>{loadHist();const ps=active(),c=countAll(allowed(ps));return shell(4,"Paso cuatro","Estás a un paso",(()=>{const ex=ps.reduce((s,a)=>s+a.x.filter(j=>ps.some(b=>b.idx===j)).length,0)+(histPairs.length);return`${ps.length} participantes${ex?` y ${ex} ${ex===1?"pareja evitada":"parejas evitadas"}`:""}.`})(),
   `<div class="huge">${c>=2e6?"2M+":c}</div><div>${c===0?"Con estas exclusiones no hay ningún sorteo posible. Vuelve atrás y quita alguna.":c===1?"…único sorteo posible: no habrá sorpresa.":"…sorteos posibles. Saldrá uno al azar, todos igual de probables."}</div>
    <ul class="facts"><li>Se usa el generador aleatorio criptográfico del navegador.</li><li>Tú no verás el resultado: cada persona recibe un enlace cerrado.</li><li>Cada sorteo lleva un número. Si todos tenéis el mismo, nadie ha repetido el sorteo a escondidas.</li></ul>
    <button class="go" id="draw"${c===0?" disabled":""}>Sortear</button><div class="msg" id="m4"></div>`,`<div class="nav"><button class="back" data-to="3">Atrás</button><span></span></div>`)},
 send:()=>{const P=result.people,ns=P.filter(p=>p.sent).length,N=P.length,cfg=mailCfg(),pend=P.filter(p=>p.e&&!p.sent),anyMail=P.some(p=>p.e);
-  if(mailUrl()&&pend.length&&result.mode!=="list")return shell(0,"Sorteo realizado","Envía los resultados",`${pend.length===N?"Todos tienen":`${pend.length} de ${N} participantes tienen`} email: les llegará su enlace automáticamente desde tu Gmail.${pend.length<N?" Al resto se lo enviarás a mano en el siguiente paso.":""} Número de sorteo, igual para todos:`,
-    `<div class="mailstep">${cfg?"":`<div class="field"><label for="keyIn">Clave de envío</label><input class="big" id="keyIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="La que pusiste en el script"></div>`}
-     <p class="hint">Lo recibirán: ${pend.map(p=>esc(p.n)).join(", ")}.</p><div class="msg" id="ms"></div>
-     <button class="go" id="mailGo">Enviar ${pend.length} ${pend.length===1?"email":"emails"}</button>
-     <button class="lnk" id="manual">${cfg?"Prefiero enviarlos a mano":"No la sé, enviaré los resultados a mano"}</button></div>`,`<div class="nav" id="sendNav"><button class="back" data-undo="1">Editar participantes</button><button class="back" data-undo="4">Repetir sorteo</button></div>`,result.id);
   const top=!anyMail?"":mailUrl()?(pend.length?`<div class="mailbar"><button class="lnk" id="toMail">Enviar por email a quien tiene correo (${pend.length})</button></div>`:"")
     :`<div class="mailbar"><span class="hint">Los emails pueden salir solos desde tu Gmail.</span><button class="lnk" id="cfgOpen">Configurar envío automático</button></div>`;
   const panel=mailUrl()?"":`<div class="cfg" id="cfgPanel" hidden><div class="field"><label for="cfgUrl">Dirección del script de Google</label><input class="big" id="cfgUrl" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off"></div>
@@ -373,7 +376,7 @@ ver:(r,msg)=>r?`<section class="screen rv-s"><div class="rv-t" id="rv"><div clas
   "","?")
 };
 let cur=1;
-function show(v,arg,msg){cur=v;closePop();$("#app").innerHTML=views[v](arg,msg);const qq=$("#app .q");if(qq)qq.appendChild(asciiEl);bind(v,arg);fitAscii();$$("#app .list").forEach(l=>{const u=()=>{l.classList.toggle("more",l.scrollHeight-l.scrollTop-l.clientHeight>4)};l.onscroll=u;l.classList.toggle("scroll",l.scrollHeight>l.clientHeight+2);u()});
+function show(v,arg,msg){cur=v;closePop();if(v!=="send")closeModal();$("#app").innerHTML=views[v](arg,msg);const qq=$("#app .q");if(qq)qq.appendChild(asciiEl);bind(v,arg);fitAscii();$$("#app .list").forEach(l=>{const u=()=>{l.classList.toggle("more",l.scrollHeight-l.scrollTop-l.clientHeight>4)};l.onscroll=u;l.classList.toggle("scroll",l.scrollHeight>l.clientHeight+2);u()});
   $("#mOrg").setAttribute("aria-pressed",v!=="ver");$("#mVer").setAttribute("aria-pressed",v==="ver");
   const f=$("#app input.big");if(f&&v!=="send"&&matchMedia("(min-width:781px)").matches)f.focus({preventScroll:true});window.scrollTo(0,0)}
 const okMail=m=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m);
@@ -404,16 +407,32 @@ function htmlFor(p){const L=[["Presupuesto",eur(st.price)],["Cuándo",fdate(st.d
 <p style="font-size:12px;color:#7a766f;margin:30px 0 0">Sorteo nº ${result.id}${(st.org||"").trim()?` · organiza ${esc(st.org.trim())}`:""}. Tiene que ser el mismo número para todos.<br>Si el botón no funciona, copia este enlace: ${link}</p></div>`}
 async function callScript(cfg,payload){const r=await fetch(cfg.url,{method:"POST",body:JSON.stringify({...payload,key:cfg.key})});const j=await r.json();if(!j.ok)throw new Error(j.error||"Error del script");return j}
 async function sendMails(btn,key){const list=result.people.filter(p=>p.e&&!p.sent);if(!list.length)return;const cfg={url:mailUrl(),key};
-  btn.disabled=true;btn.textContent="Enviando…";$("#ms").textContent="";
+  btn.disabled=true;btn.textContent="Enviando…";const M=$("#mm");M.textContent="";
   try{const j=await callScript(cfg,{mails:list.map(p=>({to:p.e,subject:SUBJ(),body:msgFor(p),html:htmlFor(p)}))});
     store.set("ai-mail",{...(store.get("ai-mail")||{}),key});
     const ok=[],bad=[];(j.res||[]).forEach(x=>{const p=list.find(q=>q.e===x.to);if(!p)return;if(x.ok){p.sent=true;p.via="mail";ok.push(p.n)}else bad.push(p.n)});
     const rest=result.people.filter(p=>!p.sent).length;
-    result.mode="list";result.flash=(ok.length?`${ok.length===1?"Enviado 1 email":`Enviados ${ok.length} emails`}.`:"")+(bad.length?` No se pudo enviar a ${bad.join(", ")}.`:"")+(rest?` Envía ${rest===1?"el que falta":`los ${rest} que faltan`} por WhatsApp.`:" ¡Ya está todo!");
+    closeModal();result.flash=(ok.length?`${ok.length===1?"Enviado 1 email":`Enviados ${ok.length} emails`}.`:"")+(bad.length?` No se pudo enviar a ${bad.join(", ")}.`:"")+(rest?` Envía ${rest===1?"el que falta":`los ${rest} que faltan`} por WhatsApp.`:" ¡Ya está todo!");
     store.set("ai-result",result);show("send");result.flash="";store.set("ai-result",result)}
   catch(err){btn.disabled=false;btn.textContent="Reintentar";
-    if(/clave/i.test(err.message)){const c=store.get("ai-mail")||{};if(c.key){delete c.key;store.set("ai-mail",c);show("send");$("#ms").textContent="La clave guardada ya no es la del script. Escribe la nueva."}else $("#ms").textContent="Esa clave no es la del script.";return}
-    $("#ms").textContent="No se pudo confirmar el envío. Antes de reintentar, mira en Enviados de tu Gmail si los correos salieron."}}
+    if(/clave/i.test(err.message)){const c=store.get("ai-mail")||{};if(c.key){delete c.key;store.set("ai-mail",c);mailModal();$("#mm").textContent="La clave guardada ya no es la del script. Escribe la nueva."}else{M.textContent="Esa clave no es la del script.";$("#keyIn").select()}return}
+    M.textContent="No se pudo confirmar el envío. Antes de reintentar, mira en Enviados de tu Gmail si los correos salieron."}}
+
+/* ---------- ventana de clave para enviar emails ---------- */
+const ov=document.createElement("div");ov.className="ov";ov.hidden=true;ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");document.body.appendChild(ov);
+function mailModal(){const pend=result.people.filter(p=>p.e&&!p.sent);if(!pend.length||!mailUrl())return;const cfg=mailCfg(),n=pend.length;
+  ov.innerHTML=`<div class="ov-b"><div class="label">Sorteo realizado · envío por email</div>
+   <h2>${cfg?`¿Enviamos ${n===1?"el email":`los ${n} emails`}?`:"Clave de envío"}</h2>
+   <p>${cfg?"":"Es la clave que pusiste en el script de Google. Sirve para que tu Gmail pueda enviar los emails. "}Recibirán su enlace por email: ${pend.map(p=>esc(p.n)).join(", ")}.</p>
+   ${cfg?"":`<input class="big ov-in" id="keyIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escribe la clave" aria-label="Clave de envío">`}
+   <div class="msg" id="mm"></div>
+   <div class="ov-a"><button class="go" id="mailGo">Enviar ${n} ${n===1?"email":"emails"}</button><button class="lnk" id="manual">No la tengo, los enviaré a mano</button></div></div>`;
+  ov.hidden=false;document.body.classList.add("ov-on");const k=$("#keyIn");if(k){k.focus();k.onkeydown=e=>{if(e.key==="Enter")$("#mailGo").click()}}}
+function closeModal(){ov.hidden=true;document.body.classList.remove("ov-on")}
+ov.addEventListener("click",e=>{const t=e.target.closest("#mailGo,#manual");if(e.target===ov){closeModal();return}if(!t)return;
+  if(t.id==="manual"){closeModal();return}
+  const c=mailCfg(),k=c?c.key:(($("#keyIn")||{}).value||"").trim();if(!k){$("#mm").textContent="Escribe la clave de envío.";$("#keyIn").focus();return}sendMails(t,k)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!ov.hidden)closeModal()});
 
 /* ---------- mensaje ---------- */
 const baseUrl=()=>PAGE_URL.split("#")[0];
@@ -445,8 +464,7 @@ function bind(v,arg){
   if(v===4)$("#draw").onclick=()=>{const ps=active(),p=draw(allowed(ps));if(!p){$("#m4").textContent="No se ha encontrado un sorteo válido.";return}
     const ALPHA="23456789ABCDEFGHJKMNPQRSTVWXYZ";let id="";for(let i=0;i<6;i++)id+=ALPHA[rnd(ALPHA.length)];id=id.slice(0,3)+"-"+id.slice(3);
     result={v:2,id,url:PAGE_URL,people:ps.map((a,i)=>{const b=ps[p[i]];return{n:a.n.trim(),e:a.e.trim(),code:shortSeal(id,[b.n.trim(),"",st.price,st.date,st.time,st.place,st.org,st.note]),sent:false}}),hist:seal("H1-",{id,p:ps.map((a,i)=>[norm(a.n),norm(ps[p[i]].n)])})};
-    const H=(store.get("ai-hist")||[]).filter(x=>x.id!==id).slice(-4);H.push({id,t:Date.now(),h:result.hist});store.set("ai-hist",H);store.set("ai-result",result);show("send")};
-  if(v==="send"){const k=$("#keyIn");if(k){k.focus({preventScroll:true});k.onkeydown=e=>{if(e.key==="Enter")$("#mailGo").click()}}}
+    const H=(store.get("ai-hist")||[]).filter(x=>x.id!==id).slice(-4);H.push({id,t:Date.now(),h:result.hist});store.set("ai-hist",H);store.set("ai-result",result);show("send");mailModal()};
   if(v==="ver"){
     if(arg){const rv=$("#rv");
       const reveal=()=>{SPIN=1;const D=[["Presupuesto",eur(arg.pr)],["Cuándo",arg.dt?(()=>{const d=new Date(arg.dt+"T12:00:00");return`${d.getDate()} de ${MES[d.getMonth()]}`})()+(arg.tm?`, ${arg.tm}`:""):""],["Dónde",arg.pl]].filter(x=>x[1]);
@@ -458,10 +476,8 @@ function bind(v,arg){
     else{const open=()=>{try{const v=$("#code").value.trim(),r=shortOpen(v);store.set("ai-mine",v.includes("#")?v.split("#").pop():v);show("ver",r)}catch(e){$("#mv").textContent="Ese código no es válido. Revisa que esté completo."}};
       $("#openCode").onclick=open;$("#code").onkeydown=e=>{if(e.key==="Enter")open()}}}
 }
-$("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("#mailGo,#manual,#toMail,#cfgOpen,#cfgCancel,#cfgSave");if(!t)return;
-  if(t.id==="mailGo"){const c=mailCfg(),k=c?c.key:($("#keyIn").value||"").trim();if(!k){$("#ms").textContent="Escribe la clave de envío.";$("#keyIn").focus();return}sendMails(t,k);return}
-  if(t.id==="manual"){result.mode="list";store.set("ai-result",result);show("send");return}
-  if(t.id==="toMail"){result.mode="mail";store.set("ai-result",result);show("send");return}
+$("#app").addEventListener("click",async e=>{if(cur!=="send")return;const t=e.target.closest("#toMail,#cfgOpen,#cfgCancel,#cfgSave");if(!t)return;
+  if(t.id==="toMail"){mailModal();return}
   if(t.id==="cfgOpen"){$("#cfgPanel").hidden=false;t.closest(".mailbar").hidden=true;$("#cfgUrl").focus();return}
   if(t.id==="cfgCancel"){show("send");return}
   if(t.id==="cfgSave"){const c={url:$("#cfgUrl").value.trim(),key:$("#cfgKey").value.trim()};if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(c.url)){$("#ms").textContent="La dirección tiene que ser la del script publicado: empieza por https://script.google.com y acaba en /exec.";return}
