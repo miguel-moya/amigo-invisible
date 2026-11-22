@@ -374,7 +374,7 @@ function goTo(n){if(n>cur){const e=validate(n);if(e){const m=$("#m"+cur)||$("#m1
   if(n===4&&result){show("send");return}show(n)}
 
 /* ---------- email automático (Google Apps Script) ---------- */
-const MAIL_URL="";
+const MAIL_URL="https://script.google.com/macros/s/AKfycbz8gwRyPmuTmBXSkLhWB6nbw3XYsYdrLvgL025Ead8xde_xp2mv0cXmqHTExsIqpSlU/exec";
 const mailUrl=()=>MAIL_URL||((store.get("ai-mail")||{}).url||"");
 const mailCfg=()=>{const c=store.get("ai-mail")||{},url=mailUrl();return url&&c.key?{url,key:c.key}:null};
 const SUBJ=()=>`Tu amigo invisible · sorteo ${result.id}`;
